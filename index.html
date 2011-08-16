@@ -163,7 +163,9 @@ $.fn.spin = function(opts) {
     });
     $('#preview').spin(opts);
   }
-  $('input').bind('change propertychange', update);
+  $('input').each(function() {
+    this.onchange = update;
+  });
   update();
 </script>
 <script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script> 
