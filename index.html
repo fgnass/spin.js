@@ -4,7 +4,7 @@
   <title>spin.js</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link href="assets/main.css" type="text/css" rel="stylesheet" />
-  <link href='http://fonts.googleapis.com/css?family=Amaranth:700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
   <link href="assets/prettify.css" type="text/css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css" />
   <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider-tooltip.css" />
@@ -19,6 +19,12 @@
   </div>
 </div>
 <div id="content">
+
+<div id="download">
+  <a href="spin.js">spin.js</a>
+  <a href="spin.min.js">spin.min.js</a>
+</div>
+
 <h2>Features</h2>
 <ul>
   <li>No images, no external CSS</li>
@@ -29,8 +35,9 @@
   <li>Smaller than an animated GIF (2.85Kb minified, 1.6Kb gzipped)</li>
   <li>MIT License</li>
 </ul>
+
+<h2>Example</h2>
 <div id="demo">
-  <h2>Example</h2>
   <div id="preview"></div>
   <form>
     <label>Lines:</label><input type="text" name="lines" min="6" max="16" step="2" value="12"><br>
@@ -43,6 +50,7 @@
   </form>
   <br clear="left">
 </div>
+
 <h2>How it works</h2>
 <p>
   Spin.js uses the CSS3 to render the UI, falling back to VML Internet Explorer.
@@ -115,13 +123,15 @@ $.fn.spin = function(opts) {
   </ul>
 </p>
 <h2>Contact</h2>
-<p>
+<p id="contact">
+  <img width="57" height="57" src="http://www.gravatar.com/avatar/f1f2e1842f6ff681a6d1b0a2405d0117.png">
   If you encounter any problems, please use the <a href="https://github.com/fgnass/spin.js/issues">GitHub issue tracker</a>.<br>
-  To keep updated, <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
+  For updates <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
   If you like spin.js and use it in the wild let me know.
 </p>
 </div>
 <div id="footer">
+  <a class="github" href="http://github.com">Hosted on GitHub</a>
 </div>
 <script src="spin.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
