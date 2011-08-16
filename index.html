@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spin.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="assets/main.css" type="text/css" rel="stylesheet" />
+  <link href='http://fonts.googleapis.com/css?family=Amaranth:700' rel='stylesheet' type='text/css'>
+  <link href="assets/prettify.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css" />
+  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider-tooltip.css" />
+  <script type="text/javascript" src="assets/prettify.js"></script>
+</head>
+<body>
+<a id="ribbon" href="http://github.com/fgnass/spin.js"></a>
+<div id="logo">
+  <h1>spin.js</h1>
+  <div id="mask">
+    <div id="dot"></div>
+  </div>
+</div>
+<div id="content">
+<h2>Features</h2>
+<ul>
+  <li>No images, no external CSS</li>
+  <li>No dependencies</li>
+  <li>Highly configurable</li>
+  <li>Resolution independant</li>
+  <li>Works in all major browsers, including IE6</li>
+  <li>Smaller than an animated GIF (2.85Kb minified, 1.6Kb gzipped)</li>
+  <li>MIT License</li>
+</ul>
+<div id="demo">
+  <h2>Example</h2>
+  <div id="preview"></div>
+  <form>
+    <label>Lines:</label><input type="text" name="lines" min="6" max="16" step="2" value="12"><br>
+    <label>Length:</label><input type="text" name="length" min="0" max="30" value="7"><br>
+    <label>Width:</label><input type="text" name="width" min="2" max="20" value="4"><br>
+    <label>Radius:</label><input type="text" name="radius" min="0" max="40" value="10"><br>
+    <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
+    <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+    <label>Shadow:</label><input type="checkbox" name="shadow" checked><br>
+  </form>
+  <br clear="left">
+</div>
+<h2>How it works</h2>
+<p>
+  Spin.js uses the CSS3 to render the UI, falling back to VML Internet Explorer.
+  If supported by the browser, <code>@keyframe</code> rules are used to animate the spinner.
+</p>
+<h2>Usage</h2>
+<pre class="prettyprint">
+var opts = {
+  lines: 12, // The number of lines to draw
+  length: 7, // The length of each line
+  width: 5, // The line thickness
+  radius: 10, // The radius of the inner circle
+  color: '#000', // #rbg or #rrggbb
+  speed: 1, // Rounds per second
+  trail: 100, // Afterglow percentage
+  shadow: true // Whether to render a shadow
+};
+var target = document.getElementById('foo');
+var spinner = new Spinner(opts).spin(target);
+</pre>
+<p>
+  The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target
+  element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
+</p>
+<h3>Manual positioning</h3>
+<p>
+  In order to manually position the spinner, invoke <code>spin()</code> without arguments and use the <code>el</code>
+  property to access the HTML element:
+</p>
+<pre class="prettyprint">
+var spinner = new Spinner().spin();
+target.appendChild(spinner.el);
+</pre>
+<p>
+  The returned element is a DIV with <code>position:relative</code> and no height. The center of the spinner
+  is positioned at the top left corner of this DIV.
+</p>
+<h3>Hiding the spinner</h3>
+<p>
+  To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops
+  the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
+</p>
+<h3>jQuery plugin</h3>
+<p>
+  Spin.js does not require jQuery. Anyway, if you use jQuery (or zepto.js) you may use the following plugin:
+</p>
+<pre class="prettyprint">
+$.fn.spin = function(opts) {
+  this.each(function() {
+    var spinner = $(this).data('spinner');
+    if (spinner) spinner.stop();
+    if (opts !== false) {
+      $(this).data('spinner', new Spinner(opts).spin(this));
+    }
+  });
+  return this;
+}
+</pre>
+<h2>Supported browsers</h2>
+<img src="assets/browsers.png">
+<p>
+  Spin.js has been successfully tested in the following browsers:
+  <ul>
+    <li>Chrome</li>
+    <li>Safari 4</li>
+    <li>Firefox 3.5</li>
+    <li>IE 6</li>
+    <li>Opera 10.6</li>
+    <li>Mobile Safari (iOS 4)</li>
+  </ul>
+</p>
+<h2>Contact</h2>
+<p>
+  If you encounter any problems, please use the <a href="https://github.com/fgnass/spin.js/issues">GitHub issue tracker</a>.<br>
+  To keep updated, <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
+  If you like spin.js and use it in the wild let me know.
+</p>
+</div>
+<div id="footer">
+</div>
+<script src="spin.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>
+  $.fn.spin = function(opts) {
+    this.each(function() {
+      var spinner = $(this).data('spinner');
+      if (spinner) spinner.stop();
+      if (opts !== false) {
+        spinner = new Spinner(opts).spin(this);
+        $(this).data('spinner', spinner);
+      }
+    });
+    return this;
+  };
+  $('#dot').spin();
+  prettyPrint();
+  function update() {
+    var opts = {color: '#fff'};
+    $('input[min]').each(function() {
+      opts[this.name] = parseFloat(this.value);
+    });
+    $('input:checkbox').each(function() {
+      opts[this.name] = this.checked;
+    });
+    $('#preview').spin(opts);
+  }
+  $('input').bind('change propertychange', update);
+  update();
+</script>
+<script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script> 
+</body>
+</html>

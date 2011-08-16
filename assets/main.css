@@ -1,0 +1,121 @@
+html, body {
+  margin: 0;
+}
+html { 
+  background: url(bg.png);
+}
+body {
+  color: #333;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+#content {
+  width: 75%;
+  max-width: 800px;
+  line-height: 1.4em;
+  margin: -50px 50px 50px 50px;
+  text-shadow: 0px 1px 0px #fff;
+}
+#footer {
+  background: #222;
+  overflow: hidden;
+  color: #888;
+  font-size: 12px;
+  padding: 20px 0 100px 50px;
+  position: relative;
+}
+#footer:before {
+  content: '';
+  display: block;
+  box-shadow: 0 0 10px #000;
+  height: 10px;
+  position: absolute;
+  left: 0;
+  top: -10px;
+  width: 100%;
+}
+a {
+  color: #333;
+}
+a:hover {
+  color: #000;
+}
+pre {
+  text-shadow: none;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 0 30px 0;
+}
+label {
+  display: inline-block;
+  line-height: 23px;
+  font-size: 14px;
+  width: 80px;
+}
+span.fd-slider {
+  vertical-align: top;
+  display: inline-block;
+  width: 150px;
+}
+#logo {
+  position: relative;
+  height: 300px;
+  margin-left: 50px; 
+}
+h1 { 
+  font-size: 200px;
+  position: absolute;
+  font-family: 'Amaranth', sans-serif;
+  text-shadow: 0px 1px 0px #fff;
+  margin: 0;
+  padding: 0;
+}
+h2 {
+  margin: 45px 0 20px 0;
+}
+h3 {
+  margin: 35px 0 10px 0;
+}
+#mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url(bg.png);
+  width: 240px;
+  height: 85px;
+}
+#dot {
+  position: absolute;
+  left: 198px;
+  top: 42px;
+  width: 46px;
+  height: 46px;
+}
+#ribbon {
+  position: absolute; 
+  top: 0; 
+  right: 0;
+  width: 149px;
+  height: 149px;
+  background:url(ribbon.png);
+  _background: none;
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=ribbon.png);
+}
+#preview {
+  background: #333;
+  float: left;
+  width: 200px;
+  height: 200px;
+  margin: 0 20px 20px 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+#demo {
+  clear: both;
+  margin: 40px 0;
+}
+#demo form {
+  width: 250px;
+  float: left;
+}
