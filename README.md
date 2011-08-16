@@ -10,5 +10,10 @@ An animated CSS3 loading spinner with VML fallback for IE.
  * Works in all major browsers, including IE6
  * Smaller than an animated GIF (2.85Kb minified, 1.6Kb gzipped)
  * MIT License
- 
-For a demo and documentation please refer to the [project's homepage](https://fgnass.github.com/spin.js).
+
+Usage
+-----
+
+    new Spinner({color:'#fff', shadow: true}).spin(target);
+
+For an interactive demo and a list of all supported options please refer to the [project's homepage](http://fgnass.github.com/spin.js).
