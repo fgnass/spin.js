@@ -136,6 +136,7 @@ h3 {
 #download {
 }
 #download a {
+  display: inline-block;
   background: #56ba4a;
   border: 3px solid #59a24f;
   color: #fff;
