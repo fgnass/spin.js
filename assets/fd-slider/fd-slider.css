@@ -102,7 +102,7 @@
         left:0;
         width:12px;
         height:12px;
-        overflow: hidden;
+        line-height: 1px !important;
         outline:0 none;
         background: #eee;
         border: 1px solid #aaa;
