@@ -1,18 +1,16 @@
-/*!
- * spin.js
- *
- * Copyright (c) 2011 Felix Gnass [fgnass at neteye dot de]
- * Licensed under the MIT license
- */
+// https://fgnass.github.com/spin.js
 (function(document, undefined) {
 
-  /** 
-   * Unfortunately uglify.js doesn't provide an option to de-duplicate strings
-   * or to use string-based property access. Hence we have to manually define
-   * some string constants in order to keep file-size below our 3K limit, as 
-   * one of the design goals was to create a script that is smaller than an 
-   * animated GIF.
-   */
+/**
+ * Copyright (c) 2011 Felix Gnass [fgnass at neteye dot de]
+ * Licensed under the MIT license
+ *
+ * Unfortunately uglify.js doesn't provide an option to de-duplicate strings
+ * or to use string-based property access. Hence we have to manually define
+ * some string constants in order to keep file-size below our 3K limit, as
+ * one of the design goals was to create a script that is smaller than an
+ * animated GIF.
+ */
 
   // Supported options
   var width = 'width';
