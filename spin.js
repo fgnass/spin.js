@@ -234,7 +234,7 @@
    */
   (function() {
     var s = css(createEl(tag[0]), behavior, URL_VML);
-    if (s.adj) {
+    if (!vendor(s, transform) && s.adj) {
       // VML support detected. Insert CSS rules for group, shape and stroke.
       var sheet = styleSheet();
       var i;
