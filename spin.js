@@ -42,6 +42,9 @@
       animations = {}, /* Dynamic animation rules keyed by their name */
       useCssAnimations;
 
+  /* Variable to access dynamically created stylesheet for storing animations */
+  var sheet;
+
   /**
    * 
    */
@@ -70,11 +73,12 @@
   }
 
   function styleSheet() {
-    var sheets = document.styleSheets;
-    if (!sheets[length]) {
-      ins(document.documentElement[firstChild], createEl(style));
+    if (!sheet) {
+     ins(document.documentElement[firstChild], createEl(style));
+     sheet = document.styleSheets[document.styleSheets.length - 1];
     }
-    return sheets[0];
+
+    return sheet;
   }
 
   /**
