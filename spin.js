@@ -13,39 +13,34 @@
  */
 
   // Supported options
-  var width = 'width';
-  var length = 'length';
-  var radius = 'radius';
-  var lines = 'lines';
-  var trail = 'trail';
-  var color = 'color';
-  var opacity = 'opacity';
-  var speed = 'speed';
-  var shadow = 'shadow';
-
-  var style = 'style';
-  var height = 'height';
-  var left = 'left';
-  var top = 'top';
-  var px = 'px';
-  var childNodes = 'childNodes';
-  var firstChild = 'firstChild';
-  var parentNode = 'parentNode';
-  var position = 'position';
-  var relative = 'relative';
-  var absolute = 'absolute';
-  var animation = 'animation';
-  var transform = 'transform';
-  var Origin = 'Origin';
-  var coord = 'coord';
-  var black = '#000';
-
-  /* Vendor prefixes, separated by zeros */
-  var prefixes = "webkit0Moz0ms0O".split(0);
-
-  /* Dynamic animation rules keyed by their name */
-  var animations = {};
-  var useCssAnimations;
+  var width = 'width',
+      length = 'length',
+      radius = 'radius',
+      lines = 'lines',
+      trail = 'trail',
+      color = 'color',
+      opacity = 'opacity',
+      speed = 'speed',
+      shadow = 'shadow',
+      style = 'style',
+      height = 'height',
+      left = 'left',
+      top = 'top',
+      px = 'px',
+      childNodes = 'childNodes',
+      firstChild = 'firstChild',
+      parentNode = 'parentNode',
+      position = 'position',
+      relative = 'relative',
+      absolute = 'absolute',
+      animation = 'animation',
+      transform = 'transform',
+      Origin = 'Origin',
+      coord = 'coord',
+      black = '#000',
+      prefixes = "webkit0Moz0ms0O".split(0), /* Vendor prefixes, separated by zeros */
+      animations = {}, /* Dynamic animation rules keyed by their name */
+      useCssAnimations;
 
   /**
    * 
@@ -88,9 +83,9 @@
   function addAnimation(to, end) {
     var name = [opacity, end, ~~(to*100)].join('-');
     if (!animations[name]) {
-      var sheet = styleSheet();
-      var dest = '{' + opacity + ':' + to + '}';
-      var i;
+      var sheet = styleSheet(),
+          dest = '{' + opacity + ':' + to + '}',
+          i;
       for (i=0; i<prefixes[length]; i++) {
         try {
           sheet.insertRule('@' +
@@ -150,11 +145,11 @@
       color, black,
       opacity, 1/4,
       speed, 1));
-  };
-  var proto = Spinner.prototype = {
+  },
+  proto = Spinner.prototype = {
     spin: function(target) {
-      var self = this;
-      var el = self.el;
+      var self = this,
+          el = self.el;
       if (target) {
         ins(target, css(el,
           left, ~~(target.offsetWidth/2) + px,
@@ -181,8 +176,8 @@
       return self;
     },
     stop: function() {
-      var self = this;
-      var el = self.el;
+      var self = this,
+          el = self.el;
 
       self.on = 0;
       if (el[parentNode]) el[parentNode].removeChild(el);
@@ -190,9 +185,9 @@
     }
   };
   proto[lines] = function(o) {
-    var el = css(createEl(), position, relative);
-    var animationName = addAnimation(o[opacity], o[trail]);
-    var i = 0;
+    var el = css(createEl(), position, relative),
+        animationName = addAnimation(o[opacity], o[trail]),
+        i = 0;
     function fill(color, shadow) {
       return css(createEl(),
         position, absolute,
@@ -225,9 +220,9 @@
   // VML rendering for IE
   ///////////////////////////////////////////////////////////////////////////////
 
-  var behavior = 'behavior';
-  var URL_VML = 'url(#default#VML)';
-  var tag = 'group0roundrect0fill0stroke'.split(0);
+  var behavior = 'behavior',
+      URL_VML = 'url(#default#VML)',
+      tag = 'group0roundrect0fill0stroke'.split(0);
 
   /** 
    * Check and init VML support
@@ -236,23 +231,23 @@
     var s = css(createEl(tag[0]), behavior, URL_VML);
     if (!vendor(s, transform) && s.adj) {
       // VML support detected. Insert CSS rules for group, shape and stroke.
-      var sheet = styleSheet();
-      var i;
+      var sheet = styleSheet(),
+          i;
       for (i=0; i < tag[length]; i++) {
         sheet.addRule(tag[i], behavior + ':' + URL_VML);
       }
       proto[lines] = function() {
-        var o = this.opts;
-        var r = o[length]+o[width];
-        var s = 2*r;
+        var o = this.opts,
+            r = o[length]+o[width],
+            s = 2*r;
 
         function grp() {
           return css(createEl(tag[0], coord+'size', s +' '+s, coord+Origin, -r + ' ' + -r), width, s, height, s);
         }
 
-        var g = grp();
-        var margin = ~(o[length]+o[radius]+o[width])+px;
-        var i;
+        var g = grp(),
+            margin = ~(o[length]+o[radius]+o[width])+px,
+            i;
 
         function seg(i, dx, filter) {
           ins(g,
