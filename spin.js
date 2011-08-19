@@ -12,7 +12,6 @@
  * animated GIF.
  */
 
-  // Supported options
   var width = 'width',
       length = 'length',
       radius = 'radius',
@@ -38,12 +37,10 @@
       Origin = 'Origin',
       coord = 'coord',
       black = '#000',
+      styleSheets = style + 'Sheets',
       prefixes = "webkit0Moz0ms0O".split(0), /* Vendor prefixes, separated by zeros */
-      animations = {}, /* Dynamic animation rules keyed by their name */
+      animations = {}, /* Animation rules keyed by their name */
       useCssAnimations;
-
-  /* Variable to access dynamically created stylesheet for storing animations */
-  var sheet;
 
   /**
    * 
@@ -72,24 +69,21 @@
     return parent;
   }
 
-  function styleSheet() {
-    if (!sheet) {
-     ins(document.documentElement[firstChild], createEl(style));
-     sheet = document.styleSheets[document.styleSheets.length - 1];
-    }
-
-    return sheet;
-  }
+  /**
+   * Insert a new stylesheet to hold the @keyframe or VML rules.
+   */
+  ins(document.documentElement[firstChild], createEl(style));
+  var sheet = document[styleSheets][document[styleSheets][length] - 1];
 
   /**
    * Creates an opacity keyframe animation rule.
    */
   function addAnimation(to, end) {
-    var name = [opacity, end, ~~(to*100)].join('-');
+    var name = [opacity, end, ~~(to*100)].join('-'),
+        dest = '{' + opacity + ':' + to + '}',
+        i;
+
     if (!animations[name]) {
-      var sheet = styleSheet(),
-          dest = '{' + opacity + ':' + to + '}',
-          i;
       for (i=0; i<prefixes[length]; i++) {
         try {
           sheet.insertRule('@' +
@@ -109,11 +103,14 @@
    * Tries various vendor prefixes and returns the first supported property.
    **/
   function vendor(el, prop) {
-    var s = el[style];
+    var s = el[style],
+        pp,
+        i;
+
     if(s[prop] !== undefined) return prop;
     prop = prop.charAt(0).toUpperCase() + prop.slice(1);
-    for(var i=0; i<prefixes[length]; i++) {
-      var pp = prefixes[i]+prop;
+    for(i=0; i<prefixes[length]; i++) {
+      pp = prefixes[i]+prop;
       if(s[pp] !== undefined) return pp;
     }
   }
@@ -129,7 +126,8 @@
   }
 
   /**
-   * 
+   * Fills in default values. The values are passed as argument pairs rather
+   * than as object in order to save some extra bytes.
    */
   function defaults(obj) {
     eachPair(arguments, function(prop, val) {
@@ -154,6 +152,7 @@
     spin: function(target) {
       var self = this,
           el = self.el;
+
       if (target) {
         ins(target, css(el,
           left, ~~(target.offsetWidth/2) + px,
@@ -163,11 +162,12 @@
       self.on = 1;
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
-        var o = self.opts;
-        var i = 0;
-        var f = 20/o[speed];
-        var ostep = (1-o[opacity])/(f*o[trail] / 100);
-        var astep = f/o[lines];
+        var o = self.opts,
+            i = 0,
+            f = 20/o[speed],
+            ostep = (1-o[opacity])/(f*o[trail] / 100),
+            astep = f/o[lines];
+
         (function anim() {
           i++;
           for (var s=o[lines]; s; s--) {
@@ -191,7 +191,9 @@
   proto[lines] = function(o) {
     var el = css(createEl(), position, relative),
         animationName = addAnimation(o[opacity], o[trail]),
-        i = 0;
+        i = 0,
+        seg;
+
     function fill(color, shadow) {
       return css(createEl(),
         position, absolute,
@@ -205,7 +207,7 @@
       );
     }
     for (; i < o[lines]; i++) {
-      var seg = css(createEl(), 
+      seg = css(createEl(),
         position, absolute, 
         top, 1+~(o[width]/2) + px,
         transform, 'translate3d(0,0,0)',
@@ -232,11 +234,11 @@
    * Check and init VML support
    */
   (function() {
-    var s = css(createEl(tag[0]), behavior, URL_VML);
+    var s = css(createEl(tag[0]), behavior, URL_VML),
+        i;
+
     if (!vendor(s, transform) && s.adj) {
       // VML support detected. Insert CSS rules for group, shape and stroke.
-      var sheet = styleSheet(),
-          i;
       for (i=0; i < tag[length]; i++) {
         sheet.addRule(tag[i], behavior + ':' + URL_VML);
       }
