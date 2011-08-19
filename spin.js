@@ -72,7 +72,7 @@
   /**
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
-  ins(document.documentElement[firstChild], createEl(style));
+  ins(document.getElementsByTagName('head')[0], createEl(style));
   var sheet = document[styleSheets][document[styleSheets][length] - 1];
 
   /**
