@@ -108,14 +108,18 @@ target.appendChild(spinner.el);
 <pre class="prettyprint">
 $.fn.spin = function(opts) {
   this.each(function() {
-    var spinner = $(this).data('spinner');
+    var $this = $(this),
+        spinner = $this.data('spinner');
+
     if (spinner) spinner.stop();
     if (opts !== false) {
-      $(this).data('spinner', new Spinner(opts).spin(this));
+      opts = $.extend({color: $this.css('color')}, opts);
+      spinner = new Spinner(opts).spin(this);
+      $this.data('spinner', spinner);
     }
   });
   return this;
-}
+};
 </pre>
 <h2>Supported browsers</h2>
 <img src="assets/browsers.png">
@@ -146,11 +150,13 @@ $.fn.spin = function(opts) {
 <script>
   $.fn.spin = function(opts) {
     this.each(function() {
-      var spinner = $(this).data('spinner');
+      var $this = $(this),
+          spinner = $this.data('spinner');
+
       if (spinner) spinner.stop();
       if (opts !== false) {
-        spinner = new Spinner(opts).spin(this);
-        $(this).data('spinner', spinner);
+        spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+        $this.data('spinner', spinner);
       }
     });
     return this;
@@ -158,7 +164,7 @@ $.fn.spin = function(opts) {
   $('#dot').spin();
   prettyPrint();
   function update() {
-    var opts = {color: '#fff'};
+    var opts = {};
     $('input[min]').each(function() {
       opts[this.name] = parseFloat(this.value);
     });
@@ -167,9 +173,10 @@ $.fn.spin = function(opts) {
     });
     $('#preview').spin(opts);
   }
-  $('input').each(function() {
+  $('input[min]').each(function() {
     this.onchange = update;
   });
+  $('input:checkbox').click(update);
   update();
 </script>
 <script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script> 
