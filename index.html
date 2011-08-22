@@ -33,17 +33,6 @@
   <a href="spin.min.js">spin.min.js</a>
 </div>
 
-<h2>Features</h2>
-<ul>
-  <li>No images, no external CSS</li>
-  <li>No dependencies</li>
-  <li>Highly configurable</li>
-  <li>Resolution independent</li>
-  <li>Works in all major browsers, including IE6</li>
-  <li>Smaller than an animated GIF (3K minified, 1.7K gzipped)</li>
-  <li>MIT License</li>
-</ul>
-
 <h2>Example</h2>
 <div id="demo">
   <div id="preview"></div>
@@ -58,6 +47,17 @@
   </form>
   <br clear="left">
 </div>
+
+<h2>Features</h2>
+<ul>
+  <li>No images, no external CSS</li>
+  <li>No dependencies</li>
+  <li>Highly configurable</li>
+  <li>Resolution independent</li>
+  <li>Works in all major browsers, including IE6</li>
+  <li>Smaller than an animated GIF (3K minified, 1.7K gzipped)</li>
+  <li>MIT License</li>
+</ul>
 
 <h2>How it works</h2>
 <p>
@@ -161,7 +161,7 @@ $.fn.spin = function(opts) {
     });
     return this;
   };
-  $('#dot').spin();
+  //$('#dot').spin();
   prettyPrint();
   function update() {
     var opts = {};
