@@ -1,5 +1,5 @@
 // https://fgnass.github.com/spin.js
-(function(document, undefined) {
+(function(window, document, undefined) {
 
 /**
  * Copyright (c) 2011 Felix Gnass [fgnass at neteye dot de]
@@ -35,6 +35,7 @@
       animation = 'animation',
       transform = 'transform',
       Origin = 'Origin',
+      Timeout = 'Timeout',
       coord = 'coord',
       black = '#000',
       styleSheets = style + 'Sheets',
@@ -138,7 +139,7 @@
 
   /** The constructor */
   var Spinner = function Spinner(o) {
-    this.el = this[lines](this.opts = defaults(o || {},
+    this.opts = defaults(o || {},
       lines, 12,
       trail, 100,
       length, 7,
@@ -146,12 +147,12 @@
       radius, 10,
       color, black,
       opacity, 1/4,
-      speed, 1));
+      speed, 1);
   },
   proto = Spinner.prototype = {
     spin: function(target) {
       var self = this,
-          el = self.el;
+          el = self.el = self[lines](self.opts);
 
       if (target) {
         ins(target, css(el,
@@ -159,7 +160,6 @@
           top, ~~(target.offsetHeight/2) + px
         ), target[firstChild]);
       }
-      self.on = 1;
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
@@ -174,7 +174,7 @@
             var alpha = Math.max(1-(i+s*astep)%f * ostep, o[opacity]);
             self[opacity](el, o[lines]-s, alpha, o);
           }
-          if (self.on) setTimeout(anim, 50);
+          self[Timeout] = self.el && window['set'+Timeout](anim, 50);
         })();
       }
       return self;
@@ -183,8 +183,9 @@
       var self = this,
           el = self.el;
 
-      self.on = 0;
+      window['clear'+Timeout](self[Timeout]);
       if (el[parentNode]) el[parentNode].removeChild(el);
+      self.el = undefined;
       return self;
     }
   };
@@ -291,4 +292,4 @@
 
   window.Spinner = Spinner;
 
-})(document);
+})(window, document);
