@@ -184,7 +184,7 @@
           el = self.el;
 
       window['clear'+Timeout](self[Timeout]);
-      if (el[parentNode]) el[parentNode].removeChild(el);
+      if (el && el[parentNode]) el[parentNode].removeChild(el);
       self.el = undefined;
       return self;
     }
