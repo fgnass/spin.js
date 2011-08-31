@@ -259,7 +259,7 @@
         function seg(i, dx, filter) {
           ins(g,
             ins(css(grp(), 'rotation', 360 / o[lines] * i + 'deg', left, ~~dx), 
-              ins(css(createEl(tag[1], 'arcsize', 1), width, r, height, o[width], left, o[radius], top, -o[width]/2, 'filter', filter),
+              ins(css(createEl(tag[1], 'arcsize', 1), width, r, height, o[width], left, o[radius], top, -o[width]>>1, 'filter', filter),
                 createEl(tag[2], color, o[color], opacity, o[opacity]),
                 createEl(tag[3], opacity, 0) // transparent stroke to fix color bleeding upon opacity change
               )
