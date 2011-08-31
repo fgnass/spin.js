@@ -109,13 +109,14 @@ target.appendChild(spinner.el);
 $.fn.spin = function(opts) {
   this.each(function() {
     var $this = $(this),
-        spinner = $this.data('spinner');
+        data = $this.data();
 
-    if (spinner) spinner.stop();
+    if (data.spinner) {
+      data.spinner.stop();
+      delete data.spinner;
+    }
     if (opts !== false) {
-      opts = $.extend({color: $this.css('color')}, opts);
-      spinner = new Spinner(opts).spin(this);
-      $this.data('spinner', spinner);
+      data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
     }
   });
   return this;
@@ -152,12 +153,14 @@ $.fn.spin = function(opts) {
   $.fn.spin = function(opts) {
     this.each(function() {
       var $this = $(this),
-          spinner = $this.data('spinner');
+          data = $this.data();
 
-      if (spinner) spinner.stop();
+      if (data.spinner) {
+        data.spinner.stop();
+        delete data.spinner;
+      }
       if (opts !== false) {
-        spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
-        $this.data('spinner', spinner);
+        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
       }
     });
     return this;
