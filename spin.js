@@ -47,7 +47,7 @@
    * 
    */
   function eachPair(args, it) {
-    var end = ~~((args[length]-1)/2);
+    var end = args[length]-1>>1;
     for (var i = 1; i <= end; i++) {
       it(args[i*2-1], args[i*2]);
     }
@@ -156,8 +156,8 @@
 
       if (target) {
         ins(target, css(el,
-          left, ~~(target.offsetWidth/2) + px,
-          top, ~~(target.offsetHeight/2) + px
+          left, (target.offsetWidth >> 1) + px,
+          top, (target.offsetHeight >> 1) + px
         ), target[firstChild]);
       }
       if (!useCssAnimations) {
@@ -212,7 +212,8 @@
         position, absolute, 
         top, 1+~(o[width]/2) + px,
         transform, 'translate3d(0,0,0)',
-        animation, animationName + ' ' + 1/o[speed] + 's linear infinite ' + (1/o[lines]/o[speed]*i - 1/o[speed]) + 's'
+        opacity, o[opacity],
+        animation, animationName + ' ' + 1/o[speed] + 's linear infinite ' + (1/o[lines]/o[speed]*i) + 's'
       );
       if (o[shadow]) ins(seg, css(fill(black, '0 0 4px ' + black), top, 2+px));
       ins(el, ins(seg, fill(o[color], '0 0 1px rgba(0,0,0,.1)')));
@@ -259,7 +260,7 @@
         function seg(i, dx, filter) {
           ins(g,
             ins(css(grp(), 'rotation', 360 / o[lines] * i + 'deg', left, ~~dx), 
-              ins(css(createEl(tag[1], 'arcsize', 1), width, r, height, o[width], left, o[radius], top, -o[width]/2, 'filter', filter),
+              ins(css(createEl(tag[1], 'arcsize', 1), width, r, height, o[width], left, o[radius], top, -o[width]>>1, 'filter', filter),
                 createEl(tag[2], color, o[color], opacity, o[opacity]),
                 createEl(tag[3], opacity, 0) // transparent stroke to fix color bleeding upon opacity change
               )
