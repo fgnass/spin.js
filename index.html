@@ -147,8 +147,9 @@ $.fn.spin = function(opts) {
 <div id="footer">
   <a class="github" href="http://github.com">Hosted on GitHub</a>
 </div>
-<script src="spin.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
+<script src="spin.min.js"></script>
 <script>
   $.fn.spin = function(opts) {
     this.each(function() {
@@ -177,13 +178,15 @@ $.fn.spin = function(opts) {
     });
     $('#preview').spin(opts);
   }
-  $('input[min]').each(function() {
-    this.onchange = update;
+  $(window).load(function() {
+    $('input[min]').each(function() {
+      this.onchange = update;
+    });
+    $('input:checkbox').click(update);
+    setTimeout(update, 1000);
   });
-  $('input:checkbox').click(update);
-  update();
+
 </script>
-<script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script> 
 <script type="text/javascript">
   var _gaq=[['_setAccount','UA-19036385-2'],['_trackPageview']];
   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
