@@ -8,7 +8,7 @@ An animated CSS3 loading spinner with VML fallback for IE.
  * Highly configurable
  * Resolution independent
  * Works in all major browsers, including IE6
- * Smaller than an animated GIF (~3K minified)
+ * Smaller than an animated GIF (~1.6K gzipped)
  * MIT License
 
 Usage
