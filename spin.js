@@ -47,7 +47,7 @@
    * 
    */
   function eachPair(args, it) {
-    var end = ~~((args[length]-1)/2);
+    var end = args[length]-1>>1;
     for (var i = 1; i <= end; i++) {
       it(args[i*2-1], args[i*2]);
     }
@@ -156,8 +156,8 @@
 
       if (target) {
         ins(target, css(el,
-          left, ~~(target.offsetWidth/2) + px,
-          top, ~~(target.offsetHeight/2) + px
+          left, (target.offsetWidth >> 1) + px,
+          top, (target.offsetHeight >> 1) + px
         ), target[firstChild]);
       }
       if (!useCssAnimations) {
