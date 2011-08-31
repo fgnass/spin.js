@@ -100,6 +100,18 @@
     return obj;
   }
 
+  /**
+   * Returns the absolute page-offset of the given element.
+   */
+  function pos(el) {
+    var o = {x:el.offsetLeft, y:el.offsetTop};
+    while((el = el.offsetParent)) {
+      o.x+=el.offsetLeft;
+      o.y+=el.offsetTop;
+    }
+    return o;
+  }
+
   /** The constructor */
   var Spinner = function Spinner(o) {
     this.opts = defaults(o || {}, {
@@ -116,13 +128,16 @@
   proto = Spinner.prototype = {
     spin: function(target) {
       var self = this,
-          el = self.el = css(createEl(), {position: 'relative'});
+          el = self.el = css(createEl(), {position: 'relative'}),
+          ep, // element position
+          tp; // target position
 
       if (target) {
-        ins(target, el, target.firstChild);
+        tp = pos(ins(target, el, target.firstChild));
+        ep = pos(el);
         css(el, {
-          left: (target.offsetWidth >> 1) + 'px',
-          top: (target.offsetHeight >> 1) + 'px'
+          left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
+          top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
       }
       self.lines(el, self.opts);
@@ -163,7 +178,7 @@
     function fill(color, shadow) {
       return css(createEl(), {
         position: 'absolute',
-        width: (o.length+o.width) + 'px', 
+        width: (o.length+o.width) + 'px',
         height: o.width + 'px',
         background: color,
         boxShadow: shadow,
