@@ -212,7 +212,8 @@
         position, absolute, 
         top, 1+~(o[width]/2) + px,
         transform, 'translate3d(0,0,0)',
-        animation, animationName + ' ' + 1/o[speed] + 's linear infinite ' + (1/o[lines]/o[speed]*i - 1/o[speed]) + 's'
+        opacity, o[opacity],
+        animation, animationName + ' ' + 1/o[speed] + 's linear infinite ' + (1/o[lines]/o[speed]*i) + 's'
       );
       if (o[shadow]) ins(seg, css(fill(black, '0 0 4px ' + black), top, 2+px));
       ins(el, ins(seg, fill(o[color], '0 0 1px rgba(0,0,0,.1)')));
