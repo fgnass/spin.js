@@ -45,15 +45,18 @@
   function addAnimation(to, end) {
     var name = ['opacity', end, ~~(to*100)].join('-'),
         dest = '{opacity:' + to + '}',
+        pre,
         i;
 
     if (!animations[name]) {
       for (i=0; i<prefixes.length; i++) {
+        pre = prefixes[i] && '-'+prefixes[i].toLowerCase()+'-' || '';
         try {
-          sheet.insertRule('@' +
-            (prefixes[i] && '-'+prefixes[i].toLowerCase() +'-' || '') +
-            'keyframes ' + name + '{0%{opacity:1}' +
-            end + '%' + dest + 'to' + dest + '}', sheet.cssRules.length);
+          sheet.insertRule('@' + pre + 'keyframes ' + name + '{0%{opacity:1}' +
+            end + '%' + dest + 'to' + dest + '}', 0);
+
+          sheet.insertRule('.spin .' + name + '{' + pre +
+            'animation: ' + name + ' 1s linear infinite}', 1);
         }
         catch (err) {
         }
@@ -141,6 +144,9 @@
         });
       }
       self.lines(el, self.opts);
+      setTimeout(function() {
+        el.className = 'spin';
+      }, 1);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
@@ -188,12 +194,13 @@
       });
     }
     for (; i < o.lines; i++) {
-      seg = css(createEl(), {
+      seg = css(createEl(0, {className: animationName}), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
         transform: 'translate3d(0,0,0)',
         opacity: o.opacity,
-        animation: animationName + ' ' + 1/o.speed + 's linear infinite ' + (1/o.lines/o.speed*i) + 's'
+        animationDuration: 1/o.speed + 's',
+        animationDelay: ~~(1000/o.lines/o.speed*i) + 'ms'
       });
       if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
       ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
