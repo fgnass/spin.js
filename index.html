@@ -55,7 +55,7 @@
   <li>Highly configurable</li>
   <li>Resolution independent</li>
   <li>Works in all major browsers, including IE6</li>
-  <li>Smaller than an animated GIF (1.6K gzipped)</li>
+  <li>Smaller than an animated GIF (1.7K gzipped)</li>
   <li>MIT License</li>
 </ul>
 
@@ -130,10 +130,10 @@ $.fn.spin = function(opts) {
     <li>Chrome</li>
     <li>Safari 4+</li>
     <li>Firefox 3.5+</li>
-    <li>IE 6,7,8,9+</li>
+    <li>IE 6,7,8,9</li>
     <li>Opera 10.6+</li>
-    <li>Mobile Safari (iOS 4)</li>
-    <li>Android 2.3</li>
+    <li>Mobile Safari (iOS 3.1+)</li>
+    <li>Android 2.3+</li>
   </ul>
 </p>
 <h2>Contact</h2>
@@ -183,7 +183,7 @@ $.fn.spin = function(opts) {
       this.onchange = update;
     });
     $('input:checkbox').click(update);
-    setTimeout(update, 1000);
+    update();
   });
 
 </script>
