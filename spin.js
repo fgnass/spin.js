@@ -42,23 +42,29 @@
   var sheet = document.styleSheets[document.styleSheets.length-1];
 
   /**
-   * Creates an opacity keyframe animation rule.
+   * Creates an opacity keyframe animation rule and returns its name.
+   * Since most mobile Webkits have timing issues with animation-delay,
+   * we create separate rules for each line/segment.
    */
-  function addAnimation(to, end) {
-    var name = ['opacity', end, ~~(to*100)].join('-'),
-        dest = '{opacity:' + to + '}',
+  function addAnimation(alpha, trail, i, lines) {
+    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-'),
+        start = 0.01 + i/lines*100,
+        z = Math.max(1-(1-alpha)/trail*(100-start) , alpha),
         pre,
-        i;
+        p;
 
     if (!animations[name]) {
-      for (i=0; i<prefixes.length; i++) {
-        pre = prefixes[i] && '-'+prefixes[i].toLowerCase()+'-' || '';
+      for (p=0; p<prefixes.length; p++) {
+        pre = prefixes[p] && '-'+prefixes[p].toLowerCase()+'-' || '';
         try {
-          sheet.insertRule('@' + pre + 'keyframes ' + name + '{0%{opacity:1}' +
-            end + '%' + dest + 'to' + dest + '}', 0);
-
-          sheet.insertRule('.spin .' + name + '{' + pre +
-            'animation: ' + name + ' 1s linear infinite}', 1);
+          sheet.insertRule(
+            '@' + pre + 'keyframes ' + name + '{' +
+            '0%{opacity:'+z+'}' +
+            start + '%{opacity:'+ alpha + '}' +
+            (start+0.01) + '%{opacity:1}' +
+            (start+trail)%100 + '%{opacity:'+ alpha + '}' +
+            '100%{opacity:'+ z + '}' +
+            '}', 0);
         }
         catch (err) {
         }
@@ -145,9 +151,6 @@
         });
       }
       self.lines(el, self.opts);
-      setTimeout(function() {
-        el.className = 'spin';
-      }, 1);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
@@ -178,8 +181,7 @@
     }
   };
   proto.lines = function(el, o) {
-    var animationName = addAnimation(o.opacity, o.trail),
-        i = 0,
+    var i = 0,
         seg;
 
     function fill(color, shadow) {
@@ -195,13 +197,12 @@
       });
     }
     for (; i < o.lines; i++) {
-      seg = css(createEl(0, {className: animationName}), {
+      seg = css(createEl(), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
         transform: 'translate3d(0,0,0)',
         opacity: o.opacity,
-        animationDuration: 1/o.speed + 's',
-        animationDelay: ~~(1000/o.lines/o.speed*i) + 'ms'
+        animation: addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
       if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
       ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
