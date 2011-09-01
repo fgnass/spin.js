@@ -11,21 +11,23 @@
       useCssAnimations;
 
   /**
-   * Utility function to create elements. If no tag name is given, a DIV is created.
+   * Utility function to create elements. If no tag name is given,
+   * a DIV is created. Optionally properties can be passed.
    */
-  function createEl(tag, attr) {
+  function createEl(tag, prop) {
     var el = document.createElement(tag || 'div'),
         n;
 
-    for(n in attr) {
-      el[n] = attr[n];
+    for(n in prop) {
+      el[n] = prop[n];
     }
     return el;
   }
 
   /**
-   * Inserts child1 before child2. If child2 is not specified, child1 is appended.
-   * If child2 has no parentNode, child2 is appended first.
+   * Inserts child1 before child2. If child2 is not specified,
+   * child1 is appended. If child2 has no parentNode, child2 is
+   * appended first.
    */
   function ins(parent, child1, child2) {
     if(child2 && !child2.parentNode) ins(parent, child2);
@@ -40,23 +42,29 @@
   var sheet = document.styleSheets[document.styleSheets.length-1];
 
   /**
-   * Creates an opacity keyframe animation rule.
+   * Creates an opacity keyframe animation rule and returns its name.
+   * Since most mobile Webkits have timing issues with animation-delay,
+   * we create separate rules for each line/segment.
    */
-  function addAnimation(to, end) {
-    var name = ['opacity', end, ~~(to*100)].join('-'),
-        dest = '{opacity:' + to + '}',
+  function addAnimation(alpha, trail, i, lines) {
+    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-'),
+        start = 0.01 + i/lines*100,
+        z = Math.max(1-(1-alpha)/trail*(100-start) , alpha),
         pre,
-        i;
+        p;
 
     if (!animations[name]) {
-      for (i=0; i<prefixes.length; i++) {
-        pre = prefixes[i] && '-'+prefixes[i].toLowerCase()+'-' || '';
+      for (p=0; p<prefixes.length; p++) {
+        pre = prefixes[p] && '-'+prefixes[p].toLowerCase()+'-' || '';
         try {
-          sheet.insertRule('@' + pre + 'keyframes ' + name + '{0%{opacity:1}' +
-            end + '%' + dest + 'to' + dest + '}', 0);
-
-          sheet.insertRule('.spin .' + name + '{' + pre +
-            'animation: ' + name + ' 1s linear infinite}', 1);
+          sheet.insertRule(
+            '@' + pre + 'keyframes ' + name + '{' +
+            '0%{opacity:'+z+'}' +
+            start + '%{opacity:'+ alpha + '}' +
+            (start+0.01) + '%{opacity:1}' +
+            (start+trail)%100 + '%{opacity:'+ alpha + '}' +
+            '100%{opacity:'+ z + '}' +
+            '}', 0);
         }
         catch (err) {
         }
@@ -93,8 +101,7 @@
   }
 
   /**
-   * Fills in default values. The values are passed as argument pairs rather
-   * than as object in order to save some extra bytes.
+   * Fills in default values.
    */
   function defaults(obj, def) {
     for (var n in def) {
@@ -118,14 +125,14 @@
   /** The constructor */
   var Spinner = function Spinner(o) {
     this.opts = defaults(o || {}, {
-      lines: 12,
-      trail: 100,
-      length: 7,
-      width: 5,
-      radius: 10,
-      color: '#000',
-      opacity: 1/4,
-      speed: 1
+      lines: 12, // The number of lines to draw
+      length: 7, // The length of each line
+      width: 5, // The line thickness
+      radius: 10, // The radius of the inner circle
+      color: '#000', // #rbg or #rrggbb
+      speed: 1, // Rounds per second
+      trail: 100, // Afterglow percentage
+      opacity: 1/4
     });
   },
   proto = Spinner.prototype = {
@@ -144,9 +151,6 @@
         });
       }
       self.lines(el, self.opts);
-      setTimeout(function() {
-        el.className = 'spin';
-      }, 1);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
@@ -177,8 +181,7 @@
     }
   };
   proto.lines = function(el, o) {
-    var animationName = addAnimation(o.opacity, o.trail),
-        i = 0,
+    var i = 0,
         seg;
 
     function fill(color, shadow) {
@@ -194,13 +197,12 @@
       });
     }
     for (; i < o.lines; i++) {
-      seg = css(createEl(0, {className: animationName}), {
+      seg = css(createEl(), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
         transform: 'translate3d(0,0,0)',
         opacity: o.opacity,
-        animationDuration: 1/o.speed + 's',
-        animationDelay: ~~(1000/o.lines/o.speed*i) + 'ms'
+        animation: addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
       if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
       ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
@@ -211,9 +213,9 @@
     el.childNodes[i].style.opacity = val;
   };
 
-  ///////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
   // VML rendering for IE
-  ///////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
 
   /** 
    * Check and init VML support
@@ -224,7 +226,7 @@
 
     if (!vendor(s, 'transform') && s.adj) {
 
-      // VML support detected. Insert CSS rules for group, shape and stroke.
+      // VML support detected. Insert CSS rules ...
       for (i=4; i--;) sheet.addRule(['group', 'roundrect', 'fill', 'stroke'][i], 'behavior:url(#default#VML)');
 
       proto.lines = function(el, o) {
@@ -242,7 +244,13 @@
         function seg(i, dx, filter) {
           ins(g,
             ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
-              ins(css(createEl('roundrect', {arcsize: 1}), {width: r, height: o.width, left: o.radius, top: -o.width>>1, filter: filter}),
+              ins(css(createEl('roundrect', {arcsize: 1}), {
+                  width: r,
+                  height: o.width,
+                  left: o.radius,
+                  top: -o.width>>1,
+                  filter: filter
+                }),
                 createEl('fill', {color: o.color, opacity: o.opacity}),
                 createEl('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
               )
