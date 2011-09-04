@@ -121,6 +121,19 @@
     }
     return o;
   }
+  
+  /**
+   * Returns the mouse position
+   */
+  function mousePos(e) {
+    if(!e) e = window.event;
+    var body = (window.document.compatMode && window.document.compatMode == "CSS1Compat") ? 
+    window.document.documentElement : window.document.body;
+    return {
+      top: e.pageY ? e.pageY : e.clientY + body.scrollTop - body.clientTop,
+      left: e.pageX ? e.pageX : e.clientX + body.scrollLeft  - body.clientLeft
+    };
+  }
 
   /** The constructor */
   var Spinner = function Spinner(o) {
@@ -132,7 +145,8 @@
       color: '#000', // #rbg or #rrggbb
       speed: 1, // Rounds per second
       trail: 100, // Afterglow percentage
-      opacity: 1/4
+      opacity: 1/4,
+      attachToMouse: false
     });
   },
   proto = Spinner.prototype = {
@@ -142,6 +156,10 @@
           ep, // element position
           tp; // target position
 
+      if(self.opts.attachToMouse) {
+        self.attachToMouse();
+      }
+          
       if (target) {
         tp = pos(ins(target, el, target.firstChild));
         ep = pos(el);
@@ -149,6 +167,8 @@
           left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
           top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
+        
+        
       }
       self.lines(el, self.opts);
       if (!useCssAnimations) {
@@ -178,6 +198,32 @@
       if (el && el.parentNode) el.parentNode.removeChild(el);
       self.el = undefined;
       return self;
+    },
+    show: function(status) {
+      el = this.el;
+      
+      display = 'none';
+      if(status)
+        display = 'block';
+
+      css(this.el, {
+        display: display
+      });
+    },
+    hide: function() {
+      this.show(false);
+    },
+    attachToMouse: function() {
+      el = this.el;
+      css(el, {position: 'absolute'});
+      
+      document.onmousemove = function(e) {
+        var coords = mousePos(e);
+        css(el, {
+          left: (coords.left+22) + 'px',
+          top: (coords.top+22) + 'px'
+        });
+      }
     }
   };
   proto.lines = function(el, o) {
