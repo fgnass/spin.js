@@ -51,19 +51,15 @@
 <h2>Features</h2>
 <ul>
   <li>No images, no external CSS</li>
-  <li>No dependencies</li>
+  <li>No dependencies (jQuery is <a href="#jquery">supported</a>, but not required)</li>
   <li>Highly configurable</li>
   <li>Resolution independent</li>
+  <li>Uses VML as fallback in old IEs</li>
+  <li>Uses @keyframe animations, falling back to setTimeout()</li>
   <li>Works in all major browsers, including IE6</li>
-  <li>Smaller than an animated GIF (1.7K gzipped)</li>
   <li>MIT License</li>
 </ul>
 
-<h2>How it works</h2>
-<p>
-  Spin.js uses the CSS3 to render the UI, falling back to VML Internet Explorer.
-  If supported by the browser, <code>@keyframe</code> rules are used to animate the spinner.
-</p>
 <h2>Usage</h2>
 <pre class="prettyprint">
 var opts = {
@@ -101,7 +97,7 @@ target.appendChild(spinner.el);
   To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops
   the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
 </p>
-<h3>jQuery plugin</h3>
+<h3 id="jquery">jQuery plugin</h3>
 <p>
   Spin.js does not require jQuery. Anyway, if you use jQuery (or zepto.js) you may use the following plugin:
 </p>
@@ -136,12 +132,25 @@ $.fn.spin = function(opts) {
     <li>Android 2.3+</li>
   </ul>
 </p>
+
+<h2>Changes</h2>
+<h3 id="v1.1">Version 1.1 (6.9.2011)</h3>
+<ul>
+  <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/12">a bug</a> where the animation occasionally got out of sync in older WebKit browsers.</li>
+  <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/23">a bug</a> where the spinner was misplaced when the target element had a non-zero padding.</li>
+  <li>Optimized the code for gzip compression. While the minified version got slightly larger, the zipped version now only weighs  1.7K.</li>
+</ul>
+<h3 id="v1.0">Version 1.0 (16.8.2011)</h3>
+<ul>
+  <li>Initial release</li>
+</ul>
+
 <h2>Contact</h2>
 <p id="contact">
   <img width="57" height="57" src="http://www.gravatar.com/avatar/f1f2e1842f6ff681a6d1b0a2405d0117.png">
   If you encounter any problems, please use the <a href="https://github.com/fgnass/spin.js/issues">GitHub issue tracker</a>.<br>
   For updates <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
-  If you like spin.js and use it in the wild let me know.
+  If you like spin.js and use it in the wild, let me know.
 </p>
 </div>
 <div id="footer">
