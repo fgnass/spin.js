@@ -50,25 +50,18 @@
     var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-'),
         start = 0.01 + i/lines*100,
         z = Math.max(1-(1-alpha)/trail*(100-start) , alpha),
-        pre,
-        p;
+        prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase(),
+        pre = prefix && '-'+prefix+'-' || '';
 
     if (!animations[name]) {
-      for (p=0; p<prefixes.length; p++) {
-        pre = prefixes[p] && '-'+prefixes[p].toLowerCase()+'-' || '';
-        try {
-          sheet.insertRule(
-            '@' + pre + 'keyframes ' + name + '{' +
-            '0%{opacity:'+z+'}' +
-            start + '%{opacity:'+ alpha + '}' +
-            (start+0.01) + '%{opacity:1}' +
-            (start+trail)%100 + '%{opacity:'+ alpha + '}' +
-            '100%{opacity:'+ z + '}' +
-            '}', 0);
-        }
-        catch (err) {
-        }
-      }
+      sheet.insertRule(
+        '@' + pre + 'keyframes ' + name + '{' +
+        '0%{opacity:'+z+'}' +
+        start + '%{opacity:'+ alpha + '}' +
+        (start+0.01) + '%{opacity:1}' +
+        (start+trail)%100 + '%{opacity:'+ alpha + '}' +
+        '100%{opacity:'+ z + '}' +
+        '}', 0);
       animations[name] = 1;
     }
     return name;
@@ -202,7 +195,7 @@
         top: 1+~(o.width/2) + 'px',
         transform: 'translate3d(0,0,0)',
         opacity: o.opacity,
-        animation: addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+        animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
       if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
       ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
