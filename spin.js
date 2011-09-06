@@ -186,7 +186,7 @@
         boxShadow: shadow,
         transformOrigin: 'left',
         transform: 'rotate(' + ~~(360/o.lines*i) + 'deg) translate(' + o.radius+'px' +',0)',
-        borderRadius: '100em'
+        borderRadius: (o.width>>1) + 'px'
       });
     }
     for (; i < o.lines; i++) {
