@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js
+//fgnass.github.com/spin.js#v1.1
 (function(window, document, undefined) {
 
 /**
