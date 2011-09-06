@@ -114,18 +114,44 @@
     }
     return o;
   }
+  
+  /**
+   * Returns the mouse position
+   */
+  function mousePos(e) {
+    if(!e) e = window.event;
+    var body = (window.document.compatMode && window.document.compatMode == "CSS1Compat") ? 
+    window.document.documentElement : window.document.body;
+    return {
+      top: e.pageY ? e.pageY : e.clientY + body.scrollTop - body.clientTop,
+      left: e.pageX ? e.pageX : e.clientX + body.scrollLeft  - body.clientLeft
+    };
+  }
+  
+  /**
+   * Returns the viewport-size
+   */
+  function viewportSize() {
+    return {
+      width: document.getElementsByTagName('html')[0].clientWidth,
+       height: document.getElementsByTagName('html')[0].clientHeight
+    };
+  }
 
   /** The constructor */
   var Spinner = function Spinner(o) {
     this.opts = defaults(o || {}, {
-      lines: 12, // The number of lines to draw
-      length: 7, // The length of each line
-      width: 5, // The line thickness
-      radius: 10, // The radius of the inner circle
-      color: '#000', // #rbg or #rrggbb
-      speed: 1, // Rounds per second
-      trail: 100, // Afterglow percentage
-      opacity: 1/4
+      lines: 20, // The number of lines to draw
+      length: 0, // The length of each line
+      width: 2.5, // The line thickness
+      radius: 5, // The radius of the inner circle
+      color: '#13b8e7', // #rbg or #rrggbb
+      speed: 1.4, // Rounds per second
+      trail: 68, // Afterglow percentage
+      shadow: false, // Whether to render a shadow
+      opacity: 1/16,
+      attachToMouse: true, // attach the spinner to the mouse
+      attachOffset: 22 // offset of spinner to the mouse
     });
   },
   proto = Spinner.prototype = {
@@ -135,6 +161,10 @@
           ep, // element position
           tp; // target position
 
+      if(self.opts.attachToMouse) {
+        self.attachToMouse(self.opts);
+      }
+          
       if (target) {
         tp = pos(ins(target, el, target.firstChild));
         ep = pos(el);
@@ -142,6 +172,8 @@
           left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
           top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
+        
+        
       }
       self.lines(el, self.opts);
       if (!useCssAnimations) {
@@ -171,6 +203,46 @@
       if (el && el.parentNode) el.parentNode.removeChild(el);
       self.el = undefined;
       return self;
+    },
+    show: function(status) {
+      el = this.el;
+      
+      display = 'none';
+      if(status)
+        display = 'block';
+
+      css(this.el, {
+        display: display
+      });
+    },
+    hide: function() {
+      this.show(false);
+    },
+    attachToMouse: function(opts) {
+      el = this.el;
+      css(el, {position: 'absolute'});
+
+      document.onmousemove = function(e) {
+        var coords = mousePos(e);
+        var viewport = viewportSize();
+        var radius = opts.radius;
+        var offset = opts.attachOffset;
+        var circleWidth = radius*2;
+
+        var left = (coords.left+offset);
+        if((left+circleWidth) >= viewport.width)
+          left = left-(circleWidth+offset);
+
+        var top = (coords.top+offset);
+        if((top+circleWidth) >= viewport.height)
+          top = top-(circleWidth+offset);
+
+        css(el, {
+          left: left + 'px',
+          top: top + 'px'
+        });
+        
+      }
     }
   };
   proto.lines = function(el, o) {
