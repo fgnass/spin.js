@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spin.js</title>
+  <style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+  }
+  label {
+    display: inline-block;
+    width: 70px;
+  }
+  #preview {
+    background: #333;
+    color: #fff;
+    width: 200px;
+    height: 200px;
+    margin: 0 20px 20px 0;
+    border-radius: 10px;
+  }
+  </style>
+</head>
+<body>
+
+<div id="preview"></div>
+<form>
+  <label>Lines:</label><input type="range" name="lines" min="6" max="16" step="2" value="12"><br>
+  <label>Length:</label><input type="range" name="length" min="0" max="30" value="7"><br>
+  <label>Width:</label><input type="range" name="width" min="2" max="20" value="4"><br>
+  <label>Radius:</label><input type="range" name="radius" min="0" max="40" value="10"><br>
+  <label>Trail:</label><input type="range" name="trail" min="10" max="100" value="60"><br>
+  <label>Speed:</label><input type="range" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+  <label>Shadow:</label><input type="checkbox" name="shadow"><br>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="spin.js"></script>
+<script>
+  $.fn.spin = function(opts) {
+    this.each(function() {
+      var $this = $(this),
+          data = $this.data();
+
+      if (data.spinner) {
+        data.spinner.stop();
+        delete data.spinner;
+      }
+      if (opts !== false) {
+        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+      }
+    });
+    return this;
+  };
+  function update() {
+    var opts = {};
+    $('input[min]').each(function() {
+      opts[this.name] = parseFloat(this.value);
+    });
+    $('input:checkbox').each(function() {
+      opts[this.name] = this.checked;
+    });
+    $('#preview').spin(opts);
+  }
+  $('input[min]').change(update);
+  $('input:checkbox').click(update);
+  update();
+</script>
+</body>
+</html>
