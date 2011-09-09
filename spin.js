@@ -143,6 +143,7 @@
           top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
       }
+      el.setAttribute('aria-role', 'progressbar');
       self.lines(el, self.opts);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
