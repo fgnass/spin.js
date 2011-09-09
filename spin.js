@@ -125,7 +125,8 @@
       color: '#000', // #rbg or #rrggbb
       speed: 1, // Rounds per second
       trail: 100, // Afterglow percentage
-      opacity: 1/4
+      opacity: 1/4,
+      fps: 16
     });
   },
   proto = Spinner.prototype = {
@@ -149,7 +150,8 @@
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
             i = 0,
-            f = 20/o.speed,
+            fps = o.fps,
+            f = fps/o.speed,
             ostep = (1-o.opacity)/(f*o.trail / 100),
             astep = f/o.lines;
 
@@ -159,7 +161,7 @@
             var alpha = Math.max(1-(i+s*astep)%f * ostep, o.opacity);
             self.opacity(el, o.lines-s, alpha, o);
           }
-          self.timeout = self.el && setTimeout(anim, 50);
+          self.timeout = self.el && setTimeout(anim, ~~(1000/fps));
         })();
       }
       return self;
