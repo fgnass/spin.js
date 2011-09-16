@@ -117,6 +117,7 @@
 
   /** The constructor */
   var Spinner = function Spinner(o) {
+    if (!this.spin) return new Spinner(o);
     this.opts = defaults(o || {}, {
       lines: 12, // The number of lines to draw
       length: 7, // The length of each line
