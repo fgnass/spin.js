@@ -60,8 +60,12 @@ pre {
 }
 label {
   display: inline-block;
-  line-height: 23px;
+  width: 440px;
   font-size: 14px;
+  vertical-align: top;
+}
+#opts label {
+  line-height: 23px;
   width: 80px;
 }
 span.fd-slider {
@@ -134,9 +138,8 @@ h3 {
   width: 250px;
   float: left;
 }
-#download {
-}
-#download a {
+
+a.button {
   display: inline-block;
   background: #56ba4a;
   border: 3px solid #59a24f;
@@ -151,7 +154,7 @@ h3 {
   margin: 10px 20px 0 0;
   -webkit-transition: all 0.25s ease;
 }
-#download a:hover {
+a.button:hover {
   background: #2f8325;
   box-shadow: none;
 }

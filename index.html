@@ -29,14 +29,14 @@
 <div id="content">
 
 <div id="download">
-  <a href="spin.js">spin.js</a>
-  <a href="spin.min.js">spin.min.js</a>
+  <a href="spin.js" class="button">spin.js</a>
+  <a href="spin.min.js" class="button">spin.min.js</a>
 </div>
 
-<h2>Example</h2>
-<div id="demo">
+<div id="example">
+  <h2>Example</h2>
   <div id="preview"></div>
-  <form>
+  <form id="opts">
     <label>Lines:</label><input type="text" name="lines" min="6" max="16" step="2" value="12"><br>
     <label>Length:</label><input type="text" name="length" min="0" max="30" value="7"><br>
     <label>Width:</label><input type="text" name="width" min="2" max="20" value="4"><br>
@@ -46,6 +46,10 @@
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
   </form>
   <br clear="left">
+  <input type="checkbox" id="share">
+  <label for="share">
+    <b>Share it!</b> If checked, the option values will be stored in the URL so that you can easily share your settings.
+  </label>
 </div>
 
 <h2>Features</h2>
@@ -187,23 +191,42 @@ $.fn.spin = function(opts) {
   prettyPrint();
   function update() {
     var opts = {};
-    $('input[min]').each(function() {
+    $('#opts input[min]').each(function() {
       $('#opt-' + this.name).text(opts[this.name] = parseFloat(this.value));
     });
-    $('input:checkbox').each(function() {
+    $('#opts input:checkbox').each(function() {
       opts[this.name] = this.checked;
       $('#opt-' + this.name).text(this.checked);
     });
     $('#preview').spin(opts);
+    if ($('#share').is(':checked')) {
+      window.location.replace('#?' + $('form').serialize());
+    }
   }
-  $(window).load(function() {
-    $('input[min]').each(function() {
+  $(function() {
+    var params = {};
+    var hash = /^#\?(.*)/.exec(location.hash);
+    if (hash) {
+      $('#share').prop('checked', true);
+      $.each(hash[1].split(/&/), function(i, pair) {
+        var kv = pair.split(/=/);
+        params[kv[0]] = kv[kv.length-1];
+      });
+    }
+    $('#opts input[min]').each(function() {
+      var val = params[this.name];
+      if (val !== undefined) this.value = val;
       this.onchange = update;
     });
-    $('input:checkbox').click(update);
+    $('#opts input:checkbox').each(function() {
+      this.checked = !!params[this.name];
+      this.onclick = update;
+    });
+    $('#share').click(function() {
+      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!');
+    });
     update();
   });
-
 </script>
 <script type="text/javascript">
   var _gaq=[['_setAccount','UA-19036385-2'],['_trackPageview']];
