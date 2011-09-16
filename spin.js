@@ -117,19 +117,22 @@
 
   /** The constructor */
   var Spinner = function Spinner(o) {
+    if (!this.spin) return new Spinner(o);
     this.opts = defaults(o || {}, {
       lines: 12, // The number of lines to draw
       length: 7, // The length of each line
       width: 5, // The line thickness
       radius: 10, // The radius of the inner circle
-      color: '#000', // #rbg or #rrggbb
+      color: '#000', // #rgb or #rrggbb
       speed: 1, // Rounds per second
       trail: 100, // Afterglow percentage
-      opacity: 1/4
+      opacity: 1/4,
+      fps: 20
     });
   },
   proto = Spinner.prototype = {
     spin: function(target) {
+      this.stop();
       var self = this,
           el = self.el = css(createEl(), {position: 'relative'}),
           ep, // element position
@@ -143,12 +146,14 @@
           top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
       }
+      el.setAttribute('aria-role', 'progressbar');
       self.lines(el, self.opts);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var o = self.opts,
             i = 0,
-            f = 20/o.speed,
+            fps = o.fps,
+            f = fps/o.speed,
             ostep = (1-o.opacity)/(f*o.trail / 100),
             astep = f/o.lines;
 
@@ -158,19 +163,19 @@
             var alpha = Math.max(1-(i+s*astep)%f * ostep, o.opacity);
             self.opacity(el, o.lines-s, alpha, o);
           }
-          self.timeout = self.el && setTimeout(anim, 50);
+          self.timeout = self.el && setTimeout(anim, ~~(1000/fps));
         })();
       }
       return self;
     },
     stop: function() {
-      var self = this,
-          el = self.el;
-
-      clearTimeout(self.timeout);
-      if (el && el.parentNode) el.parentNode.removeChild(el);
-      self.el = undefined;
-      return self;
+      var el = this.el;
+      if (el) {
+        clearTimeout(this.timeout);
+        if (el.parentNode) el.parentNode.removeChild(el);
+        this.el = undefined;
+      }
+      return this;
     }
   };
   proto.lines = function(el, o) {
@@ -260,7 +265,8 @@
           seg(i);
         }
         return ins(css(el, {
-          margin: margin + ' 0 0 ' + margin
+          margin: margin + ' 0 0 ' + margin,
+          zoom: 1
         }), g);
       };
       proto.opacity = function(el, i, val, o) {

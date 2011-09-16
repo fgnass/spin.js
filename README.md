@@ -7,8 +7,10 @@ An animated CSS3 loading spinner with VML fallback for IE.
  * No dependencies
  * Highly configurable
  * Resolution independent
+ * Uses VML as fallback in old IEs
+ * Uses @keyframe animations, falling back to setTimeout()
  * Works in all major browsers, including IE6
- * Smaller than an animated GIF (~1.7K gzipped)
+ * Small footprint (~1.7K gzipped)
  * MIT License
 
 Usage
