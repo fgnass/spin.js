@@ -265,7 +265,8 @@
           seg(i);
         }
         return ins(css(el, {
-          margin: margin + ' 0 0 ' + margin
+          margin: margin + ' 0 0 ' + margin,
+          zoom: 1
         }), g);
       };
       proto.opacity = function(el, i, val, o) {
