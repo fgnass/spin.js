@@ -132,6 +132,7 @@
   },
   proto = Spinner.prototype = {
     spin: function(target) {
+      this.stop();
       var self = this,
           el = self.el = css(createEl(), {position: 'relative'}),
           ep, // element position
@@ -168,13 +169,13 @@
       return self;
     },
     stop: function() {
-      var self = this,
-          el = self.el;
-
-      clearTimeout(self.timeout);
-      if (el && el.parentNode) el.parentNode.removeChild(el);
-      self.el = undefined;
-      return self;
+      var el = this.el;
+      if (el) {
+        clearTimeout(this.timeout);
+        if (el.parentNode) el.parentNode.removeChild(el);
+        this.el = undefined;
+      }
+      return this;
     }
   };
   proto.lines = function(el, o) {
