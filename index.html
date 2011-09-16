@@ -134,6 +134,14 @@ $.fn.spin = function(opts) {
 </p>
 
 <h2>Changes</h2>
+<h3 id="v1.2">Version 1.2 (16.9.2011)</h3>
+<ul>
+  <li>Calling <tt>spin()</tt> now invokes <tt>stop()</tt> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
+  <li>Added a workaround for the IE negative margin bug. See <a href="https://github.com/fgnass/spin.js/issues/27">issue #27</a>.</li>
+  <li>The <tt>new</tt> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
+  <li>Improved accessibility by adding <tt>aria-role="progressbar"</tt>.</a>
+</ul>
+
 <h3 id="v1.1">Version 1.1 (6.9.2011)</h3>
 <ul>
   <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/12">a bug</a> where the animation occasionally got out of sync in Mobile Safari and Android's built-in WebKit.</li>
