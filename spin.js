@@ -122,7 +122,7 @@
       length: 7, // The length of each line
       width: 5, // The line thickness
       radius: 10, // The radius of the inner circle
-      color: '#000', // #rbg or #rrggbb
+      color: '#000', // #rgb or #rrggbb
       speed: 1, // Rounds per second
       trail: 100, // Afterglow percentage
       opacity: 1/4,
