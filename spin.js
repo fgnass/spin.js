@@ -127,7 +127,7 @@
       speed: 1, // Rounds per second
       trail: 100, // Afterglow percentage
       opacity: 1/4,
-      fps: 16
+      fps: 20
     });
   },
   proto = Spinner.prototype = {
