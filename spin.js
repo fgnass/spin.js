@@ -208,7 +208,7 @@
     return el;
   };
   proto.opacity = function(el, i, val) {
-    el.childNodes[i].style.opacity = val;
+    if (i < el.childNodes.length) el.childNodes[i].style.opacity = val;
   };
 
   /////////////////////////////////////////////////////////////////////////
