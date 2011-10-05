@@ -270,8 +270,12 @@
         }), g);
       };
       proto.opacity = function(el, i, val, o) {
+        var c = el.firstChild;
         o = o.shadow && o.lines || 0;
-        el.firstChild.childNodes[i+o].firstChild.firstChild.opacity = val;
+        if (c && i+o < c.childNodes.length) {
+          c = c.childNodes[i+o]; c = c && c.firstChild; c = c && c.firstChild;
+          if (c) c.opacity = val;
+        }
       };
     }
     else {
