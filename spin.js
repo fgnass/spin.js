@@ -38,12 +38,12 @@
   /**
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
-  ins(document.getElementsByTagName('head')[0], createEl('style', {title: 'spinjs'}));
-  for(var i=0, sheets=document.styleSheets, sheet; i<sheets.length, sheet=sheets[i]; i++) {
-    if(sheet.title=='spinjs') {
-      break;
+  var sheet = (function() {
+    ins(document.getElementsByTagName('head')[0], createEl('style', {title: 'spinjs'}));
+    for (var i=0, sheets=document.styleSheets; i < sheets.length; i++) {
+      if (sheets[i].title == 'spinjs') return sheets[i];
     }
-  }
+  })();
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
