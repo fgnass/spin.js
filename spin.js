@@ -39,10 +39,9 @@
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
   var sheet = (function() {
-    ins(document.getElementsByTagName('head')[0], createEl('style', {title: 'spinjs'}));
-    for (var i=0, sheets=document.styleSheets; i < sheets.length; i++) {
-      if (sheets[i].title == 'spinjs') return sheets[i];
-    }
+    var el = createEl('style');
+    ins(document.getElementsByTagName('head')[0], el);
+    return el.sheet || el.styleSheet;
   })();
 
   /**
