@@ -38,8 +38,11 @@
   /**
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
-  ins(document.getElementsByTagName('head')[0], createEl('style'));
-  var sheet = document.styleSheets[document.styleSheets.length-1];
+  var sheet = (function() {
+    var el = createEl('style');
+    ins(document.getElementsByTagName('head')[0], el);
+    return el.sheet || el.styleSheet;
+  })();
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
@@ -96,9 +99,12 @@
   /**
    * Fills in default values.
    */
-  function defaults(obj, def) {
-    for (var n in def) {
-      if (obj[n] === undefined) obj[n] = def[n];
+  function merge(obj) {
+    for (var i=1; i < arguments.length; i++) {
+      var def = arguments[i];
+      for (var n in def) {
+        if (obj[n] === undefined) obj[n] = def[n];
+      }
     }
     return obj;
   }
@@ -118,17 +124,18 @@
   /** The constructor */
   var Spinner = function Spinner(o) {
     if (!this.spin) return new Spinner(o);
-    this.opts = defaults(o || {}, {
-      lines: 12, // The number of lines to draw
-      length: 7, // The length of each line
-      width: 5, // The line thickness
-      radius: 10, // The radius of the inner circle
-      color: '#000', // #rgb or #rrggbb
-      speed: 1, // Rounds per second
-      trail: 100, // Afterglow percentage
-      opacity: 1/4,
-      fps: 20
-    });
+    this.opts = merge(o || {}, Spinner.defaults, defaults);
+  },
+  defaults = Spinner.defaults = {
+    lines: 12, // The number of lines to draw
+    length: 7, // The length of each line
+    width: 5, // The line thickness
+    radius: 10, // The radius of the inner circle
+    color: '#000', // #rgb or #rrggbb
+    speed: 1, // Rounds per second
+    trail: 100, // Afterglow percentage
+    opacity: 1/4,
+    fps: 20
   },
   proto = Spinner.prototype = {
     spin: function(target) {
