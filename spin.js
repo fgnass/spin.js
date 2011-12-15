@@ -244,6 +244,7 @@
 
         var g = grp(),
             margin = ~(o.length+o.radius+o.width)+'px',
+
             i;
 
         function seg(i, dx, filter) {
@@ -273,6 +274,7 @@
         }
         return ins(css(el, {
           margin: margin + ' 0 0 ' + margin,
+                      position:'absolute',
           zoom: 1
         }), g);
       };
