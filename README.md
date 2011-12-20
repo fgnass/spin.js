@@ -18,4 +18,6 @@ Usage
 
     new Spinner({color:'#fff', lines: 12}).spin(target);
 
+or use [spinjs-rails](https://github.com/dnagir/spinjs-rails) from Rails.
+
 For an interactive demo and a list of all supported options please refer to the [project's homepage](http://fgnass.github.com/spin.js).
