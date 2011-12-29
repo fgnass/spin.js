@@ -136,7 +136,7 @@
     trail: 100, // Afterglow percentage
     opacity: 1/4,
     fps: 20,
-    transform3d: true // use 3d transforms on browsers that support it
+    transform3d: false // use 3d transforms on browsers that support it
   },
   proto = Spinner.prototype = {
     spin: function(target) {
