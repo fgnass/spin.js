@@ -135,7 +135,8 @@
     speed: 1, // Rounds per second
     trail: 100, // Afterglow percentage
     opacity: 1/4,
-    fps: 20
+    fps: 20,
+    transform3d: false // use 3d transforms on browsers that support it
   },
   proto = Spinner.prototype = {
     spin: function(target) {
@@ -205,7 +206,7 @@
       seg = css(createEl(), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
-        transform: 'translate3d(0,0,0)',
+        transform: this.opts.transform3d ? 'translate3d(0,0,0)' : '',
         opacity: o.opacity,
         animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
