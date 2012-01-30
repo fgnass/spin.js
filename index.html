@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=1024, maximum-scale=1">
   <meta property="og:image" content="http://fgnass.github.com/spin.js/assets/preview.jpg?v=1" />
   <link rel="shortcut icon" href="favicon.ico">
-  <link href="assets/main.css?v=2" type="text/css" rel="stylesheet">
+  <link href="assets/main.css?v=3" type="text/css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
   <link href="assets/prettify.css" type="text/css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css">
+  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css?v=2">
   <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider-tooltip.css">
   <script type="text/javascript" src="assets/prettify.js"></script>
 </head>
@@ -44,6 +44,7 @@
     <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
     <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
+    <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
   </form>
   <br clear="left">
   <input type="checkbox" id="share">
@@ -74,7 +75,8 @@ var opts = {
   color: '#000', // #rgb or #rrggbb
   speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
   trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
-  shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
+  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
+  hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
 };
 var target = document.getElementById('foo');
 var spinner = new Spinner(opts).spin(target);
@@ -141,9 +143,14 @@ $.fn.spin = function(opts) {
 </p>
 
 <h2>Changes</h2>
+<h3 id="v1.2.3">Version 1.2.3 (30.01.2012)</h3>
+<ul>
+  <li>Hardware acceleration is now disabled by default. See <a href="https://github.com/fgnass/spin.js/issues/47">issue #47</a> and
+  <a href="https://github.com/fgnass/spin.js/issues/41">issue #41</a>.</li>
+</ul>
 <h3 id="v1.2.2">Version 1.2.2 (8.11.2011)</h3>
 <ul>
-  <li>Fixed a cross-domain issue with the dynamically created stylesheet. <a href="https://github.com/fgnass/spin.js/issues/36">issue #36</a>.</li>
+  <li>Fixed a cross-domain issue with the dynamically created stylesheet. See <a href="https://github.com/fgnass/spin.js/issues/36">issue #36</a>.</li>
 </ul>
 <h3 id="v1.2.1">Version 1.2.1 (5.10.2011)</h3>
 <ul>

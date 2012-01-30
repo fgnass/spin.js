@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
 }
-html { 
+html {
   background: url(bg.png);
 }
 body {
@@ -65,7 +65,7 @@ label {
   vertical-align: top;
 }
 #opts label {
-  line-height: 23px;
+  line-height: 25px;
   width: 80px;
 }
 span.fd-slider {
@@ -76,12 +76,12 @@ span.fd-slider {
 #logo {
   position: relative;
   height: 300px;
-  margin-left: 100px; 
+  margin-left: 100px;
 }
 h1, h2, h3, #download a {
   font-family: 'Amaranth', sans-serif;
 }
-h1 { 
+h1 {
   font-size: 200px;
   position: absolute;
   text-shadow: 0px 1px 0px #fff;
@@ -111,8 +111,8 @@ h3 {
   height: 46px;
 }
 #ribbon {
-  position: absolute; 
-  top: 0; 
+  position: absolute;
+  top: 0;
   right: 0;
   width: 149px;
   height: 149px;

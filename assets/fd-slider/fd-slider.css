@@ -3,27 +3,26 @@
 .fd-form-element-hidden
         {
         display:none;
-        } 
+        }
 /* Horizontal Outer wrapper - all other DOM elements added as children to this top level wrapper */
 .fd-slider
-        {                     
+        {
         width:100%;
         /* The height of the slider handle */
         height:20px;
-        /* Set a 10 pixel bottom margin */
-        margin:0 0 10px 0;
+        margin:0;
         }
 /* Vertical Outer wrapper - all other DOM elements added as children to this top level wrapper */
 .fd-slider-vertical
-        {       
-        /* The width of the slider handle */        
+        {
+        /* The width of the slider handle */
         width:20px;
         /* Fill the available space */
-        height:100%; 
-        /* Set a 10 pixel right and bottom margin */      
-        margin:0 10px 10px 0; 
+        height:100%;
+        /* Set a 10 pixel right and bottom margin */
+        margin:0 10px 10px 0;
         /* You may wish to float the vertical sliders left or display:inline-block */
-        /* float:left; */              
+        /* float:left; */
         }
 /* Shared rules - both horizontal & vertical sliders */
 .fd-slider,
@@ -37,8 +36,8 @@
         border:0 none;
         -moz-user-select:none;
         -khtml-user-select:none;
-        -webkit-touch-callout:none; 
-        user-select:none;     
+        -webkit-touch-callout:none;
+        user-select:none;
         }
 .fd-slider-inner
         {
@@ -62,13 +61,13 @@
         overflow:hidden;
         line-height:4px;
         top:8px;
-        -moz-border-radius:4px; 
-        -webkit-border-radius:4px; 
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
         border-radius:4px;
-        -moz-background-clip: padding; 
-        -webkit-background-clip: padding-box; 
-        background-clip: padding-box; 
-        background-color: #333; 
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        background-color: #333;
         }
 /* The animated range bar */
 .fd-slider-range
@@ -76,7 +75,7 @@
         position:absolute;
         display:block;
         z-index:3;
-        height:6px;      
+        height:6px;
         margin:0;
         padding:0 2px 0 0;
         overflow:hidden;
@@ -84,10 +83,10 @@
         -moz-border-radius:2px;
         -webkit-border-radius:2px;
         border-radius:2px;
-        -moz-background-clip: padding; 
-        -webkit-background-clip: padding-box; 
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
         background-clip: padding-box;
-        background-color: #eee; 
+        background-color: #eee;
         }
 /* The drag handle */
 .fd-slider-handle
@@ -108,11 +107,11 @@
         border: 1px solid #aaa;
         border-radius: 12px;
         -webkit-user-select: none;
-        -webkit-touch-callout:none;        
+        -webkit-touch-callout:none;
         -moz-user-select:none;
-        -moz-user-focus:none; 
+        -moz-user-focus:none;
         -moz-outline:0 none;
-        user-select:none;                                 
+        user-select:none;
         }
 /* Focus styles */
 .fd-slider-handle:focus
@@ -121,9 +120,9 @@
         border:0 none;
         -moz-user-focus:normal;
         }
-button.fd-slider-handle:focus::-moz-focus-inner 
-        { 
-        border-color: transparent; 
+button.fd-slider-handle:focus::-moz-focus-inner
+        {
+        border-color: transparent;
         }
 
 body.fd-slider-drag-vertical,
@@ -132,7 +131,7 @@ body.fd-slider-drag-vertical *
         /* Stop text selection */
         -moz-user-select:none;
         -webkit-user-select:none;
-        user-select:none;     
+        user-select:none;
         }
 body.fd-slider-drag-horizontal,
 body.fd-slider-drag-horizontal *
@@ -140,5 +139,5 @@ body.fd-slider-drag-horizontal *
         /* Stop text selection */
         -moz-user-select:none;
         -webkit-user-select:none;
-        user-select:none;     
+        user-select:none;
         }
