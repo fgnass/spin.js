@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.2.2
+//fgnass.github.com/spin.js#v1.2.3
 (function(window, document, undefined) {
 
 /**
@@ -205,7 +205,7 @@
       seg = css(createEl(), {
         position: 'absolute',
         top: 1+~(o.width/2) + 'px',
-        transform: 'translate3d(0,0,0)',
+        transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
         opacity: o.opacity,
         animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
       });
@@ -222,7 +222,7 @@
   // VML rendering for IE
   /////////////////////////////////////////////////////////////////////////
 
-  /** 
+  /**
    * Check and init VML support
    */
   (function() {
