@@ -25,13 +25,12 @@
   }
 
   /**
-   * Inserts child1 before child2. If child2 is not specified,
-   * child1 is appended. If child2 has no parentNode, child2 is
-   * appended first.
+   * Appends children and returns the parent.
    */
-  function ins(parent, child1, child2) {
-    if(child2 && !child2.parentNode) ins(parent, child2);
-    parent.insertBefore(child1, child2||null);
+  function ins(parent /* child1, child2, ...*/) {
+    for(var i=1, n=arguments.length; i<n; i++) {
+      parent.appendChild(arguments[i]);
+    }
     return parent;
   }
 
@@ -146,7 +145,8 @@
           tp; // target position
 
       if (target) {
-        tp = pos(ins(target, el, target.firstChild));
+        target.insertBefore(el, target.firstChild||null);
+        tp = pos(target);
         ep = pos(el);
         css(el, {
           left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
