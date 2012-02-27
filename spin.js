@@ -134,7 +134,8 @@
     speed: 1, // Rounds per second
     trail: 100, // Afterglow percentage
     opacity: 1/4,
-    fps: 20
+    fps: 20,
+    className: 'spinner'
   },
   proto = Spinner.prototype = {
     spin: function(target) {
@@ -149,10 +150,11 @@
         tp = pos(target);
         ep = pos(el);
         css(el, {
-          left: (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
-          top: (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
+          left: self.opts.leftOffset ? self.opts.leftOffset : (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
+          top: self.opts.topOffset ? self.opts.topOffset : (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
         });
       }
+      el.setAttribute('class', self.opts.className );
       el.setAttribute('aria-role', 'progressbar');
       self.lines(el, self.opts);
       if (!useCssAnimations) {
