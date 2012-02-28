@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spin.js</title>
+  <style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
+  div {
+
+    border-radius: 10px;
+  }
+  #target1 {
+    background: #aaa url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  #target2 {
+    background: #bbb url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  #target3 {
+    background: #ccc url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  #target4 {
+    background: #ddd url(../assets/crosshair.gif) center center no-repeat;
+    padding: 15px;
+    width: 350px;
+    height: 99px;
+    padding: 50px;
+  }
+
+  </style>
+</head>
+<body>
+
+<div id="target1"></div>
+<div id="target2"></div>
+<div id="target3"></div>
+<div id="target4"><img src="../assets/browsers.png" style="position:relative;top:16px;left:-5px"></div>
+
+<script src="../spin.js"></script>
+
+<script>
+  Spinner({radius: 10, length: 40}).spin(document.getElementById('target1'));
+  Spinner({radius: 40, length: 10}).spin(document.getElementById('target2'));
+  Spinner({top: 0, left: 0}).spin(document.getElementById('target3'));
+  Spinner({radius: 30, length: 0, width: 10, color: '#C40000', trail: 40}).spin(document.getElementById('target4'));
+</script>
+
+</body>
+</html>
