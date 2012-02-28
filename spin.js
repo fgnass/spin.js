@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.2.3
+//fgnass.github.com/spin.js#v1.2.4
 (function(window, document, undefined) {
 
 /**
@@ -6,17 +6,17 @@
  * Licensed under the MIT license
  */
 
-  var prefixes = ['webkit', 'Moz', 'ms', 'O'], /* Vendor prefixes */
-      animations = {}, /* Animation rules keyed by their name */
-      useCssAnimations;
+  var prefixes = ['webkit', 'Moz', 'ms', 'O']; /* Vendor prefixes */
+  var animations = {}; /* Animation rules keyed by their name */
+  var useCssAnimations;
 
   /**
    * Utility function to create elements. If no tag name is given,
    * a DIV is created. Optionally properties can be passed.
    */
   function createEl(tag, prop) {
-    var el = document.createElement(tag || 'div'),
-        n;
+    var el = document.createElement(tag || 'div');
+    var n;
 
     for(n in prop) {
       el[n] = prop[n];
@@ -28,7 +28,7 @@
    * Appends children and returns the parent.
    */
   function ins(parent /* child1, child2, ...*/) {
-    for(var i=1, n=arguments.length; i<n; i++) {
+    for (var i=1, n=arguments.length; i<n; i++) {
       parent.appendChild(arguments[i]);
     }
     return parent;
@@ -37,11 +37,11 @@
   /**
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
-  var sheet = (function() {
+  var sheet = function() {
     var el = createEl('style');
     ins(document.getElementsByTagName('head')[0], el);
     return el.sheet || el.styleSheet;
-  })();
+  }();
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
@@ -49,11 +49,11 @@
    * we create separate rules for each line/segment.
    */
   function addAnimation(alpha, trail, i, lines) {
-    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-'),
-        start = 0.01 + i/lines*100,
-        z = Math.max(1-(1-alpha)/trail*(100-start) , alpha),
-        prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase(),
-        pre = prefix && '-'+prefix+'-' || '';
+    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-');
+    var start = 0.01 + i/lines*100;
+    var z = Math.max(1-(1-alpha)/trail*(100-start) , alpha);
+    var prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase();
+    var pre = prefix && '-'+prefix+'-' || '';
 
     if (!animations[name]) {
       sheet.insertRule(
@@ -73,9 +73,9 @@
    * Tries various vendor prefixes and returns the first supported property.
    **/
   function vendor(el, prop) {
-    var s = el.style,
-        pp,
-        i;
+    var s = el.style;
+    var pp;
+    var i;
 
     if(s[prop] !== undefined) return prop;
     prop = prop.charAt(0).toUpperCase() + prop.slice(1);
@@ -140,10 +140,10 @@
   proto = Spinner.prototype = {
     spin: function(target) {
       this.stop();
-      var self = this,
-          el = self.el = css(createEl(), {position: 'relative'}),
-          ep, // element position
-          tp; // target position
+      var self = this;
+      var el = self.el = css(createEl(), {position: 'relative'});
+      var ep; // element position
+      var tp; // target position
 
       if (target) {
         target.insertBefore(el, target.firstChild||null);
@@ -159,21 +159,21 @@
       self.lines(el, self.opts);
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
-        var o = self.opts,
-            i = 0,
-            fps = o.fps,
-            f = fps/o.speed,
-            ostep = (1-o.opacity)/(f*o.trail / 100),
-            astep = f/o.lines;
+        var o = self.opts;
+        var i = 0;
+        var fps = o.fps;
+        var f = fps/o.speed;
+        var ostep = (1-o.opacity)/(f*o.trail / 100);
+        var astep = f/o.lines;
 
-        (function anim() {
+        !function anim() {
           i++;
           for (var s=o.lines; s; s--) {
             var alpha = Math.max(1-(i+s*astep)%f * ostep, o.opacity);
             self.opacity(el, o.lines-s, alpha, o);
           }
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps));
-        })();
+        }();
       }
       return self;
     },
@@ -185,39 +185,39 @@
         this.el = undefined;
       }
       return this;
-    }
-  };
-  proto.lines = function(el, o) {
-    var i = 0,
-        seg;
+    },
+    lines: function(el, o) {
+      var i = 0;
+      var seg;
 
-    function fill(color, shadow) {
-      return css(createEl(), {
-        position: 'absolute',
-        width: (o.length+o.width) + 'px',
-        height: o.width + 'px',
-        background: color,
-        boxShadow: shadow,
-        transformOrigin: 'left',
-        transform: 'rotate(' + ~~(360/o.lines*i) + 'deg) translate(' + o.radius+'px' +',0)',
-        borderRadius: (o.width>>1) + 'px'
-      });
+      function fill(color, shadow) {
+        return css(createEl(), {
+          position: 'absolute',
+          width: (o.length+o.width) + 'px',
+          height: o.width + 'px',
+          background: color,
+          boxShadow: shadow,
+          transformOrigin: 'left',
+          transform: 'rotate(' + ~~(360/o.lines*i) + 'deg) translate(' + o.radius+'px' +',0)',
+          borderRadius: (o.width>>1) + 'px'
+        });
+      }
+      for (; i < o.lines; i++) {
+        seg = css(createEl(), {
+          position: 'absolute',
+          top: 1+~(o.width/2) + 'px',
+          transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
+          opacity: o.opacity,
+          animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+        });
+        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
+        ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
+      }
+      return el;
+    },
+    opacity: function(el, i, val) {
+      if (i < el.childNodes.length) el.childNodes[i].style.opacity = val;
     }
-    for (; i < o.lines; i++) {
-      seg = css(createEl(), {
-        position: 'absolute',
-        top: 1+~(o.width/2) + 'px',
-        transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
-        opacity: o.opacity,
-        animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
-      });
-      if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
-      ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
-    }
-    return el;
-  };
-  proto.opacity = function(el, i, val) {
-    if (i < el.childNodes.length) el.childNodes[i].style.opacity = val;
   };
 
   /////////////////////////////////////////////////////////////////////////
@@ -227,9 +227,9 @@
   /**
    * Check and init VML support
    */
-  (function() {
-    var s = css(createEl('group'), {behavior: 'url(#default#VML)'}),
-        i;
+  !function() {
+    var s = css(createEl('group'), {behavior: 'url(#default#VML)'});
+    var i;
 
     if (!vendor(s, 'transform') && s.adj) {
 
@@ -290,7 +290,7 @@
     else {
       useCssAnimations = vendor(s, 'animation');
     }
-  })();
+  }();
 
   window.Spinner = Spinner;
 
