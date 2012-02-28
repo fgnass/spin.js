@@ -68,19 +68,19 @@
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span>,            // The number of lines to draw
-  length: <span id="opt-length" class="lit">7</span>,            // The length of each line
-  width: <span id="opt-width" class="lit">5</span>,             // The line thickness
-  radius: <span id="opt-radius" class="lit">10</span>,           // The radius of the inner circle
-  color: '#000',        // #rgb or #rrggbb
-  speed: <span id="opt-speed" class="lit">1</span>,             // Rounds per second
-  trail: <span id="opt-trail" class="lit">100</span>,            // Afterglow percentage
-  shadow: <span id="opt-shadow" class="kwd">true</span>,        // Whether to render a shadow
-  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>,       // Whether to use hardware acceleration
+  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
+  length: <span id="opt-length" class="lit">7</span>, // The length of each line
+  width: <span id="opt-width" class="lit">5</span>, // The line thickness
+  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
+  color: '#000', // #rgb or #rrggbb
+  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
+  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
+  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
+  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration
   className: 'spinner', // The CSS class to assign to the spinner
-  zIndex: 2e9,          // The z-index (defaults to 2000000000)
-  top: 'auto',          // Top position relative to parent in px
-  left: 'auto'          // Left position relative to parent in px
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  top: 'auto', // Top position relative to parent in px
+  left: 'auto' // Left position relative to parent in px
 };
 var target = document.getElementById('foo');
 var spinner = new Spinner(opts).spin(target);
