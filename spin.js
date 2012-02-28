@@ -120,28 +120,36 @@
     return o;
   }
 
+  var defaults = {
+    lines: 12,            // The number of lines to draw
+    length: 7,            // The length of each line
+    width: 5,             // The line thickness
+    radius: 10,           // The radius of the inner circle
+    color: '#000',        // #rgb or #rrggbb
+    speed: 1,             // Rounds per second
+    trail: 100,           // Afterglow percentage
+    opacity: 1/4,         // Opacity of the lines
+    fps: 20,              // Frames per second when using setTimeout()
+    zIndex: 2e9,          // Use a high z-index by default
+    className: 'spinner', // CSS class to assign to the element
+    top: 'auto',          // center vertically
+    left: 'auto'          // center horizontally
+  };
+
   /** The constructor */
   var Spinner = function Spinner(o) {
     if (!this.spin) return new Spinner(o);
     this.opts = merge(o || {}, Spinner.defaults, defaults);
-  },
-  defaults = Spinner.defaults = {
-    lines: 12, // The number of lines to draw
-    length: 7, // The length of each line
-    width: 5, // The line thickness
-    radius: 10, // The radius of the inner circle
-    color: '#000', // #rgb or #rrggbb
-    speed: 1, // Rounds per second
-    trail: 100, // Afterglow percentage
-    opacity: 1/4,
-    fps: 20,
-    className: 'spinner'
-  },
-  proto = Spinner.prototype = {
+  };
+
+  Spinner.defaults = {};
+  Spinner.prototype = {
     spin: function(target) {
       this.stop();
       var self = this;
-      var el = self.el = css(createEl(), {position: 'relative'});
+      var o = self.opts;
+      var el = self.el = css(createEl(0, {className: o.className}), {position: 'relative', zIndex: o.zIndex});
+      var mid = o.radius+o.length+o.width;
       var ep; // element position
       var tp; // target position
 
@@ -150,16 +158,16 @@
         tp = pos(target);
         ep = pos(el);
         css(el, {
-          left: self.opts.leftOffset ? self.opts.leftOffset : (target.offsetWidth >> 1) - ep.x+tp.x + 'px',
-          top: self.opts.topOffset ? self.opts.topOffset : (target.offsetHeight >> 1) - ep.y+tp.y + 'px'
+          left: (o.left == 'auto' ? tp.x-ep.x + (target.offsetWidth >> 1) : o.left+mid) + 'px',
+          top: (o.top == 'auto' ? tp.y-ep.y + (target.offsetHeight >> 1) : o.top+mid)  + 'px'
         });
       }
-      el.setAttribute('class', self.opts.className );
+
       el.setAttribute('aria-role', 'progressbar');
       self.lines(el, self.opts);
+
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
-        var o = self.opts;
         var i = 0;
         var fps = o.fps;
         var f = fps/o.speed;
@@ -236,17 +244,18 @@
       // VML support detected. Insert CSS rules ...
       for (i=4; i--;) sheet.addRule(['group', 'roundrect', 'fill', 'stroke'][i], 'behavior:url(#default#VML)');
 
-      proto.lines = function(el, o) {
-        var r = o.length+o.width,
-            s = 2*r;
+      Spinner.prototype.lines = function(el, o) {
+        var r = o.length+o.width;
+        var s = 2*r;
 
         function grp() {
           return css(createEl('group', {coordsize: s +' '+s, coordorigin: -r +' '+-r}), {width: s, height: s});
         }
 
-        var g = grp(),
-            margin = ~(o.length+o.radius+o.width)+'px',
-            i;
+        var margin = -(o.width+o.length)*2+'px';
+        var g = css(grp(), {position: 'absolute', top: margin, left: margin});
+
+        var i;
 
         function seg(i, dx, filter) {
           ins(g,
@@ -270,15 +279,10 @@
             seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)');
           }
         }
-        for (i = 1; i <= o.lines; i++) {
-          seg(i);
-        }
-        return ins(css(el, {
-          margin: margin + ' 0 0 ' + margin,
-          zoom: 1
-        }), g);
+        for (i = 1; i <= o.lines; i++) seg(i);
+        return ins(el, g);
       };
-      proto.opacity = function(el, i, val, o) {
+      Spinner.prototype.opacity = function(el, i, val, o) {
         var c = el.firstChild;
         o = o.shadow && o.lines || 0;
         if (c && i+o < c.childNodes.length) {
