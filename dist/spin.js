@@ -279,15 +279,8 @@
             seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)');
           }
         }
-        for (i = 1; i <= o.lines; i++) {
-          seg(i);
-        }
-        return ins(css(el, {
-          //margin: margin + ' 0 0 ' + margin,
-          //top: margin,
-          //left: margin,
-          zoom: 1
-        }), g);
+        for (i = 1; i <= o.lines; i++) seg(i);
+        return ins(el, g);
       };
       Spinner.prototype.opacity = function(el, i, val, o) {
         var c = el.firstChild;

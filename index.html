@@ -68,15 +68,19 @@
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
-  length: <span id="opt-length" class="lit">7</span>, // The length of each line
-  width: <span id="opt-width" class="lit">5</span>, // The line thickness
-  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
-  color: '#000', // #rgb or #rrggbb
-  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
-  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
-  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
-  hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
+  lines: <span id="opt-lines" class="lit">12</span>,            // The number of lines to draw
+  length: <span id="opt-length" class="lit">7</span>,            // The length of each line
+  width: <span id="opt-width" class="lit">5</span>,             // The line thickness
+  radius: <span id="opt-radius" class="lit">10</span>,           // The radius of the inner circle
+  color: '#000',        // #rgb or #rrggbb
+  speed: <span id="opt-speed" class="lit">1</span>,             // Rounds per second
+  trail: <span id="opt-trail" class="lit">100</span>,            // Afterglow percentage
+  shadow: <span id="opt-shadow" class="kwd">true</span>,        // Whether to render a shadow
+  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>,       // Whether to use hardware acceleration
+  className: 'spinner', // The CSS class to assign to the spinner
+  zIndex: 2e9,          // The z-index (defaults to 2000000000)
+  top: 'auto',          // Top position relative to parent in px
+  left: 'auto'          // Left position relative to parent in px
 };
 var target = document.getElementById('foo');
 var spinner = new Spinner(opts).spin(target);
@@ -87,8 +91,12 @@ var spinner = new Spinner(opts).spin(target);
 </p>
 <h3>Manual positioning</h3>
 <p>
-  In order to manually position the spinner, invoke <code>spin()</code> without arguments and use the <code>el</code>
-  property to access the HTML element:
+  By default the spinner is centered within the target element. Alternatively you may specify a <code>top</code> and
+  <code>left</code> option to position the spinner relative to the target element.
+</p>
+<p>
+  In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any
+  arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
 var spinner = new Spinner().spin();
@@ -143,6 +151,12 @@ $.fn.spin = function(opts) {
 </p>
 
 <h2>Changes</h2>
+<h3 id="v1.2.4">Version 1.2.4 (28.02.2012)</h3>
+<ul>
+  <li>
+    Added new config options: top, left, zIndex and className.
+  </li>
+</ul>
 <h3 id="v1.2.3">Version 1.2.3 (30.01.2012)</h3>
 <ul>
   <li>Hardware acceleration is now disabled by default. See <a href="https://github.com/fgnass/spin.js/issues/47">issue #47</a> and
