@@ -166,7 +166,12 @@
           left = tp.x-ep.x + (target.offsetWidth >> 1);
         } else if (o.left == 'right') {
           var padding = jQuery(target).css('padding-left');
-          left = target.offsetWidth - (2 * (2 * o.length) + o.radius) - padding.replace('px', '');
+          if( typeof padding === "undefined") {
+            padding = 0;
+          } else {
+            padding = padding.replace('px', '');
+          }
+          left = target.offsetWidth - (2 * (2 * o.length) + o.radius) - padding;
           //left = 0;
         } else if (o.left == 'left') {
           left = 0;
