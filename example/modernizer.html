@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spin.js</title>
+  <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+  <style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+  }
+  #preview {
+    background: #aaa;
+    color: black;
+    width: 220px;
+    height: 220px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+  }
+  </style>
+</head>
+<body>
+
+<section id="preview"></section>
+
+<script src="../spin.js"></script>
+<script>
+  new Spinner().spin(document.getElementById('preview'));
+</script>
+</body>
+</html>
