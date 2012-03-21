@@ -7,9 +7,18 @@
     font-family: Helvetica, Arial, sans-serif;
     font-size: 16px;
   }
-  #preview {
+  #preview1 {
     background: #aaa;
     color: black;
+    width: 220px;
+    height: 220px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+  }
+  #preview2 {
+    background: #666;
+    color: red;
     width: 220px;
     height: 220px;
     margin: 0 20px;
@@ -20,7 +29,8 @@
 </head>
 <body>
 
-<div id="preview"></div>
+<div id="preview1"></div>
+<div id="preview2"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="../spin.js"></script>
@@ -40,7 +50,8 @@
     });
     return this;
   };
-  $('#preview').spin({lines: 8});
+  $('#preview1').spin();
+  $('#preview2').spin({color: '#fff'});
 </script>
 </body>
 </html>
