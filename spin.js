@@ -125,6 +125,7 @@
     length: 7,            // The length of each line
     width: 5,             // The line thickness
     radius: 10,           // The radius of the inner circle
+    rotate: 0,            // rotation offset
     color: '#000',        // #rgb or #rrggbb
     speed: 1,             // Rounds per second
     trail: 100,           // Afterglow percentage
@@ -206,7 +207,7 @@
           background: color,
           boxShadow: shadow,
           transformOrigin: 'left',
-          transform: 'rotate(' + ~~(360/o.lines*i) + 'deg) translate(' + o.radius+'px' +',0)',
+          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
           borderRadius: (o.width>>1) + 'px'
         });
       }
