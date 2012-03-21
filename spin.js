@@ -237,20 +237,24 @@
    * Check and init VML support
    */
   !function() {
+
+    function vml(tag, attr) {
+      return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr);
+    }
+
     var s = css(createEl('group'), {behavior: 'url(#default#VML)'});
-    var i;
 
     if (!vendor(s, 'transform') && s.adj) {
 
-      // VML support detected. Insert CSS rules ...
-      for (i=4; i--;) sheet.addRule(['group', 'roundrect', 'fill', 'stroke'][i], 'behavior:url(#default#VML)');
+      // VML support detected. Insert CSS rule ...
+      sheet.addRule('.spin-vml', 'behavior:url(#default#VML)');
 
       Spinner.prototype.lines = function(el, o) {
         var r = o.length+o.width;
         var s = 2*r;
 
         function grp() {
-          return css(createEl('group', {coordsize: s +' '+s, coordorigin: -r +' '+-r}), {width: s, height: s});
+          return css(vml('group', {coordsize: s +' '+s, coordorigin: -r +' '+-r}), {width: s, height: s});
         }
 
         var margin = -(o.width+o.length)*2+'px';
@@ -261,15 +265,15 @@
         function seg(i, dx, filter) {
           ins(g,
             ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
-              ins(css(createEl('roundrect', {arcsize: 1}), {
+              ins(css(vml('roundrect', {arcsize: 1}), {
                   width: r,
                   height: o.width,
                   left: o.radius,
                   top: -o.width>>1,
                   filter: filter
                 }),
-                createEl('fill', {color: o.color, opacity: o.opacity}),
-                createEl('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
+                vml('fill', {color: o.color, opacity: o.opacity}),
+                vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
               )
             )
           );
