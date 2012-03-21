@@ -144,7 +144,7 @@
   };
 
   Spinner.defaults = {};
-  Spinner.prototype = {
+  merge(Spinner.prototype, {
     spin: function(target) {
       this.stop();
       var self = this;
@@ -227,7 +227,7 @@
     opacity: function(el, i, val) {
       if (i < el.childNodes.length) el.childNodes[i].style.opacity = val;
     }
-  };
+  });
 
   /////////////////////////////////////////////////////////////////////////
   // VML rendering for IE
