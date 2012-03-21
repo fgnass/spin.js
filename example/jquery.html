@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spin.js</title>
+  <style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+  }
+  #preview {
+    background: #aaa;
+    color: black;
+    width: 220px;
+    height: 220px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+  }
+  </style>
+</head>
+<body>
+
+<div id="preview"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="../spin.js"></script>
+<script>
+  $.fn.spin = function(opts) {
+    this.each(function() {
+      var $this = $(this),
+          data = $this.data();
+
+      if (data.spinner) {
+        data.spinner.stop();
+        delete data.spinner;
+      }
+      if (opts !== false) {
+        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+      }
+    });
+    return this;
+  };
+  $('#preview').spin({lines: 8});
+</script>
+</body>
+</html>
