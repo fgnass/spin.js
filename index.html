@@ -37,10 +37,11 @@
   <h2>Example</h2>
   <div id="preview"></div>
   <form id="opts">
-    <label>Lines:</label><input type="text" name="lines" min="6" max="16" step="2" value="12"><br>
+    <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
     <label>Length:</label><input type="text" name="length" min="0" max="30" value="7"><br>
     <label>Width:</label><input type="text" name="width" min="2" max="20" value="4"><br>
     <label>Radius:</label><input type="text" name="radius" min="0" max="40" value="10"><br>
+    <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
     <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
     <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
@@ -72,6 +73,7 @@ var opts = {
   length: <span id="opt-length" class="lit">7</span>, // The length of each line
   width: <span id="opt-width" class="lit">5</span>, // The line thickness
   radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
+  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
   color: '#000', // #rgb or #rrggbb
   speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
   trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
