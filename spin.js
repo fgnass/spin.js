@@ -41,7 +41,7 @@
     var el = createEl('style');
     ins(document.getElementsByTagName('head')[0], el);
     return el.sheet || el.styleSheet;
-  }();
+  };
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
