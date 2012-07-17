@@ -223,7 +223,6 @@
         });
         // Build the final shadow string
         shadow.string = [shadow.left, shadow.top, shadow.radius, shadow.color].join(' ');
-        console.log(shadow.string);
       }
 
       function fill(color, shadow) {
