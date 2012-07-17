@@ -229,7 +229,9 @@
       
       // Determine how to draw the shadow
       var shadow = parseShadow(o.shadow);
-      shadow.string = '0 0 ' + shadow.radius + ' ' + shadow.color;
+      if (shadow) {
+        shadow.string = '0 0 ' + shadow.radius + ' ' + shadow.color;
+	    }
 
       function fill(color, shadow) {
         return css(createEl(), {
