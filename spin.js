@@ -317,7 +317,7 @@
           var shadow = parseShadow(o.shadow);
           var filter = [
             'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + shadow.radius + ')',
-            'progid:DXImageTransform.Microsoft.Alpha(Opacity=' + (100 - parseInt(shadow.radius) * 10) + ')'
+            'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)'
           ].join(' ');
           for (i = 1; i <= o.lines; i++) {
             seg(i, 0, filter, shadow.color);
