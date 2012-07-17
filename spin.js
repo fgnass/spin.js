@@ -132,8 +132,6 @@
         radius: '4px',
         color: '#000'
       });
-      // Build the final shadow string
-      shadow.string = [shadow.left, shadow.top, shadow.radius, shadow.color].join(' ');
     }
     return shadow;
   }
@@ -231,6 +229,7 @@
       
       // Determine how to draw the shadow
       var shadow = parseShadow(o.shadow);
+      shadow.string = '0 0 ' + shadow.radius + ' ' + shadow.color;
 
       function fill(color, shadow) {
         return css(createEl(), {
@@ -252,7 +251,7 @@
           opacity: o.opacity,
           animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
         });
-        if (o.shadow) ins(seg, css(fill(shadow.color, shadow.string), {top: 2+'px'}));
+        if (o.shadow) ins(seg, css(fill(shadow.color, shadow.string), {top: shadow.top, left: shadow.left}));
         ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
       }
       return el;
