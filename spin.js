@@ -231,7 +231,7 @@
       var shadow = parseShadow(o.shadow);
       if (shadow) {
         shadow.string = '0 0 ' + shadow.radius + ' ' + shadow.color;
-	    }
+      }
 
       function fill(color, shadow) {
         return css(createEl(), {
@@ -315,7 +315,10 @@
 
         if (o.shadow) {
           var shadow = parseShadow(o.shadow);
-          var filter = 'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + shadow.radius + ',shadowopacity=.3)';
+          var filter = [
+            'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + shadow.radius + ')',
+            'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)'
+          ].join(' ');
           for (i = 1; i <= o.lines; i++) {
             seg(i, -2, filter, shadow.color);
           }
