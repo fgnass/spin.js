@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <title>spin.js</title>
+  <style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
+  div {
+    border-radius: 10px;
+  }
+  #target1 {
+    background: #aaa url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  #target2 {
+    background: #bbb url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  #target3 {
+    background: #ccc url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+  }
+  </style>
+</head>
+<body>
+
+<div id="target1"></div>
+<div id="target2"></div>
+<div id="target3"></div>
+
+<script src="../spin.js"></script>
+
+<script>
+  var opts = [
+    {
+      color: '#222',
+      shadow: '0px 0px 2px #f00'
+    },
+    {
+      color: '#222',
+      shadow: {
+        left: '2px',
+        top: '2px',
+        radius: '2px',
+        color: '#0f0'
+      }
+    },
+    {
+      color: '#222',
+      shadow: '-2px -2px 2px #00f'
+    }
+  ];
+  
+  for (var i = 0, c = opts.length; i < c; i++) {
+    Spinner(opts[i]).spin(document.getElementById('target' + (i + 1)));
+  }
+</script>
+
+</body>
+</html>

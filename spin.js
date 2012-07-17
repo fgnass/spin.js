@@ -107,6 +107,34 @@
     }
     return obj;
   }
+  
+  /**
+   * Parses a shadow options object/string/boolean.
+   */
+  function parseShadow(shadow) {
+    if (shadow) {
+      // Allow a shadow property string (eg. "0 0 4px #000")
+      if (typeof shadow === 'string') {
+        var segments = shadow.split(' ');
+        shadow = { };
+        shadow.left    = segments.shift();
+        shadow.top     = segments.shift();
+        shadow.radius  = segments.shift();
+        shadow.color   = segments.join(' ');
+      }
+      // If the shadow was not given as a string or object, assume it
+      // was boolean true (for backward compat) and default to an empty object
+      shadow = (typeof shadow === 'object') ? shadow : { };
+      // Default any ungiven shadow values
+      shadow = merge(shadow, {
+        top: '0',
+        left: '0',
+        radius: '4px',
+        color: '#000'
+      });
+    }
+    return shadow;
+  }
 
   /**
    * Returns the absolute page-offset of the given element.
@@ -198,6 +226,12 @@
     lines: function(el, o) {
       var i = 0;
       var seg;
+      
+      // Determine how to draw the shadow
+      var shadow = parseShadow(o.shadow);
+      if (shadow) {
+        shadow.string = '0 0 ' + shadow.radius + ' ' + shadow.color;
+      }
 
       function fill(color, shadow) {
         return css(createEl(), {
@@ -219,7 +253,7 @@
           opacity: o.opacity,
           animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
         });
-        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}));
+        if (o.shadow) ins(seg, css(fill(shadow.color, shadow.string), {top: shadow.top, left: shadow.left}));
         ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')));
       }
       return el;
@@ -262,7 +296,7 @@
 
         var i;
 
-        function seg(i, dx, filter) {
+        function seg(i, dx, filter, color) {
           ins(g,
             ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
               ins(css(vml('roundrect', {arcsize: 1}), {
@@ -272,7 +306,7 @@
                   top: -o.width>>1,
                   filter: filter
                 }),
-                vml('fill', {color: o.color, opacity: o.opacity}),
+                vml('fill', {color: color || o.color, opacity: o.opacity}),
                 vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
               )
             )
@@ -280,8 +314,13 @@
         }
 
         if (o.shadow) {
+          var shadow = parseShadow(o.shadow);
+          var filter = [
+            'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + shadow.radius + ')',
+            'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)'
+          ].join(' ');
           for (i = 1; i <= o.lines; i++) {
-            seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)');
+            seg(i, 0, filter, shadow.color);
           }
         }
         for (i = 1; i <= o.lines; i++) seg(i);
