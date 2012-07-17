@@ -107,6 +107,36 @@
     }
     return obj;
   }
+  
+  /**
+   * Parses a shadow options object/string/boolean.
+   */
+  function parseShadow(shadow) {
+    if (shadow) {
+      // Allow a shadow property string (eg. "0 0 4px #000")
+      if (typeof shadow === 'string') {
+        var segments = shadow.split(' ');
+        shadow = { };
+        shadow.left    = segments.shift();
+        shadow.top     = segments.shift();
+        shadow.radius  = segments.shift();
+        shadow.color   = segments.join(' ');
+      }
+      // If the shadow was not given as a string or object, assume it
+      // was boolean true (for backward compat) and default to an empty object
+      shadow = (typeof shadow === 'object') ? shadow : { };
+      // Default any ungiven shadow values
+      shadow = merge(shadow, {
+        top: '0',
+        left: '0',
+        radius: '4px',
+        color: '#000'
+      });
+      // Build the final shadow string
+      shadow.string = [shadow.left, shadow.top, shadow.radius, shadow.color].join(' ');
+    }
+    return shadow;
+  }
 
   /**
    * Returns the absolute page-offset of the given element.
@@ -200,30 +230,7 @@
       var seg;
       
       // Determine how to draw the shadow
-      var shadow = o.shadow;
-      if (shadow) {
-        // Allow a shadow property string (eg. "0 0 4px #000")
-        if (typeof shadow === 'string') {
-          var segments = shadow.split(' ');
-          shadow = { };
-          shadow.left    = segments.shift();
-          shadow.top     = segments.shift();
-          shadow.radius  = segments.shift();
-          shadow.color   = segments.join(' ');
-        }
-        // If the shadow was not given as a string or object, assume it
-        // was boolean true (for backward compat) and default to an empty object
-        shadow = (typeof shadow === 'object') ? shadow : { };
-        // Default any ungiven shadow values
-        shadow = merge(shadow, {
-          top: '0',
-          left: '0',
-          radius: '4px',
-          color: '#000'
-        });
-        // Build the final shadow string
-        shadow.string = [shadow.left, shadow.top, shadow.radius, shadow.color].join(' ');
-      }
+      var shadow = parseShadow(o.shadow);
 
       function fill(color, shadow) {
         return css(createEl(), {
@@ -288,7 +295,7 @@
 
         var i;
 
-        function seg(i, dx, filter) {
+        function seg(i, dx, filter, color) {
           ins(g,
             ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
               ins(css(vml('roundrect', {arcsize: 1}), {
@@ -298,7 +305,7 @@
                   top: -o.width>>1,
                   filter: filter
                 }),
-                vml('fill', {color: o.color, opacity: o.opacity}),
+                vml('fill', {color: color || o.color, opacity: o.opacity}),
                 vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
               )
             )
@@ -306,8 +313,10 @@
         }
 
         if (o.shadow) {
+          var shadow = parseShadow(o.shadow);
+          var filter = 'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + shadow.radius + ',shadowopacity=.3)';
           for (i = 1; i <= o.lines; i++) {
-            seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)');
+            seg(i, -2, filter, shadow.color);
           }
         }
         for (i = 1; i <= o.lines; i++) seg(i);
