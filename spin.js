@@ -38,7 +38,7 @@
    * Insert a new stylesheet to hold the @keyframe or VML rules.
    */
   var sheet = function() {
-    var el = createEl('style');
+    var el = createEl('style', {type : 'text/css'});
     ins(document.getElementsByTagName('head')[0], el);
     return el.sheet || el.styleSheet;
   }();
