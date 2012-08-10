@@ -125,7 +125,8 @@
     length: 7,            // The length of each line
     width: 5,             // The line thickness
     radius: 10,           // The radius of the inner circle
-    rotate: 0,            // rotation offset
+    rotate: 0,            // Rotation offset
+    corners: 1,           // Roundness (0..1)
     color: '#000',        // #rgb or #rrggbb
     speed: 1,             // Rounds per second
     trail: 100,           // Afterglow percentage
@@ -208,7 +209,7 @@
           boxShadow: shadow,
           transformOrigin: 'left',
           transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
-          borderRadius: (o.width>>1) + 'px'
+          borderRadius: (o.corners * o.width>>1) + 'px'
         });
       }
       for (; i < o.lines; i++) {
@@ -265,7 +266,7 @@
         function seg(i, dx, filter) {
           ins(g,
             ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
-              ins(css(vml('roundrect', {arcsize: 1}), {
+              ins(css(vml('roundrect', {arcsize: o.corners}), {
                   width: r,
                   height: o.width,
                   left: o.radius,
