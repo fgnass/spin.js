@@ -148,7 +148,7 @@
       this.stop()
       var self = this
         , o = self.opts
-        , el = self.el = css(createEl(0, {className: o.className}), {position: 'relative', zIndex: o.zIndex})
+        , el = self.el = css(createEl(0, {className: o.className}), {position: 'relative', width: 0, zIndex: o.zIndex})
         , mid = o.radius+o.length+o.width
         , ep // element position
         , tp // target position
