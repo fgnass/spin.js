@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.2.6
+//fgnass.github.com/spin.js#v1.2.7
 !function(window, document, undefined) {
 
   /**
@@ -317,4 +317,4 @@
   else
     window.Spinner = Spinner
 
-}(window, document)
+}(window, document);
