@@ -316,4 +316,4 @@
   else
     window.Spinner = Spinner
 
-}(window, document)
+}(window, document);
