@@ -7,7 +7,7 @@
 	<meta property="og:image" content="http://fgnass.github.com/spin.js/assets/preview.jpg?v=1"/>
 	<link rel="shortcut icon" href="favicon.ico">
 	<link href="assets/main.css?v=5" type="text/css" rel="stylesheet">
-	<link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
+	<link href="//fonts.googleapis.com/css?family=Amaranth:400,700" rel="stylesheet" type="text/css">
 	<link href="assets/prettify.css" type="text/css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css?v=2">
 	<link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider-tooltip.css">
@@ -66,42 +66,42 @@
 	</ul>
 	<h2 id="usage">Usage</h2>
 	<pre class="prettyprint">
-		 var opts = { lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw length: <span id="opt-length" class="lit">7</span>, // The length of each line width: <span id="opt-width" class="lit">5</span>, // The line thickness radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1) rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset color: '#000', // #rgb or #rrggbb speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration className: 'spinner', // The CSS class to assign to the spinner zIndex: 2e9, // The z-index (defaults to 2000000000) top: 'auto', // Top position relative to parent in px left: 'auto' // Left position relative to parent in px }; var target = document.getElementById('foo'); var spinner = new Spinner(opts).spin(target);
+		var opts = { lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw length: <span id="opt-length" class="lit">7</span>, // The length of each line width: <span id="opt-width" class="lit">5</span>, // The line thickness radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1) rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset color: '#000', // #rgb or #rrggbb speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration className: 'spinner', // The CSS class to assign to the spinner zIndex: 2e9, // The z-index (defaults to 2000000000) top: 'auto', // Top position relative to parent in px left: 'auto' // Left position relative to parent in px }; var target = document.getElementById('foo'); var spinner = new Spinner(opts).spin(target);
 	</pre>
 	<p>
-		 The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
+		The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
 	</p>
 	<h3>Manual positioning</h3>
 	<p>
-		 By default the spinner is centered within the target element. Alternatively you may specify a <code>top</code> and <code>left</code> option to position the spinner relative to the target element.
+		By default the spinner is centered within the target element. Alternatively you may specify a <code>top</code> and <code>left</code> option to position the spinner relative to the target element.
 	</p>
 	<p>
-		 In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any arguments and use the <code>el</code> property to access the HTML element:
+		In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any arguments and use the <code>el</code> property to access the HTML element:
 	</p>
 	<pre class="prettyprint">
-		 var spinner = new Spinner().spin(); target.appendChild(spinner.el);
+		var spinner = new Spinner().spin(); target.appendChild(spinner.el);
 	</pre>
 	<p>
-		 The returned element is a DIV with <code>position:relative</code> and no height. The center of the spinner is positioned at the top left corner of this DIV.
+		The returned element is a DIV with <code>position:relative</code> and no height. The center of the spinner is positioned at the top left corner of this DIV.
 	</p>
 	<h3>Hiding the spinner</h3>
 	<p>
-		 To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
+		To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
 	</p>
 	<h3 id="jquery">jQuery plugin</h3>
 	<p>
-		 Spin.js does not require jQuery. Anyway, if you use jQuery (or zepto.js) you may use the following plugin:
+		Spin.js does not require jQuery. Anyway, if you use jQuery (or zepto.js) you may use the following plugin:
 	</p>
 	<pre class="prettyprint">
-		 $.fn.spin = function(opts) { this.each(function() { var $this = $(this), data = $this.data(); if (data.spinner) { data.spinner.stop(); delete data.spinner; } if (opts !== false) { data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this); } }); return this; };
+		$.fn.spin = function(opts) { this.each(function() { var $this = $(this), data = $this.data(); if (data.spinner) { data.spinner.stop(); delete data.spinner; } if (opts !== false) { data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this); } }); return this; };
 	</pre>
 	<p>
-		 Alternatively you may use this <a href="https://gist.github.com/1290439">advanced version</a> written by Bradley Smith.
+		Alternatively you may use this <a href="https://gist.github.com/1290439">advanced version</a> written by Bradley Smith.
 	</p>
 	<h2>Supported browsers</h2>
 	<img src="assets/browsers.png">
 	<p>
-		 Spin.js has been successfully tested in the following browsers:
+		Spin.js has been successfully tested in the following browsers:
 		<ul>
 			<li>Chrome</li>
 			<li>Safari 3.2+</li>
@@ -169,16 +169,16 @@
 	<p id="contact">
 		<img width="57" height="57" src="http://www.gravatar.com/avatar/f1f2e1842f6ff681a6d1b0a2405d0117.png">
 		If you encounter any problems, please use the <a href="https://github.com/fgnass/spin.js/issues">GitHub issue tracker</a>.<br>
-		 For updates <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
-		 If you like spin.js and use it in the wild, let me know.
+		For updates <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
+		If you like spin.js and use it in the wild, let me know.
 	</p>
 </div>
 <div id="footer">
 	<a class="github" href="http://github.com">Hosted on GitHub</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
-<script src="dist/spin.min.js?v=1.2.7"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+<script src="assets/fd-slider/fd-slider.js" type="text/javascript"></script>
+<script src="dist/spin.min.js?v=1.2.7" type="text/javascript"></script>
 <script>
 	$.fn.spin = function(opts) {
 		this.each(function() {
