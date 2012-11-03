@@ -6,19 +6,17 @@
 	<meta name="description" content="An animated CSS activity indicator with VML fallback.">
 	<meta name="viewport" content="width=1024, maximum-scale=1">
 	<meta property="og:image" content="http://fgnass.github.com/spin.js/assets/preview.jpg"/>
-	<link rel="shortcut icon" href="favicon.ico">
-	<link href="http://fonts.googleapis.com/css?family=Amaranth:400,700" rel="stylesheet" type="text/css">
-	<link href="assets/style.css" type="text/css" rel="stylesheet">
+	<link rel="icon" href="favicon.ico">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Amaranth:400,700">
+	<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
 <div id="logo">
 	<h1>spin.js</h1>
-	<!--
-	<div id="mask">
+	<!--<div id="mask">
 		<div id="dot"></div>
-	</div>
-	-->
+	</div>-->
 </div>
 
 <a id="ribbon" href="https://github.com/fgnass/spin.js"></a>
@@ -45,7 +43,7 @@
 		<label>Shadow:</label><input type="checkbox" name="shadow"><br>
 		<label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
 	</form>
-	<br clear="left">
+	<br style="clear:left">
 	<input type="checkbox" id="share">
 	<label for="share">
 	<b>Share it!</b> If checked, the option values will be stored in the URL so that you can easily share your settings.</label>
@@ -130,18 +128,17 @@ $.fn.spin = function(opts) {
 </p>
 <h2>Supported browsers</h2>
 <img src="assets/browsers.png" width="353" height="66" alt="browsers">
-<p>
-	Spin.js has been successfully tested in the following browsers:
-	<ul>
-		<li>Chrome</li>
-		<li>Safari 3.2+</li>
-		<li>Firefox 3.5+</li>
-		<li>IE 6,7,8,9</li>
-		<li>Opera 10.6+</li>
-		<li>Mobile Safari (iOS 3.1+)</li>
-		<li>Android 2.3+</li>
-	</ul>
-</p>
+<br>
+Spin.js has been successfully tested in the following browsers:
+<ul>
+	<li>Chrome</li>
+	<li>Safari 3.2+</li>
+	<li>Firefox 3.5+</li>
+	<li>IE 6,7,8,9</li>
+	<li>Opera 10.6+</li>
+	<li>Mobile Safari (iOS 3.1+)</li>
+	<li>Android 2.3+</li>
+</ul>
 <h2>Changes</h2>
 <h3 id="v1.2.7">Version 1.2.7 (2.10.2012)</h3>
 <ul>
@@ -179,10 +176,10 @@ $.fn.spin = function(opts) {
 </ul>
 <h3 id="v1.2">Version 1.2 (16.9.2011)</h3>
 <ul>
-	<li>Calling <tt>spin()</tt> now invokes <tt>stop()</tt> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
+	<li>Calling <code>spin()</code> now invokes <code>stop()</code> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
 	<li>Added a workaround for the IE negative margin bug. See <a href="https://github.com/fgnass/spin.js/issues/27">issue #27</a>.</li>
-	<li>The <tt>new</tt> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
-	<li>Improved accessibility by adding <tt>aria-role="progressbar"</tt>.
+	<li>The <code>new</code> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
+	<li>Improved accessibility by adding <code>aria-role="progressbar"</code>.
 </ul>
 <h3 id="v1.1">Version 1.1 (6.9.2011)</h3>
 <ul>
@@ -205,8 +202,8 @@ $.fn.spin = function(opts) {
 <div id="footer">
 	<a class="github" href="http://github.com">Hosted on GitHub</a>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-<script src="assets/pack.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="assets/pack.js"></script>
 <script>
 	$.fn.spin = function(opts) {
 		this.each(function() {
