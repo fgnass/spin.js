@@ -80,7 +80,14 @@
     prop = prop.charAt(0).toUpperCase() + prop.slice(1)
     for(i=0; i<prefixes.length; i++) {
       pp = prefixes[i]+prop
-      if(s[pp] !== undefined) return pp
+      if(s[pp] !== undefined){ 
+        return pp
+      }else{
+        pp = prefixes[i] + prop.replace( new RegExp( "^" + prop.charAt(0) ) , prop.charAt(0).toUpperCase() );
+        if( s[pp] !== undefined ){
+          return pp ;
+        }   
+      } 
     }
   }
 
