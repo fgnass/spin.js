@@ -95,7 +95,7 @@ h2 {
 h3 {
   margin: 35px 0 10px 0;
 }
-#mask {
+/*#mask {
   position: absolute;
   top: 0;
   left: 0;
@@ -109,7 +109,7 @@ h3 {
   top: 42px;
   width: 46px;
   height: 46px;
-}
+}*/
 #ribbon {
   position: absolute;
   top: 0;
@@ -131,13 +131,13 @@ h3 {
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-#demo {
+/*#demo {
   clear: both;
 }
 #demo form {
   width: 250px;
   float: left;
-}
+}*/
 
 a.button {
   display: inline-block;
