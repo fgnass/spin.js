@@ -16,10 +16,10 @@ ul {
   width: 75%;
   max-width: 800px;
   line-height: 1.4em;
-  margin: 0 50px 50px 100px;
+  margin: 0 50px 70px 100px;
   text-shadow: 0px 1px 0px #fff;
 }
-#footer {
+footer {
   background: #202020;
   overflow: hidden;
   color: #888;
@@ -27,7 +27,7 @@ ul {
   padding: 20px 0 100px 50px;
   position: relative;
 }
-#footer:before {
+footer:before {
   content: '';
   display: block;
   box-shadow: 0 0 10px #000;
@@ -37,7 +37,7 @@ ul {
   top: -10px;
   width: 100%;
 }
-#footer a.github {
+footer a.github {
    background: url(github.png) no-repeat;
    width: 68px;
    height: 30px;
