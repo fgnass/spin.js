@@ -1,0 +1,5 @@
+#!/bin/bash
+cat prettify.css fd-slider/fd-slider.css \
+ fd-slider/fd-slider-tooltip.css main.css | cleancss -o style.css
+
+uglifyjs prettify.js fd-slider/fd-slider.js ../spin.js --compress --mangle -o pack.js

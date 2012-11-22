@@ -16,10 +16,10 @@ ul {
   width: 75%;
   max-width: 800px;
   line-height: 1.4em;
-  margin: 0 50px 50px 100px;
+  margin: 0 50px 70px 100px;
   text-shadow: 0px 1px 0px #fff;
 }
-#footer {
+footer {
   background: #202020;
   overflow: hidden;
   color: #888;
@@ -27,7 +27,7 @@ ul {
   padding: 20px 0 100px 50px;
   position: relative;
 }
-#footer:before {
+footer:before {
   content: '';
   display: block;
   box-shadow: 0 0 10px #000;
@@ -37,8 +37,8 @@ ul {
   top: -10px;
   width: 100%;
 }
-#footer a.github {
-   background: url(github.gif) no-repeat;
+footer a.github {
+   background: url(github.png) no-repeat;
    width: 68px;
    height: 30px;
    text-indent: -999em;
@@ -95,7 +95,7 @@ h2 {
 h3 {
   margin: 35px 0 10px 0;
 }
-#mask {
+/*#mask {
   position: absolute;
   top: 0;
   left: 0;
@@ -109,7 +109,7 @@ h3 {
   top: 42px;
   width: 46px;
   height: 46px;
-}
+}*/
 #ribbon {
   position: absolute;
   top: 0;
@@ -131,13 +131,13 @@ h3 {
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-#demo {
+/*#demo {
   clear: both;
 }
 #demo form {
   width: 250px;
   float: left;
-}
+}*/
 
 a.button {
   display: inline-block;
