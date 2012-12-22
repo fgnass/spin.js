@@ -164,7 +164,7 @@
         })
       }
 
-      el.setAttribute('aria-role', 'progressbar')
+      el.setAttribute('role', 'progressbar')
       self.lines(el, self.opts)
 
       if (!useCssAnimations) {
