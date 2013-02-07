@@ -313,7 +313,7 @@
   })()
 
   if (typeof define == 'function' && define.amd)
-    define(function() { return Spinner })
+    define('spinner', function() { return Spinner })
   else
     window.Spinner = Spinner
 
