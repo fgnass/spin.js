@@ -65,6 +65,7 @@
 
       animations[name] = 1
     }
+
     return name
   }
 
@@ -125,6 +126,7 @@
     rotate: 0,            // Rotation offset
     corners: 1,           // Roundness (0..1)
     color: '#000',        // #rgb or #rrggbb
+    direction: 1,         // 1: clockwise / -1: counterclockwise
     speed: 1,             // Rounds per second
     trail: 100,           // Afterglow percentage
     opacity: 1/4,         // Opacity of the lines
@@ -170,6 +172,8 @@
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var i = 0
+          , start = (o.lines - 1) * (1 - o.direction) / 2
+          , alpha
           , fps = o.fps
           , f = fps/o.speed
           , ostep = (1-o.opacity) / (f*o.trail / 100)
@@ -177,9 +181,10 @@
 
         ;(function anim() {
           i++;
-          for (var s=o.lines; s; s--) {
-            var alpha = Math.max(1-(i+s*astep)%f * ostep, o.opacity)
-            self.opacity(el, o.lines-s, alpha, o)
+          for (var j = 0; j < o.lines; j++) {
+            alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
+
+            self.opacity(el, j * o.direction + start, alpha, o)
           }
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
@@ -199,6 +204,7 @@
 
     lines: function(el, o) {
       var i = 0
+        , start = (o.lines - 1) * (1 - o.direction) / 2
         , seg
 
       function fill(color, shadow) {
@@ -220,7 +226,7 @@
           top: 1+~(o.width/2) + 'px',
           transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
           opacity: o.opacity,
-          animation: useCssAnimations && addAnimation(o.opacity, o.trail, i, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+          animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
         })
 
         if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
