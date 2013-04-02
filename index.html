@@ -38,13 +38,19 @@
   <div id="preview"></div>
   <form id="opts">
     <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
-    <label>Length:</label><input type="text" name="length" min="0" max="30" value="7"><br>
-    <label>Width:</label><input type="text" name="width" min="2" max="20" value="4"><br>
-    <label>Radius:</label><input type="text" name="radius" min="0" max="40" value="10"><br>
+    <label>Length:</label><input type="text" name="length" min="0" max="40" value="20"><br>
+    <label>Width:</label><input type="text" name="width" min="2" max="30" value="10"><br>
+    <label>Radius:</label><input type="text" name="radius" min="0" max="60" value="30"><br>
     <label>Corners:</label><input type="text" name="corners" min="0" max="1" step="0.1" value="1"><br>
     <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
     <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
     <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+    <label>Direction:</label>
+    <select name="direction">
+      <option value="1">Clockwise</option>
+      <option value="-1">Counterclockwise</option>
+    </select>
+    <br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
     <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
   </form>
@@ -249,7 +255,7 @@ $.fn.spin = function(opts) {
   prettyPrint();
   function update() {
     var opts = {};
-    $('#opts input[min]').each(function() {
+    $('#opts input[min], #opts select').each(function() {
       $('#opt-' + this.name).text(opts[this.name] = parseFloat(this.value));
     });
     $('#opts input:checkbox').each(function() {
@@ -271,7 +277,7 @@ $.fn.spin = function(opts) {
         params[kv[0]] = kv[kv.length-1];
       });
     }
-    $('#opts input[min]').each(function() {
+    $('#opts input[min], #opts select').each(function() {
       var val = params[this.name];
       if (val !== undefined) this.value = val;
       this.onchange = update;

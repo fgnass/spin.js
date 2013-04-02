@@ -38,6 +38,12 @@
   <label>Rotate:</label><input type="range" name="rotate" min="0" max="90" value="0"><br>
   <label>Trail:</label><input type="range" name="trail" min="10" max="100" value="60"><br>
   <label>Speed:</label><input type="range" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+  <label>Direction:</label>
+  <select name="direction">
+    <option value="1">Clockwise</option>
+    <option value="-1">Counterclockwise</option>
+  </select>
+  <br>
   <label>Shadow:</label><input type="checkbox" name="shadow"><br>
   <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
 </form>
@@ -62,7 +68,7 @@
   };
   function update() {
     var opts = {};
-    $('input[min]').each(function() {
+    $('input[min], select').each(function() {
       opts[this.name] = parseFloat(this.value);
     });
     $('input:checkbox').each(function() {
@@ -70,7 +76,7 @@
     });
     $('#preview').spin(opts);
   }
-  $('input[min]').change(update);
+  $('input[min], select').change(update);
   $('input:checkbox').click(update);
   update();
 </script>
