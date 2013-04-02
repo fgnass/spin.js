@@ -1,0 +1,79 @@
+{
+  /* Additional globals */
+  "predef": [
+    "define"
+  ],
+
+  /* Enforcing Options */
+
+  "bitwise"       : false,  // Switches on warnings about the use of bitwise operators such as ^ (XOR), | (OR) and others
+  "curly"         : false,  // Switches on warnings when no curly braces are being used around blocks for loops and conditional.
+                            // NOTE: If you turned this off, only omit curlies on single and same line statements
+  "eqeqeq"        : false,  // Switches on warnings about the use of == and !=
+  "forin"         : false,  // Switches on warnings about when code is not wrapped in .hasOwnProperty condition in for in loops
+  "immed"         : true,   // Switches on warnings for immediately invoked functions which are not wrapped in parenthesis
+  "latedef"       : true,   // Switches on warnings for using variables or functions prior of their definition
+  "newcap"        : true,   // Switches on warnings if uncapitalised constructor function names are being used
+  "noarg"         : true,   // Switches on warnings when arguments.caller and arguments.callee are being used
+  "noempty"       : false,  // Switches on warnings when empty blocks are being used
+  "nonew"         : true,   // Switches on warnings when no "new" keyword is being used for constructor functions
+                            // NOTE: Have not being able to switch this off and it always warned me during my tests
+  "plusplus"      : false,  // Switches on warnings when using the unary in-/de-crement operators ++ and --
+  "regexp"        : true,   // Switches on warnings for unsafe usage of '.' in regular expressions
+  "undef"         : true,   // Switches on warnings when using undeclared variables
+                            // NOTE: Have not being able to switch this off and it always warned me during my tests
+  "strict"        : false,  // Switches on warnings to use strict in all functions
+  "trailing"      : true,   // Switches on warnings for using trailing whitespace at the end of lines
+
+  /* Relaxing Options */
+
+  "asi"           : true,   // Switches off warnings about missing semi-colons
+  "boss"          : true,   // Switches off warnings about assignments in places where conditions are expected
+  "debug"         : false,  // Switches off warnings about debugger statements - TODO: Try use debugger properly
+  "eqnull"        : false,  // Switches off warnings when comparing == null
+  "es5"           : true,   // Switches off warnings when using ECMAScript 5 features
+  "esnext"        : false,  // Switches off warnings when using ES.next features, i.e. const
+  "evil"          : true,   // Switches off warnings about the use of eval
+  "expr"          : true,   // Switches off warnings when using expressions in places where assignments are expected
+  "funcscope"     : false,  // Switches off warnings about var definitions within blocks, using them later outside
+  "globalstrict"  : false,  // Switches off warnings about the use of global strict mode
+  "iterator"      : false,  // Switches off warnings about the use of the __iterator__ property
+  "lastsemic"     : false,  // Switches off warnings about missing semicolons on the last statement in one line blocks
+  "laxbreak"      : true,   // Switches off warnings about improper line breaks
+  "laxcomma"      : true,   // Switches off warnings about leading commas in multi-line var declarations
+  "loopfunc"      : true,   // Switches off warnings about functions inside of loops
+  "multistr"      : false,  // Switches off warnings about the use of multi-line strings
+  "onecase"       : false,  // Switches off warnings when only one case is being used in switch statements
+  "proto"         : true,   // Switches off warnings when using the __proto__ property
+  "regexdash"     : false,  // Switches off warnings about unescaped - in the end of regular expressions
+  "scripturl"     : false,  // Switches off warnings about the use of script-targeted URLs—such as javascript:
+  "smarttabs"     : false,  // Switches off warnings about mixed tabs and spaces for indentation
+  "shadow"        : false,  // Switches off warnings about re-declaring variable which have already being defined in an outer scope
+  "sub"           : false,  // Switches off warnings about property accessors using '[]' notation when '.' notation can be used
+  "supernew"      : false,  // Switches off warnings about "weird" constructions like new function () { ... }
+  // Can not be set here. Needs to be configured inline in function scope with the comment: /*jshint validthis:true */
+  //"validthis"     : false,  // Switches off warnings about possible strict violations when using this in a non-constructor function
+
+
+  /* Environments */
+
+  "browser"       : true,   // Allows the use of undefined globals exposed by modern browsers, i.e. window or document
+  "couch"         : false,  // Allows the use of globals exposed by CouchDB
+  "devel"         : false,  // Allows the use of globals like console.xxx and alert statements
+  "dojo"          : false,  // Allows the use of globals exposed by the DoJo Toolkit
+  "jquery"        : false,  // Allows the use of globals exposed by jQuery
+  "mootools"      : false,  // Allows the use of globals exposed by the MooTools framework
+  "node"          : true,   // Allows the use of globals for code running in nodejs, i.e. 'global'
+  "nonstandard"   : false,  // Allows the use of non-standard but widely adopted globals such as escape and unescape
+  "prototypejs"   : false,  // Allows the use of globals exposed by the Prototype framework
+  "rhino"         : false,  // Allows the use of globals available for code running in Rhino
+  "wsh"           : false,  // Allows the use of globals available for code running in the Windows Script Host
+
+
+  /* Legacy */
+
+  "nomen"         : false,  // Disallow the use of variable names beginning with an underscore
+  "onevar"        : false,  // If false, warns when having multiple var definition within one function
+  "passfail"      : false,  // If true, JSHint stops on the first error or warning.
+  "white"         : false   // If true, Douglas Crockford's JavaScript coding styles are enforce - behaves eradic
+}
