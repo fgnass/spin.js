@@ -29,23 +29,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="../spin.js"></script>
+<script src="../jquery.spin.js"></script>
 <script>
-  $.fn.spin = function(opts) {
-    this.each(function() {
-      var $this = $(this),
-          data = $this.data();
-
-      if (data.spinner) {
-        data.spinner.stop();
-        delete data.spinner;
-      }
-      if (opts !== false) {
-        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
-      }
-    });
-    return this;
-  };
-  $('#preview1').spin();
+  $('#preview1').spin('tiny', 'teal');
   $('#preview2').spin({color: '#fff'});
 
   //Remove spinner upon click
