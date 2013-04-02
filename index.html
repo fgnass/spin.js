@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1024, maximum-scale=1">
   <meta property="og:image" content="http://fgnass.github.com/spin.js/assets/preview.jpg?v=1" />
   <link rel="shortcut icon" href="favicon.ico">
-  <link href="assets/main.css?v=5" type="text/css" rel="stylesheet">
+  <link href="assets/main.css?v=6" type="text/css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
   <link href="assets/prettify.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css?v=2">
@@ -17,11 +17,6 @@
 
 <div id="logo">
   <h1>spin.js</h1>
-  <!--
-  <div id="mask">
-    <div id="dot"></div>
-  </div>
-  -->
 </div>
 
 <a id="ribbon" href="http://github.com/fgnass/spin.js"></a>
@@ -54,11 +49,14 @@
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
     <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
   </form>
-  <br clear="left">
-  <input type="checkbox" id="share">
-  <label for="share">
-    <b>Share it!</b> If checked, the option values will be stored in the URL so that you can easily share your settings.
-  </label>
+
+  <div class="share">
+    <input type="checkbox" id="share">
+    <label for="share">
+      <b>Share it!</b> If checked, the option values will be stored in the URL so that you can easily share your settings.
+    </label>
+  </div>
+
 </div>
 
 <h2>Features</h2>
@@ -72,7 +70,10 @@
   <li>Works in all major browsers, including IE6</li>
   <li>MIT License</li>
 </ul>
-
+<p>
+  Spin.js dynamically creates spinning activity indicators that can be used as
+  resolution-independent replacement for AJAX loading GIFs.
+</p>
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
@@ -124,7 +125,7 @@ target.appendChild(spinner.el);
 </p>
 <h3 id="jquery">jQuery plugin</h3>
 <p>
-  Spin.js does not require jQuery. Anyway, if you use jQuery (or zepto.js) you may use the following plugin:
+  Spin.js does not require jQuery. Anyway, if you use jQuery (or <a href="http://zeptojs.com/"> zepto.js</a>) you may use the following plugin:
 </p>
 <pre class="prettyprint">
 $.fn.spin = function(opts) {
@@ -205,10 +206,10 @@ $.fn.spin = function(opts) {
 </ul>
 <h3 id="v1.2">Version 1.2 (16.9.2011)</h3>
 <ul>
-  <li>Calling <tt>spin()</tt> now invokes <tt>stop()</tt> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
+  <li>Calling <code>spin()</code> now invokes <code>stop()</code> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
   <li>Added a workaround for the IE negative margin bug. See <a href="https://github.com/fgnass/spin.js/issues/27">issue #27</a>.</li>
-  <li>The <tt>new</tt> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
-  <li>Improved accessibility by adding <tt>aria-role="progressbar"</tt>.</a>
+  <li>The <code>new</code> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
+  <li>Improved accessibility by adding <code>aria-role="progressbar"</code>.</a>
 </ul>
 
 <h3 id="v1.1">Version 1.1 (6.9.2011)</h3>

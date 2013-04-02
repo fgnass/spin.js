@@ -98,21 +98,7 @@ h2 {
 h3 {
   margin: 35px 0 10px 0;
 }
-#mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url(bg.png) -100px 0;
-  width: 240px;
-  height: 85px;
-}
-#dot {
-  position: absolute;
-  left: 198px;
-  top: 42px;
-  width: 46px;
-  height: 46px;
-}
+
 #ribbon {
   position: absolute;
   top: 0;
@@ -141,7 +127,9 @@ h3 {
   width: 250px;
   float: left;
 }
-
+.share {
+  clear: left;
+}
 a.button {
   display: inline-block;
   background: #56ba4a;
