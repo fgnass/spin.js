@@ -125,27 +125,7 @@ target.appendChild(spinner.el);
 </p>
 <h3 id="jquery">jQuery plugin</h3>
 <p>
-  Spin.js does not require jQuery. Anyway, if you use jQuery (or <a href="http://zeptojs.com/"> zepto.js</a>) you may use the following plugin:
-</p>
-<pre class="prettyprint">
-$.fn.spin = function(opts) {
-  this.each(function() {
-    var $this = $(this),
-        data = $this.data();
-
-    if (data.spinner) {
-      data.spinner.stop();
-      delete data.spinner;
-    }
-    if (opts !== false) {
-      data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
-    }
-  });
-  return this;
-};
-</pre>
-<p>
-  Alternatively you may use this <a href="https://gist.github.com/1290439">advanced version</a> written by Bradley Smith.
+  Spin.js does not require jQuery. Anyway, if you want to use jQuery you may use <a href="jquery.spin.js">this plugin</a>.
 </p>
 <h2>Supported browsers</h2>
 <img src="assets/browsers.png">
