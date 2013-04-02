@@ -64,6 +64,9 @@ label {
   font-size: 14px;
   vertical-align: top;
 }
+#opts {
+  display: inline-block;
+}
 #opts label {
   line-height: 25px;
   width: 80px;
@@ -124,8 +127,8 @@ h3 {
   background: #333;
   color: #fff;
   float: left;
-  width: 220px;
-  height: 220px;
+  width: 268px;
+  height: 268px;
   margin: 0 20px 20px 0;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
