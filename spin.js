@@ -16,6 +16,7 @@
   else root.Spinner = factory()
 }
 (this, function() {
+  "use strict";
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
@@ -153,7 +154,7 @@
 
   /** The constructor */
   function Spinner(o) {
-    if (!this.spin) return new Spinner(o)
+    if (typeof this == 'undefined') return new Spinner(o)
     this.opts = merge(o || {}, Spinner.defaults, defaults)
   }
 
