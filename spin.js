@@ -190,10 +190,12 @@
         })
         
         if (fp) {
-          var t = el.offsetTop + el.offsetHeight / 2 + ( fp.top || 0 ) + 'px'
-          , l = el.offsetLeft + el.offsetWidth / 2 + ( fp.left || 0 ) + 'px'
-          var opts = {position:'absolute', top: t, left: l, fontSize: fp.fontSize || '14px', color: fp.color || 'black', fontFamily: fp.fontFamily || 'tahoma' }
-          target.appendChild(css(createEl('span',{ innerHTML: fp.text, className: fp.className || '' }), opts), target );
+          setTimeout( function() {
+            var t = el.offsetTop + el.offsetHeight / 2 + ( fp.top || 0 ) + 'px'
+            , l = el.offsetLeft + el.offsetWidth / 2 + ( fp.left || 0 ) + 'px'
+            var opts = {position:'absolute', top: t, left: l, fontSize: fp.fontSize || '14px', color: fp.color || 'black', fontFamily: fp.fontFamily || 'tahoma' }
+            target.appendChild(css(createEl('span',{ innerHTML: fp.text, className: fp.className || '' }), opts), target )
+          },100)
         }
       }
 
