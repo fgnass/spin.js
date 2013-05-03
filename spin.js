@@ -38,7 +38,7 @@
    * Appends children and returns the parent.
    */
   function ins(parent /* child1, child2, ...*/) {
-    for (var i=1, n=arguments.length; i<n; i++) 
+    for (var i=1, n=arguments.length; i<n; i++)
       parent.appendChild(arguments[i])
 
     return parent
@@ -193,11 +193,9 @@
           var t = el.offsetTop + el.offsetHeight / 2 + ( fp.top || 0 ) + 'px'
           , l = el.offsetLeft + el.offsetWidth / 2 + ( fp.left || 0 ) + 'px'
           var opts = {position:'absolute', top: t, left: l, fontSize: fp.fontSize || '14px', color: fp.color || 'black', fontFamily: fp.fontFamily || 'tahoma' }
-          target.appendChild(css(createEl('span',{ innerHTML: fp.text, className: fp.className }), opts), target );
+          target.appendChild(css(createEl('span',{ innerHTML: fp.text, className: fp.className || '' }), opts), target );
         }
       }
-      
-      
 
       el.setAttribute('role', 'progressbar')
       self.lines(el, self.opts)
