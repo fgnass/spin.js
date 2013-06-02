@@ -70,6 +70,14 @@ test.describe('Sample Test', function() {
         assert.equal( result, "25px", "The border-radius of spinner should be 25px. A multiple of 2.5 times." );
       });
     });
+
+    test.it('should have 336deg of rotate, when create a spinner as {rotate: 6}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {rotate: 6}, target) );
+      driver.executeScript( "return $('.spinner div div').first().css('transform')" ).then( function(result) {
+        assert.equal( result, "matrix(0.9945218953682733, 0.10452846326765346, -0.10452846326765346, 0.9945218953682733, 9.945218953682733, 1.0452846326765346)", "The rotate of spinner should be 336deg." );
+      });
+    });
   });
 
   test.after(function() {
