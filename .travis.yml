@@ -10,4 +10,4 @@ before_script:
   - npm install -g phantomjs
   - npm install selenium-webdriver mocha node-static
 script:
-  - SELENIUM=tests/bin/selenium-server-standalone-2.31.0.jar mocha -R list tests/spec/*.js
+  - SELENIUM=tests/bin/selenium-server-standalone-2.31.0.jar mocha -R spec tests/spec/*.js
