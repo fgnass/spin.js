@@ -116,6 +116,14 @@ test.describe('Sample Test', function() {
         assert.ok( result.indexOf('0.25s') !== -1, "The spinner should have a speed as 4 laps per second." );
       });
     });
+
+    test.it('should be trails as 50, when create a spinner as {trail: 50}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {trail: 50}, target) );
+      driver.executeScript( "return $('.spinner > div').first().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('opacity-50-25-0-12') !== -1, "The spinner should have a trail as 50." );
+      });
+    });
   });
 
   test.after(function() {
