@@ -62,6 +62,14 @@ test.describe('Sample Test', function() {
         assert.equal( result, "matrix(1, 0, 0, 1, 21, 0)", "The translate of spinner should be 21px." );
       });
     });
+
+    test.it('should have 25px of border radius, when create a spinner as {corners: 10}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {corners: 10}, target) );
+      driver.executeScript( "return $('.spinner div div').first().css('border-top-left-radius')" ).then( function(result) {
+        assert.equal( result, "25px", "The border-radius of spinner should be 25px. A multiple of 2.5 times." );
+      });
+    });
   });
 
   test.after(function() {
