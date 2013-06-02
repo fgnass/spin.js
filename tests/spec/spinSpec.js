@@ -135,6 +135,15 @@ test.describe('Sample Test', function() {
         assert.equal( result, "rgba(0, 0, 0, 0.0976562) 0px 0px 1px 0px", "The first div of spinner should be shadow." );
       });
     });
+
+    test.it("should have 'indicator' as class name, when create a spinner as {className: 'indicator'}", function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {className: 'indicator'}, target) );
+      driver.executeScript( "return $('div.indicator').length" ).then( function(result) {
+        assert.equal( result, 1, "The spinner should have 'indicator' as class name." );
+      });
+    });
+
   });
 
   test.after(function() {
