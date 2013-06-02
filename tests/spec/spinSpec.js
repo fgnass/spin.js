@@ -100,6 +100,14 @@ test.describe('Sample Test', function() {
         assert.ok( result.indexOf('opacity-100-25-0-12') !== -1, "The last spinner should be 0." );
       });
     });
+
+    test.it("should be red, when create a spinner as {color: '#f00'}", function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {color: '#f00'}, target) );
+      driver.executeScript( "return $('.spinner div div').first().css('background-color')" ).then( function(result) {
+        assert.equal( result, "rgb(255, 0, 0)", "The color should be red." );
+      });
+    });
   });
 
   test.after(function() {
