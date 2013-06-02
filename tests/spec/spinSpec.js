@@ -108,6 +108,14 @@ test.describe('Sample Test', function() {
         assert.equal( result, "rgb(255, 0, 0)", "The color should be red." );
       });
     });
+
+    test.it('should be faster (4 laps per second), when create a spinner as {speed: 4}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {speed: 4}, target) );
+      driver.executeScript( "return $('.spinner > div').first().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('0.25s') !== -1, "The spinner should have a speed as 4 laps per second." );
+      });
+    });
   });
 
   test.after(function() {
