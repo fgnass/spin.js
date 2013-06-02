@@ -17,7 +17,8 @@ exports.server = function() {
 exports.driver = function() {
   driver = new webdriver.Builder().
     usingServer(server.address()).
-    withCapabilities({'browserName': 'firefox'}).
+    //withCapabilities({'browserName': 'firefox'}).
+    withCapabilities({'browserName': 'phantomjs'}).
     build();
   return driver;
 };
