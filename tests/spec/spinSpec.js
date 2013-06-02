@@ -54,6 +54,14 @@ test.describe('Sample Test', function() {
         assert.equal( result, "8px", "The height of spinner should be 8px." );
       });
     });
+
+    test.it('should have 21px of translate, when create a spinner as {radius: 21}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {radius: 21}, target) );
+      driver.executeScript( "return $('.spinner div div').first().css('transform')" ).then( function(result) {
+        assert.equal( result, "matrix(1, 0, 0, 1, 21, 0)", "The translate of spinner should be 21px." );
+      });
+    });
   });
 
   test.after(function() {
