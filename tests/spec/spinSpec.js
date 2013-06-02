@@ -78,6 +78,28 @@ test.describe('Sample Test', function() {
         assert.equal( result, "matrix(0.9945218953682733, 0.10452846326765346, -0.10452846326765346, 0.9945218953682733, 9.945218953682733, 1.0452846326765346)", "The rotate of spinner should be 336deg." );
       });
     });
+
+    test.it('should clockwise, when create a spinner as {direction: 1}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {direction: 1}, target) );
+      driver.executeScript( "return $('.spinner > div').first().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('opacity-100-25-0-12') !== -1, "The first spinner should be 0." );
+      });
+      driver.executeScript( "return $('.spinner > div').last().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('opacity-100-25-11-12') !== -1, "The last spinner should be 11." );
+      });
+    });
+
+    test.it('should counterclockwise, when create a spinner as {direction: -1}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {direction: -1}, target) );
+      driver.executeScript( "return $('.spinner > div').first().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('opacity-100-25-11-12') !== -1, "The first spinner should be 11." );
+      });
+      driver.executeScript( "return $('.spinner > div').last().attr('style')" ).then( function(result) {
+        assert.ok( result.indexOf('opacity-100-25-0-12') !== -1, "The last spinner should be 0." );
+      });
+    });
   });
 
   test.after(function() {
