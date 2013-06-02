@@ -124,6 +124,17 @@ test.describe('Sample Test', function() {
         assert.ok( result.indexOf('opacity-50-25-0-12') !== -1, "The spinner should have a trail as 50." );
       });
     });
+
+    test.it('should have shadow, when create a spinner as {shadow: true}', function() {
+      driver.get( urlSpinTest );
+      driver.executeScript( util.format(script, {shadow: true}, target) );
+      driver.executeScript( "return $('.spinner > div').first().find('div').first().css('box-shadow')" ).then( function(result) {
+        assert.equal( result, "rgb(0, 0, 0) 0px 0px 4px 0px", "The first div of spinner should not be shadow." );
+      });
+      driver.executeScript( "return $('.spinner > div').first().find('div').last().css('box-shadow')" ).then( function(result) {
+        assert.equal( result, "rgba(0, 0, 0, 0.0976562) 0px 0px 1px 0px", "The first div of spinner should be shadow." );
+      });
+    });
   });
 
   test.after(function() {
