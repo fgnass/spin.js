@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "0.8"
+before_script:
+  - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+  - npm install -g testem
+script:
+  # Script to create a tunnel in a develop environment
+  # java -jar node_modules/saucelauncher/Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY --tunnel-identifier $TRAVIS_JOB_NUMBER
+  - testem ci --port 8080
+
+
+# Run tests using Travis CI and Sauce Labs
+# https://saucelabs.com/opensource/travis
+#
+# Secure environment variables
+# http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
+#
+# Extra links
+# https://github.com/axemclion/grunt-saucelabs
+env:
+  global:
+    - secure: "ipMea0lwVbpIbRYqDGsF/ICw26ofFIMalkh2d3oUaaaEHotFYlpcc21MtEV7\nSRXr0KGAuZ3SghOl4P8kng1CDF0yFqc8X7VJQtHIazaoHoD6UjKDdFbItF3Z\no/UFPpHlEnZcfkEaxhHmJ5bf8XOLwa/ztv4QbM6ss59K8XHjnLM="
+    - secure: "E6Zj/6gVbPt+w3JyJLV2Q1TwYP2zgRJyDWxqQq+3Wp/Zkt3Juv8zpZ1KDZ4f\n6ogylVTiWENiGTFTSQOca9MirwZIA9lgm/dP5dbm+NhSDt5k/r9QyWNF0CLv\nHmCIgcBSoETs9xrzQhO8DBLVdvbR0r/HRP3Htrgkk1nljLui4rE="
