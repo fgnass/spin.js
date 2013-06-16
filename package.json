@@ -1,0 +1,17 @@
+{
+  "name": "spin.js",
+  "version": "0.0.0",
+  "description": "An animated CSS3 loading spinner",
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "jsdom": "*",
+    "jQuery": "*",
+    "xmlhttprequest": "*",
+    "wd": "*",
+    "saucelauncher": "*",
+    "soda": "*",
+    "q": "*",
+    "request": "*"
+  }
+}
