@@ -23,9 +23,9 @@ launchers:
     command: node test/lib/saucelauncher-webdriver.js 'safari' '5' 'Windows 7'
     protocol: browser
 
-  #SL_IE_9:
-  #  command: node test/lib/saucelauncher-webdriver.js 'internet explorer' '9' 'Windows 7'
-  #  protocol: browser
+  Win7_IE_9:
+    command: node test/lib/saucelauncher-webdriver.js 'internet explorer' '9' 'Windows 7'
+    protocol: browser
 
   Win8_Firefox:
     command: node test/lib/saucelauncher-webdriver.js 'firefox' '21' 'Windows 8'
@@ -59,5 +59,5 @@ launchers:
     command: node test/lib/saucelauncher-webdriver.js 'ipad' '6' 'OS X 10.8'
     protocol: browser
 
-launch_in_ci: [Win7_Firefox, Win7_Chrome, Win7_Opera, Win7_Safari, Win8_Firefox, Win8_Chrome, Win8_IE_10, WinXP_Firefox, WinXP_Chrome, WinXP_Opera, iPhone, iPad]
+launch_in_ci: [Win7_Firefox, Win7_Chrome, Win7_Opera, Win7_Safari, Win7_IE_9, Win8_Firefox, Win8_Chrome, Win8_IE_10, WinXP_Firefox, WinXP_Chrome, WinXP_Opera, iPhone, iPad]
 launch_in_dev: [phantomjs]

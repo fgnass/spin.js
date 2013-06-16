@@ -75,25 +75,39 @@ describe('Usage Option Test', function() {
     });
 
     it('should clockwise, when create a spinner as {direction: 1}', function(done) {
-      runSpinner( {direction: 1} );
-      result = $(target).find('.spinner > div').first().attr('style');
-      expect(result,  "The first spinner should be 0." ).to.have.string("opacity-100-25-0-12");
-      
-      result = $(target).find('.spinner > div').last().attr('style');
-      expect(result, "The last spinner should be 11." ).to.have.string("opacity-100-25-11-12");
+      // The test will fail in all browsers that use setTimeout() based animations.
+      setTimeout(function(){
+        var regex;
+        runSpinner( {direction: 1} );
 
-      done();
+        regex = /(opacity-100-25-0-12)|(opacity: 0.9[0-9]+)/;
+        result = $(target).find('.spinner > div').first().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        regex = /(opacity-100-25-11-12)|(opacity: 0.9)/;
+        result = $(target).find('.spinner > div').last().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        done();
+      });
     });
 
     it('should counterclockwise, when create a spinner as {direction: -1}', function(done) {
-      runSpinner( {direction: -1} );
-      result = $(target).find('.spinner > div').first().attr('style');
-      expect(result, "The first spinner should be 11." ).to.have.string("opacity-100-25-11-12");
-      
-      result = $(target).find('.spinner > div').last().attr('style');
-      expect(result, "The last spinner should be 0." ).to.have.string("opacity-100-25-0-12");
+      // The test will fail in all browsers that use setTimeout() based animations.
+      setTimeout(function(){
+        var regex;
+        runSpinner( {direction: -1} );
 
-      done();
+        regex = /(opacity-100-25-11-12)|(opacity: 0.9)/;
+        result = $(target).find('.spinner > div').first().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        regex = /(opacity-100-25-0-12)|(opacity: 0.9[0-9]+)/;
+        result = $(target).find('.spinner > div').last().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        done();
+      });
     });
 
     it("should be red, when create a spinner as {color: '#f00'}", function(done) {
@@ -107,19 +121,29 @@ describe('Usage Option Test', function() {
     });
 
     it('should be faster (4 laps per second), when create a spinner as {speed: 4}', function(done) {
-      runSpinner( {speed: 4} );
-      result = $(target).find('.spinner > div').first().attr('style');
-      expect(result).to.have.string("0.25s");
+      // The test will fail in all browsers that use setTimeout() based animations.
+      setTimeout(function(){
+        runSpinner( {speed: 4} );
 
-      done();
+        var regex = /(0.25s)|(opacity: 0.85)/;
+        result = $(target).find('.spinner > div').first().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        done();
+      });
     });
 
     it('should be trails as 50, when create a spinner as {trail: 50}', function(done) {
-      runSpinner( {trail: 50} );
-      result = $(target).find('.spinner > div').first().attr('style');
-      expect(result).to.have.string("opacity-50-25-0-12");
+      // The test will fail in all browsers that use setTimeout() based animations.
+      setTimeout(function(){
+        runSpinner( {trail: 50} );
 
-      done();
+        var regex = /(opacity-50-25-0-12)|(opacity: 0.925)/;
+        result = $(target).find('.spinner > div').first().attr('style');
+        expect( regex.test(result) ).to.be.ok;
+
+        done();
+      });
     });
 
     it('should have shadow, when create a spinner as {shadow: true}', function(done) {
