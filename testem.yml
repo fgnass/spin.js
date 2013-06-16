@@ -1,0 +1,63 @@
+framework: mocha+chai
+
+src_files:
+  - spin.js
+  - test/lib/mocha-reporter.js
+  - test/lib/jquery-1.10.1.min.js
+  - test/spec/**/*.js
+
+launchers:
+  Win7_Firefox:
+    command: node test/lib/saucelauncher-webdriver.js 'firefox' '21' 'Windows 7'
+    protocol: browser
+
+  Win7_Chrome:
+    command: node test/lib/saucelauncher-webdriver.js 'chrome' '27' 'Windows 7'
+    protocol: browser
+
+  Win7_Opera:
+    command: node test/lib/saucelauncher-webdriver.js 'opera' '12' 'Windows 7'
+    protocol: browser
+
+  Win7_Safari:
+    command: node test/lib/saucelauncher-webdriver.js 'safari' '5' 'Windows 7'
+    protocol: browser
+
+  #SL_IE_9:
+  #  command: node test/lib/saucelauncher-webdriver.js 'internet explorer' '9' 'Windows 7'
+  #  protocol: browser
+
+  Win8_Firefox:
+    command: node test/lib/saucelauncher-webdriver.js 'firefox' '21' 'Windows 8'
+    protocol: browser
+
+  Win8_Chrome:
+    command: node test/lib/saucelauncher-webdriver.js 'chrome' '27' 'Windows 8'
+    protocol: browser
+
+  Win8_IE_10:
+    command: node test/lib/saucelauncher-webdriver.js 'internet explorer' '10' 'Windows 8'
+    protocol: browser
+
+  WinXP_Firefox:
+    command: node test/lib/saucelauncher-webdriver.js 'firefox' '21' 'Windows XP'
+    protocol: browser
+
+  WinXP_Chrome:
+    command: node test/lib/saucelauncher-webdriver.js 'chrome' '27' 'Windows XP'
+    protocol: browser
+
+  WinXP_Opera:
+    command: node test/lib/saucelauncher-webdriver.js 'opera' '12' 'Windows XP'
+    protocol: browser
+
+  iPhone:
+    command: node test/lib/saucelauncher-webdriver.js 'iphone' '6' 'OS X 10.8'
+    protocol: browser
+
+  iPad:
+    command: node test/lib/saucelauncher-webdriver.js 'ipad' '6' 'OS X 10.8'
+    protocol: browser
+
+launch_in_ci: [Win7_Firefox, Win7_Chrome, Win7_Opera, Win7_Safari, Win8_Firefox, Win8_Chrome, Win8_IE_10, WinXP_Firefox, WinXP_Chrome, WinXP_Opera, iPhone, iPad]
+launch_in_dev: [phantomjs]
