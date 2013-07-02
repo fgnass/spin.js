@@ -48,6 +48,11 @@
     <br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
     <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
+    <b>Progress</b><br>
+    <label>Enabled:</label><input type="checkbox" name="progress"><br>
+    <label>Top:</label><input type="text" name="progressTop" min="-120" max="120" step="1" value="0"><br>
+    <label>Left:</label><input type="text" name="progressLeft" min="-120" max="120" step="1" value="0"><br>
+    <br>
   </form>
 
   <div class="share">
@@ -117,6 +122,20 @@ target.appendChild(spinner.el);
 <p>
   The returned element is a DIV with <code>position:relative</code> and no height. The center of the spinner
   is positioned at the top left corner of this DIV.
+</p>
+<h3>Tracking the progress</h3>
+<p>
+  If you wish to track the progress of an operation you need to set <code>progress</code> option to <code>true</code> and use the <code>setProgress(completed /*, total */)</code> method to update the display.
+</p>
+<pre class="prettyprint">
+var spinner = new Spinner({
+  trackProgress: true
+}).spin(target);
+
+spinner.setProgress(30); // 30% completed
+</pre>
+<p>
+  To position the progress display inside the spinner you may use the <code>progressTop</code> and <code>progressLeft</code> options. By default the progress display is centered inside the spinner.
 </p>
 <h3>Hiding the spinner</h3>
 <p>
@@ -228,7 +247,8 @@ target.appendChild(spinner.el);
   $.fn.spin = function(opts) {
     this.each(function() {
       var $this = $(this),
-          data = $this.data();
+          data = $this.data(),
+          progress = 0;
 
       if (data.spinner) {
         data.spinner.stop();
@@ -236,6 +256,14 @@ target.appendChild(spinner.el);
       }
       if (opts !== false) {
         data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+      }
+
+      clearInterval($.fn.spin.progressTimer);
+      if (opts.progress) {
+        $.fn.spin.progressTimer = setInterval(function () {
+          data.spinner.setProgress(progress);
+          progress = (progress + 1) % 101;
+        }, 500);
       }
     });
     return this;
