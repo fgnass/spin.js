@@ -130,6 +130,26 @@
     return o
   }
 
+  /**
+   * Returns progress tracker display.
+   */
+  function createProgressTracker(radius, length, offsetTop, offsetLeft, color) {
+    var dim = 2 * (radius + length)
+
+    if (dim < 50) dim = 50
+
+    return css(createEl('div', {innerHTML: '0%'}), {
+      textAlign : 'center',
+      width : dim + 'px',
+      height: dim + 'px',
+      lineHeight: dim + 'px',
+      position : 'absolute',
+      top : (offsetTop - dim / 2) + 'px',
+      left : (offsetLeft - dim / 2) + 'px',
+      color : color
+    })
+  }
+
   // Built-in defaults
 
   var defaults = {
@@ -149,7 +169,10 @@
     className: 'spinner', // CSS class to assign to the element
     top: 'auto',          // center vertically
     left: 'auto',         // center horizontally
-    position: 'relative'  // element position
+    position: 'relative', // element position
+    progress: false,      // show progress tracker
+    progressTop: 0,       // offset top for progress tracker
+    progressLeft: 0       // offset left for progress tracker
   }
 
   /** The constructor */
@@ -191,6 +214,11 @@
       el.setAttribute('role', 'progressbar')
       self.lines(el, self.opts)
 
+      if (o.progress) {
+        self.progressTracker = createProgressTracker(o.radius, o.length, o.progressTop, o.progressLeft, o.color)
+        ins(el, self.progressTracker)
+      }
+
       if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var i = 0
@@ -208,6 +236,7 @@
 
             self.opacity(el, j * o.direction + start, alpha, o)
           }
+
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
@@ -225,6 +254,16 @@
         this.el = undefined
       }
       return this
+    },
+
+    /**
+     * Update progress status.
+     */
+    setProgress: function(completed, total) {
+      if (this.progressTracker) {
+        total = total || 100
+        this.progressTracker.innerHTML = Math.round((completed / total) * 100) + '%'
+      }
     },
 
     /**
