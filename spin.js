@@ -10,10 +10,10 @@
   if (typeof exports == 'object')  module.exports = factory()
 
   /* AMD module */
-  else if (typeof define == 'function' && define.amd) define(factory)
+  if (typeof define == 'function' && define.amd) define(factory)
 
   /* Browser global */
-  else root.Spinner = factory()
+  root.Spinner = factory()
 }
 (this, function() {
   "use strict";
