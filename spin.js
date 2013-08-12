@@ -165,7 +165,7 @@
 
     /**
      * Adds the spinner to the given target element. If this instance is already
-     * spinning, it is automatically removed from its previous target b calling
+     * spinning, it is automatically removed from its previous target by calling
      * stop() internally.
      */
     spin: function(target) {
