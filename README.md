@@ -18,4 +18,4 @@ An animated CSS3 loading spinner with VML fallback for IE.
 new Spinner({color:'#fff', lines: 12}).spin(target);
 ```
 
-For an interactive demo and a list of all supported options please refer to the [project's homepage](http://fgnass.github.com/spin.js).
+For an interactive demo and a list of all supported options please refer to the [project's homepage](http://fgnass.github.io/spin.js/).
