@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.3
+//fgnass.github.com/spin.js#v1.3.1
 
 /**
  * Copyright (c) 2011-2013 Felix Gnass
@@ -131,14 +131,11 @@
   }
 
   /**
-   * Returns line color from string or from array based on index.
+   * Returns the line color from the given string or array.
    */
-   function getColor(color, idx){
-    if( typeof color == 'object' && color.length ){
-      return color[ idx % color.length];
-    }
-    return color;
-   }
+  function getColor(color, idx) {
+    return typeof color == 'string' ? color : color[idx % color.length]
+  }
 
   // Built-in defaults
 
