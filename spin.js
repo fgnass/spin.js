@@ -130,6 +130,16 @@
     return o
   }
 
+  /**
+   * Returns line color from string or from array based on index.
+   */
+   function getColor(color, idx){
+    if( typeof color == 'object' && color.length ){
+      return color[ idx % color.length];
+    }
+    return color;
+   }
+
   // Built-in defaults
 
   var defaults = {
@@ -259,8 +269,7 @@
         })
 
         if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
-
-        ins(el, ins(seg, fill(o.color, '0 0 1px rgba(0,0,0,.1)')))
+        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
       }
       return el
     },
@@ -314,7 +323,7 @@
                 top: -o.width>>1,
                 filter: filter
               }),
-              vml('fill', {color: o.color, opacity: o.opacity}),
+              vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
               vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
             )
           )
