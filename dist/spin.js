@@ -1,4 +1,4 @@
-//fgnass.github.com/spin.js#v1.3.1
+//fgnass.github.com/spin.js#v1.3.2
 
 /**
  * Copyright (c) 2011-2013 Felix Gnass
@@ -89,12 +89,12 @@
       , pp
       , i
 
-    if(s[prop] !== undefined) return prop
     prop = prop.charAt(0).toUpperCase() + prop.slice(1)
     for(i=0; i<prefixes.length; i++) {
       pp = prefixes[i]+prop
       if(s[pp] !== undefined) return pp
     }
+    if(s[prop] !== undefined) return prop
   }
 
   /**
