@@ -77,7 +77,7 @@ $('#el').spin('flower', 'red');
   function useDataAttributes(opts, data) {
     var attrs = ['lines', 'length', 'width', 'radius', 'corners', 'rotate', 'direction', 'color', 'speed', 'trail', 'shadow', 'hwaccel', 'className', 'zIndex', 'top', 'left'];
     for (attr in attrs) {
-      if (data[attrs[attr]]) {
+      if (data[attrs[attr]] !== undefined) {
         opts[attrs[attr]] = data[attrs[attr]];
       }
     }
