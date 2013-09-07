@@ -156,7 +156,8 @@
     className: 'spinner', // CSS class to assign to the element
     top: 'auto',          // center vertically
     left: 'auto',         // center horizontally
-    position: 'relative'  // element position
+    position: 'relative', // element position
+    overlay:false         // creates an overlay div below the spinner, blocking all user interaction until spinner ends
   }
 
   /** The constructor */
@@ -185,6 +186,11 @@
         , ep // element position
         , tp // target position
 
+       /**
+       * If no target is given, defaults to document body.
+       */
+      var target = target || document.body
+
       if (target) {
         target.insertBefore(el, target.firstChild||null)
         tp = pos(target)
@@ -193,6 +199,14 @@
           left: (o.left == 'auto' ? tp.x-ep.x + (target.offsetWidth >> 1) : parseInt(o.left, 10) + mid) + 'px',
           top: (o.top == 'auto' ? tp.y-ep.y + (target.offsetHeight >> 1) : parseInt(o.top, 10) + mid)  + 'px'
         })
+      }
+       /**
+       * Creates an overlay layer if option overlay is set to true.
+       */
+      if ( o && o.overlay===true ) {
+        var cssopts = {opacity:'0.3', background:'#000', width:'100%', height:'100%', zIndex: o.zIndex-1, top:0, left:0, position:'fixed'}
+          , overlay = self.overlay = css(createEl(0),cssopts)
+        document.body.appendChild(overlay);
       }
 
       el.setAttribute('role', 'progressbar')
@@ -226,10 +240,15 @@
      */
     stop: function() {
       var el = this.el
+        , overlay = this.overlay
       if (el) {
         clearTimeout(this.timeout)
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
+      }
+      if (overlay) {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay)
+        this.overlay = undefined
       }
       return this
     },
