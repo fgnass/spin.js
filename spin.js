@@ -140,6 +140,7 @@
   // Built-in defaults
 
   var defaults = {
+  	innerImage: null,     // an image shown inside the spinner
     lines: 12,            // The number of lines to draw
     length: 7,            // The length of each line
     width: 5,             // The line thickness
@@ -189,10 +190,27 @@
         target.insertBefore(el, target.firstChild||null)
         tp = pos(target)
         ep = pos(el)
+        
         css(el, {
           left: (o.left == 'auto' ? tp.x-ep.x + (target.offsetWidth >> 1) : parseInt(o.left, 10) + mid) + 'px',
           top: (o.top == 'auto' ? tp.y-ep.y + (target.offsetHeight >> 1) : parseInt(o.top, 10) + mid)  + 'px'
         })
+        
+        if (o.innerImage) {        
+          imgEl = createEl('img', {src: o.innerImage.url});
+        
+          var imageSize = (o.radius) * 2;
+          var imagePosition = o.radius;
+          css(imgEl, {
+          	position: 'absolute',          
+          	left: '-' + Math.floor(o.innerImage.width / 2) + 'px',
+          	top: '-' + Math.floor(o.innerImage.width / 2) + 'px',
+          	width: '' +  o.innerImage.width + "px",
+          	height: '' +  o.innerImage.height + "px"
+          });
+          
+          ins(el, imgEl);
+        }
       }
 
       el.setAttribute('role', 'progressbar')
