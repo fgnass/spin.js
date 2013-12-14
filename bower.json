@@ -7,5 +7,15 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/fgnass/spin.js.git"
-  }
+  },
+  "ignore": [
+    "*.html",
+    "*.ico",
+    "Makefile",
+    "assets",
+    "bower.json",
+    "component.json",
+    "example",
+    "package.json"
+  ]
 }
