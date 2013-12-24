@@ -1,4 +1,5 @@
 .DS_Store
+.grunt
 node_modules
 site/spin.js
 site/spin.min.js
