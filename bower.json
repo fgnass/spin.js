@@ -1,11 +1,18 @@
 {
   "name": "spin.js",
   "version": "1.3.2",
-  "main": "./dist/spin.js",
+  "main": "spin.js",
   "dependencies": {},
   "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git://github.com/fgnass/spin.js.git"
-  }
+  },
+  "ignore": [
+    "Gruntfile.js",
+    "site",
+    "bower.json",
+    "component.json",
+    "package.json"
+  ]
 }

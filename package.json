@@ -2,9 +2,6 @@
   "name": "spin.js",
   "version": "1.3.2",
   "main": "spin.js",
-  "directories": {
-    "example": "example"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/fgnass/spin.js.git"
@@ -18,5 +15,12 @@
     "scripts": {
       "spin": "spin.js"
     }
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-gh-pages": "~0.9.0",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-bump": "0.0.13"
   }
 }
