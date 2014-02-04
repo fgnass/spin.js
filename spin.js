@@ -154,7 +154,11 @@
     className: 'spinner', // CSS class to assign to the element
     top: 'auto',          // center vertically
     left: 'auto',         // center horizontally
-    position: 'relative'  // element position
+    position: 'relative', // element position
+    timeout: NaN,         // seconds until the onTimeout handler is called
+    onTimeout: function() { // default timeout handler
+      this.stop();
+    }
   }
 
   /** The constructor */
@@ -216,6 +220,13 @@
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
+      if(!isNaN(o.timeout)) {
+        self.spinTimeout = setTimeout(function() {
+          if(typeof self.opts.onTimeout == "function") {
+            self.opts.onTimeout.call(self)
+          }
+        }, ~~(o.timeout)*1000)
+      }
       return self
     },
 
@@ -226,6 +237,7 @@
       var el = this.el
       if (el) {
         clearTimeout(this.timeout)
+        clearTimeout(this.spinTimeout)
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
       }

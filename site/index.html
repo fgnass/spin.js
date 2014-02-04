@@ -48,6 +48,7 @@
     <br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
     <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
+    <label>Timeout:</label><input type="text" name="timeout" min="0" max="100" value="NaN"><br>
   </form>
 
   <div class="share">
@@ -89,6 +90,8 @@ var opts = {
   trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
   shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
   hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration
+  timeout: <span id="opt-timeout" class="kwd">NaN</span>, // Time in seconds until onTimeout is called. Set to NaN to disable.
+  onTimeout: function() { this.stop(); },
   className: 'spinner', // The CSS class to assign to the spinner
   zIndex: 2e9, // The z-index (defaults to 2000000000)
   top: 'auto', // Top position relative to parent in px
