@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 Felix Gnass
+ * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
  */
 (function(root, factory) {
@@ -154,7 +154,7 @@
     className: 'spinner', // CSS class to assign to the element
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
-    position: 'relative'  // element position
+    position: 'absolute'  // element position
   }
 
   /** The constructor */
@@ -179,13 +179,9 @@
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
         , mid = o.radius+o.length+o.width
-        , ep // element position
-        , tp // target position
 
       if (target) {
         target.insertBefore(el, target.firstChild||null)
-        tp = pos(target)
-        ep = pos(el)
         css(el, {
           left: o.left,
           top: o.top

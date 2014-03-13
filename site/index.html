@@ -101,11 +101,7 @@ var spinner = new Spinner(opts).spin(target);
   The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target
   element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
 </p>
-<h3>Manual positioning</h3>
-<p>
-  By default the spinner is centered within the target element. Alternatively you may specify a <code>top</code> and
-  <code>left</code> option to position the spinner relative to the target element.
-</p>
+<h3>Manual insertion</h3>
 <p>
   In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any
   arguments and use the <code>el</code> property to access the HTML element:
@@ -114,9 +110,15 @@ var spinner = new Spinner(opts).spin(target);
 var spinner = new Spinner().spin();
 target.appendChild(spinner.el);
 </pre>
+<h3>Positioning</h3>
 <p>
-  The returned element is a DIV with <code>position:relative</code> and no height. The center of the spinner
-  is positioned at the top left corner of this DIV.
+  Since version 2.0.0 the spinner is absolutely positioned at 50% of its offset parent.
+  You may specify a <code>top</code> and <code>left</code> option to position the spinner manually.
+</p>
+<p>
+  <b>Note:</b> The spinner element is a 0&times;0 pixel DIV that represents the center of the spinner.
+  Hence, if you passed <code>{top:0, left:0}</code> only the lower right quater of the spinner would be inside
+  the target's bounding box.
 </p>
 <h3>Hiding the spinner</h3>
 <p>
@@ -144,6 +146,10 @@ target.appendChild(spinner.el);
 
 <h2>Changes</h2>
 
+<h3 id="v2.0.0">Version 2.0.0 (13.03.2014)</h3>
+<ul>
+  <li>The Spinner is now absolutely positioned at top: 50% left: 50% by default. (Thanks <a href="https://github.com/steelywing">steelywing</a>)</li>
+</ul>
 <h3 id="v1.3.3">Version 1.3.3 (24.12.2013)</h3>
 <ul>
   <li>Grunt-based build and a master branch. See <a href="https://github.com/fgnass/spin.js/issues/189">issue #189</a>.</li>

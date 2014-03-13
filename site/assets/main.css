@@ -110,6 +110,7 @@ h3 {
   _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=ribbon.png);
 }
 #preview {
+  position: relative;
   background: #333;
   color: #fff;
   float: left;
