@@ -1,7 +1,8 @@
 {
   /* Additional globals */
   "predef": [
-    "define"
+    "define",
+    "module"
   ],
 
   /* Enforcing Options */
@@ -19,7 +20,6 @@
 
   "asi"           : true,   // Switches off warnings about missing semi-colons
   "boss"          : true,   // Switches off warnings about assignments in places where conditions are expected
-  "es5"           : true,   // Switches off warnings when using ECMAScript 5 features
   "evil"          : true,   // Switches off warnings about the use of eval
   "expr"          : true,   // Switches off warnings when using expressions in places where assignments are expected
   "laxbreak"      : true,   // Switches off warnings about improper line breaks
