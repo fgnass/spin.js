@@ -1,3 +1,11 @@
+/**
+ * Workflow to release a new version:
+ * grunt bump-only:minor
+ * grunt
+ * grunt gh-pages
+ * grunt bump-commit
+ * npm publish
+ */
 module.exports = function(grunt) {
 
   grunt.initConfig({
