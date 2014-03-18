@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 Felix Gnass
+ * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
  */
 
