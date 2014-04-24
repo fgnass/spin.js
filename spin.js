@@ -180,12 +180,13 @@
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
         , mid = o.radius+o.length+o.width
 
+      css(el, {
+        left: o.left,
+        top: o.top
+      })
+        
       if (target) {
         target.insertBefore(el, target.firstChild||null)
-        css(el, {
-          left: o.left,
-          top: o.top
-        })
       }
 
       el.setAttribute('role', 'progressbar')
