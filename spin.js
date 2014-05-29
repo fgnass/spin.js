@@ -45,34 +45,6 @@
   }
 
   /**
-   * Creates an opacity keyframe animation rule and returns its name.
-   * Since most mobile Webkits have timing issues with animation-delay,
-   * we create separate rules for each line/segment.
-   */
-  function addAnimation(sheet, property, alpha, trail, i, lines) {
-    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
-      , start = 0.01 + i/lines * 100
-      , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
-      , prefix = property.substring(0, property.indexOf('Animation')).toLowerCase()
-      , pre = prefix && '-' + prefix + '-' || ''
-
-    if (!animations[name]) {
-      sheet.insertRule(
-        '@' + pre + 'keyframes ' + name + '{' +
-        '0%{opacity:' + z + '}' +
-        start + '%{opacity:' + alpha + '}' +
-        (start+0.01) + '%{opacity:1}' +
-        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
-        '100%{opacity:' + z + '}' +
-        '}', sheet.cssRules.length)
-
-      animations[name] = 1
-    }
-
-    return name
-  }
-
-  /**
    * Tries various vendor prefixes and returns the first supported property.
    */
   function vendor(el, prop) {
@@ -175,6 +147,11 @@
         , mid = o.radius+o.length+o.width
 
       /**
+       * Track animations per spinner
+       */
+      self.animations = {}
+
+      /**
        * Insert a new stylesheet to hold the @keyframe or VML rules.
        */
       var styleEl = createEl('style', {type : 'text/css'}, o.document)
@@ -197,6 +174,37 @@
       } else {
         useCssAnimations = true
         animationsProperty = vendor(probe, 'animation')
+      }
+
+      /**
+       * Creates an opacity keyframe animation rule and returns its name.
+       * Since most mobile Webkits have timing issues with animation-delay,
+       * we create separate rules for each line/segment.
+       */
+      function addAnimation(sheet, property, alpha, trail, i, lines) {
+        var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
+          , start = 0.01 + i/lines * 100
+          , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
+          , prefix = property.substring(0, property.indexOf('Animation')).toLowerCase()
+          , pre = prefix && '-' + prefix + '-' || ''
+
+        if (!animations[name]) {
+          sheet.insertRule(
+            '@' + pre + 'keyframes ' + name + '{' +
+            '0%{opacity:' + z + '}' +
+            start + '%{opacity:' + alpha + '}' +
+            (start+0.01) + '%{opacity:1}' +
+            (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+            '100%{opacity:' + z + '}' +
+            '}', sheet.cssRules.length)
+
+          animations[name] = 1
+        } else {
+          animations[name]++
+        }
+        self.animations[name] = 1;
+
+        return name
       }
 
       /**
@@ -352,6 +360,13 @@
         styleEl = self.styleEl
       if (el) {
         clearTimeout(self.timeout)
+        for (var name in self.animations) {
+          animations[name]--
+          if (0 == animations[name]) {
+            delete animations[name]
+          }
+        }
+        delete self.animations
         if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl)
         self.styleEl = undefined
         if (el.parentNode) el.parentNode.removeChild(el)
