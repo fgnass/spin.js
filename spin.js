@@ -180,6 +180,7 @@
       var styleEl = createEl('style', {type : 'text/css'}, o.document)
       ins(o.document.getElementsByTagName('head')[0], styleEl)
       var sheet = styleEl.sheet || styleEl.styleSheet
+      self.styleEl = styleEl
 
       /**
        * Check for support.
@@ -347,9 +348,12 @@
      */
     stop: function() {
       var self = this,
-        el = self.el
+        el = self.el,
+        styleEl = self.styleEl
       if (el) {
         clearTimeout(self.timeout)
+        if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl)
+        self.styleEl = undefined
         if (el.parentNode) el.parentNode.removeChild(el)
         self.el = undefined
       }
