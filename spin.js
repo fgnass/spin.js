@@ -118,17 +118,6 @@
   }
 
   /**
-   * Returns the absolute page-offset of the given element.
-   */
-  function pos(el) {
-    var o = { x:el.offsetLeft, y:el.offsetTop }
-    while((el = el.offsetParent))
-      o.x+=el.offsetLeft, o.y+=el.offsetTop
-
-    return o
-  }
-
-  /**
    * Returns the line color from the given string or array.
    */
   function getColor(color, idx) {
