@@ -154,7 +154,9 @@
     className: 'spinner', // CSS class to assign to the element
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
-    position: 'absolute'  // element position
+    position: 'absolute', // element position
+    onStart: null,        // onStart callback
+    onStop: null          // onStop callback
   }
 
   /** The constructor */
@@ -173,12 +175,14 @@
      * stop() internally.
      */
     spin: function(target) {
-      this.stop()
+      this.stop(true)   // bypass onStop callback
 
       var self = this
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
         , mid = o.radius+o.length+o.width
+        
+      self.target = target;
 
       css(el, {
         left: o.left,
@@ -212,19 +216,31 @@
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
+      
+      if (typeof o.onStart === 'function') {
+        o.onStart.call(target, o);
+      }
+      
       return self
     },
 
     /**
      * Stops and removes the Spinner.
      */
-    stop: function() {
-      var el = this.el
+    stop: function(bypass) {
+      var el = this.el,
+          o = el.opts
+      
       if (el) {
         clearTimeout(this.timeout)
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
       }
+      
+      if (!bypass && typeof o.onStop === 'function') {
+        o.onStop.call(this.target, o);
+      }
+      
       return this
     },
 
