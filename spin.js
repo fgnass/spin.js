@@ -18,17 +18,19 @@
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
-    , useCssAnimations /* Whether to use CSS animations or setTimeout */
 
   /**
    * Utility function to create elements. If no tag name is given,
    * a DIV is created. Optionally properties can be passed.
    */
-  function createEl(tag, prop) {
-    var el = document.createElement(tag || 'div')
+  function createEl(tag, prop, doc) {
+    var el = doc.createElement(tag || 'div')
       , n
 
-    for(n in prop) el[n] = prop[n]
+    if (prop) {
+      for(n in prop) el[n] = prop[n]
+    }
+
     return el
   }
 
@@ -40,43 +42,6 @@
       parent.appendChild(arguments[i])
 
     return parent
-  }
-
-  /**
-   * Insert a new stylesheet to hold the @keyframe or VML rules.
-   */
-  var sheet = (function() {
-    var el = createEl('style', {type : 'text/css'})
-    ins(document.getElementsByTagName('head')[0], el)
-    return el.sheet || el.styleSheet
-  }())
-
-  /**
-   * Creates an opacity keyframe animation rule and returns its name.
-   * Since most mobile Webkits have timing issues with animation-delay,
-   * we create separate rules for each line/segment.
-   */
-  function addAnimation(alpha, trail, i, lines) {
-    var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
-      , start = 0.01 + i/lines * 100
-      , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
-      , prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase()
-      , pre = prefix && '-' + prefix + '-' || ''
-
-    if (!animations[name]) {
-      sheet.insertRule(
-        '@' + pre + 'keyframes ' + name + '{' +
-        '0%{opacity:' + z + '}' +
-        start + '%{opacity:' + alpha + '}' +
-        (start+0.01) + '%{opacity:1}' +
-        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
-        '100%{opacity:' + z + '}' +
-        '}', sheet.cssRules.length)
-
-      animations[name] = 1
-    }
-
-    return name
   }
 
   /**
@@ -154,7 +119,8 @@
     className: 'spinner', // CSS class to assign to the element
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
-    position: 'absolute'  // element position
+    position: 'absolute', // element position
+    document: document    // document to add the css rules to
   }
 
   /** The constructor */
@@ -177,8 +143,179 @@
 
       var self = this
         , o = self.opts
-        , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
+        , el = self.el = css(createEl(0, {className: o.className}, o.document), {position: o.position, width: 0, zIndex: o.zIndex})
         , mid = o.radius+o.length+o.width
+
+      /**
+       * Track animations per spinner
+       */
+      self.animations = {}
+
+      /**
+       * Insert a new stylesheet to hold the @keyframe or VML rules.
+       */
+      var styleEl = createEl('style', {type : 'text/css'}, o.document)
+      ins(o.document.getElementsByTagName('head')[0], styleEl)
+      var sheet = styleEl.sheet || styleEl.styleSheet
+      self.styleEl = styleEl
+
+      /**
+       * Check for support.
+       */
+      var probe = css(createEl('group', null, o.document), {behavior: 'url(#default#VML)'}),
+          useVml = false,
+          useTimeout = false,
+          useCssAnimations = false,
+          animationsProperty
+      if (!vendor(probe, 'transform') && probe.adj) {
+        useVml = true
+      } else if (!vendor(probe, 'animation')) {
+        useTimeout = true
+      } else {
+        useCssAnimations = true
+        animationsProperty = vendor(probe, 'animation')
+      }
+
+      /**
+       * Creates an opacity keyframe animation rule and returns its name.
+       * Since most mobile Webkits have timing issues with animation-delay,
+       * we create separate rules for each line/segment.
+       */
+      function addAnimation(sheet, property, alpha, trail, i, lines) {
+        var name = ['opacity', trail, ~~(alpha*100), i, lines].join('-')
+          , start = 0.01 + i/lines * 100
+          , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
+          , prefix = property.substring(0, property.indexOf('Animation')).toLowerCase()
+          , pre = prefix && '-' + prefix + '-' || ''
+
+        if (!animations[name]) {
+          sheet.insertRule(
+            '@' + pre + 'keyframes ' + name + '{' +
+            '0%{opacity:' + z + '}' +
+            start + '%{opacity:' + alpha + '}' +
+            (start+0.01) + '%{opacity:1}' +
+            (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+            '100%{opacity:' + z + '}' +
+            '}', sheet.cssRules.length)
+
+          animations[name] = 1
+        } else {
+          animations[name]++
+        }
+        self.animations[name] = 1;
+
+        return name
+      }
+
+      /**
+       * Internal method that adjusts the opacity of a single line.
+       * Will be overwritten in VML fallback mode below.
+       */
+      var setOpacity = function(el, i, val, o) {
+        if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
+      }
+
+      /**
+       * Internal method that draws the individual lines.
+       * Will be overwritten in VML fallback mode below.
+       */
+      var drawLines = (function (sheet) {
+        return function (el, o) {
+          var i = 0
+              , start = (o.lines - 1) * (1 - o.direction) / 2
+              , seg
+
+          function fill(color, shadow) {
+            return css(createEl(null, null, o.document), {
+              position: 'absolute',
+              width: (o.length+o.width) + 'px',
+              height: o.width + 'px',
+              background: color,
+              boxShadow: shadow,
+              transformOrigin: 'left',
+              transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
+              borderRadius: (o.corners * o.width>>1) + 'px'
+            })
+          }
+
+          for (; i < o.lines; i++) {
+            seg = css(createEl(null, null, o.document), {
+              position: 'absolute',
+              top: 1+~(o.width/2) + 'px',
+              transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
+              opacity: o.opacity,
+              animation: useCssAnimations && addAnimation(sheet, animationsProperty, o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
+            })
+
+            if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
+            ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
+          }
+          return el
+        }
+      }(sheet))
+
+      if (useVml) {
+        sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
+
+        setOpacity = function(el, i, val, o) {
+          var c = el.firstChild
+          o = o.shadow && o.lines || 0
+          if (c && i+o < c.childNodes.length) {
+            c = c.childNodes[i+o]; c = c && c.firstChild; c = c && c.firstChild
+            if (c) c.opacity = val
+          }
+        }
+
+        drawLines = function(el, o) {
+          var r = o.length+o.width
+              , s = 2*r
+
+          /**
+           * Utility function to create a VML tag
+           */
+          function vml(tag, attr) {
+            return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr, o.document)
+          }
+
+          function grp() {
+            return css(
+                vml('group', {
+                  coordsize: s + ' ' + s,
+                  coordorigin: -r + ' ' + -r
+                }),
+                { width: s, height: s }
+            )
+          }
+
+          var margin = -(o.width+o.length)*2 + 'px'
+              , g = css(grp(), {position: 'absolute', top: margin, left: margin})
+              , i
+
+          function seg(i, dx, filter) {
+            ins(g,
+                ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
+                    ins(css(vml('roundrect', {arcsize: o.corners}), {
+                      width: r,
+                      height: o.width,
+                      left: o.radius,
+                      top: -o.width>>1,
+                      filter: filter
+                    }),
+                        vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
+                        vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
+                    )
+                )
+            )
+          }
+
+          if (o.shadow)
+            for (i = 1; i <= o.lines; i++)
+              seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)')
+
+          for (i = 1; i <= o.lines; i++) seg(i)
+          return ins(el, g)
+        }
+      }
 
       css(el, {
         left: o.left,
@@ -190,10 +327,9 @@
       }
 
       el.setAttribute('role', 'progressbar')
-      self.lines(el, self.opts)
+      drawLines(el, o)
 
-      if (!useCssAnimations) {
-        // No CSS animation support, use setTimeout() instead
+      if (useTimeout) {
         var i = 0
           , start = (o.lines - 1) * (1 - o.direction) / 2
           , alpha
@@ -207,7 +343,7 @@
           for (var j = 0; j < o.lines; j++) {
             alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
 
-            self.opacity(el, j * o.direction + start, alpha, o)
+            setOpacity(el, j * o.direction + start, alpha, o)
           }
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
@@ -219,130 +355,26 @@
      * Stops and removes the Spinner.
      */
     stop: function() {
-      var el = this.el
+      var self = this,
+        el = self.el,
+        styleEl = self.styleEl
       if (el) {
-        clearTimeout(this.timeout)
+        clearTimeout(self.timeout)
+        for (var name in self.animations) {
+          animations[name]--
+          if (0 == animations[name]) {
+            delete animations[name]
+          }
+        }
+        delete self.animations
+        if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl)
+        self.styleEl = undefined
         if (el.parentNode) el.parentNode.removeChild(el)
-        this.el = undefined
+        self.el = undefined
       }
       return this
-    },
-
-    /**
-     * Internal method that draws the individual lines. Will be overwritten
-     * in VML fallback mode below.
-     */
-    lines: function(el, o) {
-      var i = 0
-        , start = (o.lines - 1) * (1 - o.direction) / 2
-        , seg
-
-      function fill(color, shadow) {
-        return css(createEl(), {
-          position: 'absolute',
-          width: (o.length+o.width) + 'px',
-          height: o.width + 'px',
-          background: color,
-          boxShadow: shadow,
-          transformOrigin: 'left',
-          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
-          borderRadius: (o.corners * o.width>>1) + 'px'
-        })
-      }
-
-      for (; i < o.lines; i++) {
-        seg = css(createEl(), {
-          position: 'absolute',
-          top: 1+~(o.width/2) + 'px',
-          transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
-          opacity: o.opacity,
-          animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
-        })
-
-        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
-        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
-      }
-      return el
-    },
-
-    /**
-     * Internal method that adjusts the opacity of a single line.
-     * Will be overwritten in VML fallback mode below.
-     */
-    opacity: function(el, i, val) {
-      if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
     }
-
   })
-
-
-  function initVML() {
-
-    /* Utility function to create a VML tag */
-    function vml(tag, attr) {
-      return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr)
-    }
-
-    // No CSS transforms but VML support, add a CSS rule for VML elements:
-    sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
-
-    Spinner.prototype.lines = function(el, o) {
-      var r = o.length+o.width
-        , s = 2*r
-
-      function grp() {
-        return css(
-          vml('group', {
-            coordsize: s + ' ' + s,
-            coordorigin: -r + ' ' + -r
-          }),
-          { width: s, height: s }
-        )
-      }
-
-      var margin = -(o.width+o.length)*2 + 'px'
-        , g = css(grp(), {position: 'absolute', top: margin, left: margin})
-        , i
-
-      function seg(i, dx, filter) {
-        ins(g,
-          ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
-            ins(css(vml('roundrect', {arcsize: o.corners}), {
-                width: r,
-                height: o.width,
-                left: o.radius,
-                top: -o.width>>1,
-                filter: filter
-              }),
-              vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
-              vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
-            )
-          )
-        )
-      }
-
-      if (o.shadow)
-        for (i = 1; i <= o.lines; i++)
-          seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)')
-
-      for (i = 1; i <= o.lines; i++) seg(i)
-      return ins(el, g)
-    }
-
-    Spinner.prototype.opacity = function(el, i, val, o) {
-      var c = el.firstChild
-      o = o.shadow && o.lines || 0
-      if (c && i+o < c.childNodes.length) {
-        c = c.childNodes[i+o]; c = c && c.firstChild; c = c && c.firstChild
-        if (c) c.opacity = val
-      }
-    }
-  }
-
-  var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
-
-  if (!vendor(probe, 'transform') && probe.adj) initVML()
-  else useCssAnimations = vendor(probe, 'animation')
 
   return Spinner
 
