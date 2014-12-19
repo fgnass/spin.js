@@ -37,7 +37,7 @@ $('#el').spin('flower', 'red');
 
   if (typeof exports == 'object') {
     // CommonJS
-    factory(require('jquery'), require('spin'))
+    factory(require('jquery'), require('spin.js'))
   }
   else if (typeof define == 'function' && define.amd) {
     // AMD, register as anonymous module
