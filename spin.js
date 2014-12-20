@@ -143,7 +143,9 @@
     className: 'spinner', // CSS class to assign to the element
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
-    position: 'absolute'  // element position
+    position: 'absolute',  // element position
+    stopTimer: 7000,      // Default time for stoppining the spinner
+    autoStop: false       //Flag if spinner should be stop automatically
   }
 
   /** The constructor */
@@ -176,7 +178,12 @@
       if (target) {
         target.insertBefore(el, target.firstChild||null)
       }
-
+      if (o.autoStop){
+        setInterval(function () {
+                    if (self.el != undefined)
+                        self.stop();
+                }, o.stopTimer);
+      }
       el.setAttribute('role', 'progressbar')
       self.lines(el, self.opts)
 
