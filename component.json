@@ -2,7 +2,7 @@
   "name": "spin",
   "repo": "fgnass/spin.js",
   "description": "A spinning activity indicator",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "spin.js",
   "scripts": [
     "spin.js"
