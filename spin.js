@@ -19,6 +19,7 @@
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
     , useCssAnimations /* Whether to use CSS animations or setTimeout */
+    , sheet /* A stylesheet to hold the @keyframe or VML rules. */
 
   /**
    * Utility function to create elements. If no tag name is given,
@@ -41,15 +42,6 @@
 
     return parent
   }
-
-  /**
-   * Insert a new stylesheet to hold the @keyframe or VML rules.
-   */
-  var sheet = (function() {
-    var el = createEl('style', {type : 'text/css'})
-    ins(document.getElementsByTagName('head')[0], el)
-    return el.sheet || el.styleSheet
-  }())
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
@@ -327,10 +319,18 @@
     }
   }
 
-  var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+  if (typeof document !== 'undefined') {
+    sheet = (function() {
+      var el = createEl('style', {type : 'text/css'})
+      ins(document.getElementsByTagName('head')[0], el)
+      return el.sheet || el.styleSheet
+    }())
 
-  if (!vendor(probe, 'transform') && probe.adj) initVML()
-  else useCssAnimations = vendor(probe, 'animation')
+    var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+
+    if (!vendor(probe, 'transform') && probe.adj) initVML()
+    else useCssAnimations = vendor(probe, 'animation')
+  }
 
   return Spinner
 
