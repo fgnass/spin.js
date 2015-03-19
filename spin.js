@@ -226,7 +226,8 @@
           boxShadow: shadow,
           transformOrigin: 'left',
           transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
-          borderRadius: (o.corners * o.width>>1) + 'px'
+          borderRadius: (o.corners * o.width>>1) + 'px',
+          backfaceVisibility: 'hidden'
         })
       }
 
