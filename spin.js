@@ -123,6 +123,7 @@
     length: 7,            // The length of each line
     width: 5,             // The line thickness
     radius: 10,           // The radius of the inner circle
+    scale: 1.0,           // Scales overall size of the spinner
     rotate: 0,            // Rotation offset
     corners: 1,           // Roundness (0..1)
     color: '#000',        // #rgb or #rrggbb
@@ -220,20 +221,20 @@
       function fill(color, shadow) {
         return css(createEl(), {
           position: 'absolute',
-          width: (o.length+o.width) + 'px',
-          height: o.width + 'px',
+          width: o.scale*(o.length+o.width) + 'px',
+          height: o.scale*o.width + 'px',
           background: color,
           boxShadow: shadow,
           transformOrigin: 'left',
-          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
-          borderRadius: (o.corners * o.width>>1) + 'px'
+          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.scale*o.radius+'px' +',0)',
+          borderRadius: (o.corners * o.scale*o.width>>1) + 'px'
         })
       }
 
       for (; i < o.lines; i++) {
         seg = css(createEl(), {
           position: 'absolute',
-          top: 1+~(o.width/2) + 'px',
+          top: 1+~(o.scale*o.width/2) + 'px',
           transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
           opacity: o.opacity,
           animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
@@ -267,8 +268,8 @@
     sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
 
     Spinner.prototype.lines = function(el, o) {
-      var r = o.length+o.width
-        , s = 2*r
+      var r = o.scale*(o.length+o.width)
+        , s = o.scale*2*r
 
       function grp() {
         return css(
@@ -280,7 +281,7 @@
         )
       }
 
-      var margin = -(o.width+o.length)*2 + 'px'
+      var margin = -(o.width+o.length)*o.scale*2 + 'px'
         , g = css(grp(), {position: 'absolute', top: margin, left: margin})
         , i
 
@@ -289,9 +290,9 @@
           ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
             ins(css(vml('roundrect', {arcsize: o.corners}), {
                 width: r,
-                height: o.width,
-                left: o.radius,
-                top: -o.width>>1,
+                height: o.scale*o.width,
+                left: o.scale*o.radius,
+                top: -o.scale*o.width>>1,
                 filter: filter
               }),
               vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
