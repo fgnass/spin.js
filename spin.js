@@ -19,6 +19,7 @@
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
     , useCssAnimations /* Whether to use CSS animations or setTimeout */
+    , sheet /* A stylesheet to hold the @keyframe or VML rules. */
 
   /**
    * Utility function to create elements. If no tag name is given,
@@ -41,15 +42,6 @@
 
     return parent
   }
-
-  /**
-   * Insert a new stylesheet to hold the @keyframe or VML rules.
-   */
-  var sheet = (function() {
-    var el = createEl('style', {type : 'text/css'})
-    ins(document.getElementsByTagName('head')[0], el)
-    return el.sheet || el.styleSheet
-  }())
 
   /**
    * Creates an opacity keyframe animation rule and returns its name.
@@ -118,17 +110,6 @@
   }
 
   /**
-   * Returns the absolute page-offset of the given element.
-   */
-  function pos(el) {
-    var o = { x:el.offsetLeft, y:el.offsetTop }
-    while((el = el.offsetParent))
-      o.x+=el.offsetLeft, o.y+=el.offsetTop
-
-    return o
-  }
-
-  /**
    * Returns the line color from the given string or array.
    */
   function getColor(color, idx) {
@@ -142,6 +123,7 @@
     length: 7,            // The length of each line
     width: 5,             // The line thickness
     radius: 10,           // The radius of the inner circle
+    scale: 1.0,           // Scales overall size of the spinner
     rotate: 0,            // Rotation offset
     corners: 1,           // Roundness (0..1)
     color: '#000',        // #rgb or #rrggbb
@@ -178,7 +160,6 @@
       var self = this
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
-        , mid = o.radius+o.length+o.width
 
       css(el, {
         left: o.left,
@@ -240,20 +221,20 @@
       function fill(color, shadow) {
         return css(createEl(), {
           position: 'absolute',
-          width: (o.length+o.width) + 'px',
-          height: o.width + 'px',
+          width: o.scale*(o.length+o.width) + 'px',
+          height: o.scale*o.width + 'px',
           background: color,
           boxShadow: shadow,
           transformOrigin: 'left',
-          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.radius+'px' +',0)',
-          borderRadius: (o.corners * o.width>>1) + 'px'
+          transform: 'rotate(' + ~~(360/o.lines*i+o.rotate) + 'deg) translate(' + o.scale*o.radius+'px' +',0)',
+          borderRadius: (o.corners * o.scale*o.width>>1) + 'px'
         })
       }
 
       for (; i < o.lines; i++) {
         seg = css(createEl(), {
           position: 'absolute',
-          top: 1+~(o.width/2) + 'px',
+          top: 1+~(o.scale*o.width/2) + 'px',
           transform: o.hwaccel ? 'translate3d(0,0,0)' : '',
           opacity: o.opacity,
           animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1/o.speed + 's linear infinite'
@@ -287,8 +268,8 @@
     sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
 
     Spinner.prototype.lines = function(el, o) {
-      var r = o.length+o.width
-        , s = 2*r
+      var r = o.scale*(o.length+o.width)
+        , s = o.scale*2*r
 
       function grp() {
         return css(
@@ -300,7 +281,7 @@
         )
       }
 
-      var margin = -(o.width+o.length)*2 + 'px'
+      var margin = -(o.width+o.length)*o.scale*2 + 'px'
         , g = css(grp(), {position: 'absolute', top: margin, left: margin})
         , i
 
@@ -309,9 +290,9 @@
           ins(css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx}),
             ins(css(vml('roundrect', {arcsize: o.corners}), {
                 width: r,
-                height: o.width,
-                left: o.radius,
-                top: -o.width>>1,
+                height: o.scale*o.width,
+                left: o.scale*o.radius,
+                top: -o.scale*o.width>>1,
                 filter: filter
               }),
               vml('fill', {color: getColor(o.color, i), opacity: o.opacity}),
@@ -339,10 +320,18 @@
     }
   }
 
-  var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+  if (typeof document !== 'undefined') {
+    sheet = (function() {
+      var el = createEl('style', {type : 'text/css'})
+      ins(document.getElementsByTagName('head')[0], el)
+      return el.sheet || el.styleSheet
+    }())
 
-  if (!vendor(probe, 'transform') && probe.adj) initVML()
-  else useCssAnimations = vendor(probe, 'animation')
+    var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+
+    if (!vendor(probe, 'transform') && probe.adj) initVML()
+    else useCssAnimations = vendor(probe, 'animation')
+  }
 
   return Spinner
 
