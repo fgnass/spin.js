@@ -1,4 +1,4 @@
-# spin.js
+# spin.js [![JS.ORG](https://img.shields.io/badge/js.org-spin-ffb400.svg?style=flat-square)](http://js.org)
 
 An animated CSS3 loading spinner with VML fallback for IE.
 
