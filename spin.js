@@ -148,6 +148,31 @@
   Spinner.defaults = {}
 
   merge(Spinner.prototype, {
+    /**
+     * Adds the spinner to the given target element. If this instance is already
+     * spinning, it is automatically removed from its previous target b calling
+     * stop() internally.  It will create a modal that blocks clicks with the 
+     * CSS class name provided.
+     */
+    spinWithClickShield: function (target, clickShieldClassName) {
+        this.spin(target)
+        var self = this
+        var o = self.opts
+        clickShieldClassName = clickShieldClassName || o.clickShieldClassName
+        var clickShieldEl = self.clickShieldEl = css(createEl(0, { className: clickShieldClassName }), { position: o.position, width: '100%', zIndex: o.zIndex })
+
+        css(clickShieldEl, {
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0
+        })
+
+        if (target) {
+            target.insertBefore(clickShieldEl, target.firstChild || null)
+        }
+        return self
+    },
 
     /**
      * Adds the spinner to the given target element. If this instance is already
@@ -199,14 +224,19 @@
     /**
      * Stops and removes the Spinner.
      */
-    stop: function() {
-      var el = this.el
-      if (el) {
-        clearTimeout(this.timeout)
-        if (el.parentNode) el.parentNode.removeChild(el)
-        this.el = undefined
-      }
-      return this
+    stop: function () {
+        var self = this;
+        var removeElement = function (target) {
+            if (target) {
+                clearTimeout(self.timeout)
+                if (target.parentNode) target.parentNode.removeChild(target)
+            }
+        }
+        removeElement(self.el)
+        self.el = undefined
+        removeElement(self.clickShieldEl)
+        self.clickShieldEl = undefined
+        return this
     },
 
     /**
