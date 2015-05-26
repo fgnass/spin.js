@@ -122,6 +122,10 @@ target.appendChild(spinner.el);
   Hence, if you passed <code>{top:0, left:0}</code> only the lower right quater of the spinner would be inside
   the target's bounding box.
 </p>
+<p>
+  The spinner element must be surrounded by an element using relative positioning, or the spinner will be
+  outside of the parent element.
+</p>
 <h3>Hiding the spinner</h3>
 <p>
   To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops
