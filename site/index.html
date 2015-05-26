@@ -78,25 +78,25 @@
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
-  length: <span id="opt-length" class="lit">7</span>, // The length of each line
-  width: <span id="opt-width" class="lit">5</span>, // The line thickness
-  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
-  scale: <span id="opt-scale" class="lit">1.0</span>, // Scales overall size of the spinner
-  corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1)
-  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
-  direction: <span id="opt-rotate" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
-  color: '#000', // #rgb or #rrggbb or array of colors
-  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
-  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
-  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
-  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration
-  className: 'spinner', // The CSS class to assign to the spinner
-  zIndex: 2e9, // The z-index (defaults to 2000000000)
-  top: '50%', // Top position relative to parent
-  left: '50%' // Left position relative to parent
-};
-var target = document.getElementById('foo');
+  lines: <span id="opt-lines" class="lit">12</span> // The number of lines to draw
+, length: <span id="opt-length" class="lit">7</span> // The length of each line
+, width: <span id="opt-width" class="lit">5</span> // The line thickness
+, radius: <span id="opt-radius" class="lit">10</span> // The radius of the inner circle
+, scale: <span id="opt-scale" class="lit">1.0</span> // Scales overall size of the spinner
+, corners: <span id="opt-corners" class="lit">1</span> // Corner roundness (0..1)
+, rotate: <span id="opt-rotate" class="lit">0</span> // The rotation offset
+, direction: <span id="opt-rotate" class="lit">1</span> // 1: clockwise, -1: counterclockwise
+, color: '#000' // #rgb or #rrggbb or array of colors
+, speed: <span id="opt-speed" class="lit">1</span> // Rounds per second
+, trail: <span id="opt-trail" class="lit">100</span> // Afterglow percentage
+, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
+, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
+, className: 'spinner' // The CSS class to assign to the spinner
+, zIndex: 2e9 // The z-index (defaults to 2000000000)
+, top: '50%' // Top position relative to parent
+, left: '50%' // Left position relative to parent
+}
+var target = document.getElementById('foo')
 var spinner = new Spinner(opts).spin(target);
 </pre>
 <p>
@@ -109,8 +109,8 @@ var spinner = new Spinner(opts).spin(target);
   arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
-var spinner = new Spinner().spin();
-target.appendChild(spinner.el);
+var spinner = new Spinner().spin()
+target.appendChild(spinner.el)
 </pre>
 <h3>Positioning</h3>
 <p>
@@ -259,60 +259,60 @@ target.appendChild(spinner.el);
 <script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
 <script src="spin.min.js"></script>
 <script>
-  $.fn.spin = function(opts) {
-    this.each(function() {
-      var $this = $(this),
-          data = $this.data();
+  $.fn.spin = function (opts) {
+    this.each(function () {
+      var $this = $(this)
+        , data = $this.data()
 
       if (data.spinner) {
-        data.spinner.stop();
-        delete data.spinner;
+        data.spinner.stop()
+        delete data.spinner
       }
       if (opts !== false) {
-        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this)
       }
-    });
-    return this;
-  };
-  //$('#dot').spin();
-  prettyPrint();
-  function update() {
-    var opts = {};
-    $('#opts input[min], #opts select').each(function() {
-      $('#opt-' + this.name).text(opts[this.name] = parseFloat(this.value));
-    });
-    $('#opts input:checkbox').each(function() {
-      opts[this.name] = this.checked;
-      $('#opt-' + this.name).text(this.checked);
-    });
-    $('#preview').spin(opts);
+    })
+    return this
+  }
+  //$('#dot').spin()
+  prettyPrint()
+  function update () {
+    var opts = {}
+    $('#opts input[min], #opts select').each(function () {
+      $('#opt-' + this.name).text(opts[this.name] = parseFloat(this.value))
+    })
+    $('#opts input:checkbox').each(function () {
+      opts[this.name] = this.checked
+      $('#opt-' + this.name).text(this.checked)
+    })
+    $('#preview').spin(opts)
     if ($('#share').is(':checked')) {
-      window.location.replace('#?' + $('form').serialize());
+      window.location.replace('#?' + $('form').serialize())
     }
   }
-  $(function() {
-    var params = {};
-    var hash = /^#\?(.*)/.exec(location.hash);
+  $(function () {
+    var params = {}
+    var hash = /^#\?(.*)/.exec(location.hash)
     if (hash) {
-      $('#share').prop('checked', true);
-      $.each(hash[1].split(/&/), function(i, pair) {
-        var kv = pair.split(/=/);
-        params[kv[0]] = kv[kv.length-1];
-      });
+      $('#share').prop('checked', true)
+      $.each(hash[1].split(/&/), function (i, pair) {
+        var kv = pair.split(/=/)
+        params[kv[0]] = kv[kv.length-1]
+      })
     }
-    $('#opts input[min], #opts select').each(function() {
-      var val = params[this.name];
-      if (val !== undefined) this.value = val;
-      this.onchange = update;
-    });
-    $('#opts input:checkbox').each(function() {
-      this.checked = !!params[this.name];
-      this.onclick = update;
-    });
-    $('#share').click(function() {
-      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!');
-    });
-    update();
+    $('#opts input[min], #opts select').each(function () {
+      var val = params[this.name]
+      if (val !== undefined) this.value = val
+      this.onchange = update
+    })
+    $('#opts input:checkbox').each(function () {
+      this.checked = !!params[this.name]
+      this.onclick = update
+    })
+    $('#share').click(function () {
+      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!')
+    })
+    update()
   });
 </script>
 <script type="text/javascript">
