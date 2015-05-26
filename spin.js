@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
+ * http://fgnass.github.com/spin.js
+ *
  * Example:
     var opts = {
       lines: 13, // The number of lines to draw
