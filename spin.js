@@ -1,6 +1,31 @@
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
+ * http://fgnass.github.com/spin.js
+ *
+ * Example:
+    var opts = {
+      lines: 12,            // The number of lines to draw
+      length: 7,            // The length of each line
+      width: 5,             // The line thickness
+      radius: 10,           // The radius of the inner circle
+      scale: 1.0,           // Scales overall size of the spinner
+      rotate: 0,            // Rotation offset
+      corners: 1,           // Roundness (0..1)
+      color: '#000',        // #rgb or #rrggbb
+      direction: 1,         // 1: clockwise, -1: counterclockwise
+      speed: 1,             // Rounds per second
+      trail: 100,           // Afterglow percentage
+      opacity: 1/4,         // Opacity of the lines
+      fps: 20,              // Frames per second when using setTimeout()
+      zIndex: 2e9,          // Use a high z-index by default
+      className: 'spinner', // CSS class to assign to the element
+      top: '50%',           // center vertically
+      left: '50%',          // center horizontally
+      position: 'absolute'  // element position
+    }
+    var target = document.getElementById('foo')
+    var spinner = new Spinner(opts).spin(target)
  */
 (function(root, factory) {
 
@@ -14,7 +39,7 @@
   else root.Spinner = factory()
 }
 (this, function() {
-  "use strict";
+  "use strict"
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
@@ -148,7 +173,7 @@
   Spinner.defaults = {}
 
   merge(Spinner.prototype, {
-
+    isSpinning: false,
     /**
      * Adds the spinner to the given target element. If this instance is already
      * spinning, it is automatically removed from its previous target b calling
@@ -165,7 +190,7 @@
         left: o.left,
         top: o.top
       })
-        
+
       if (target) {
         target.insertBefore(el, target.firstChild||null)
       }
@@ -184,7 +209,7 @@
           , astep = f/o.lines
 
         ;(function anim() {
-          i++;
+          i++
           for (var j = 0; j < o.lines; j++) {
             alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
 
@@ -193,6 +218,7 @@
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
+      this.isSpinning = true
       return self
     },
 
@@ -206,6 +232,7 @@
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
       }
+      this.isSpinning = false
       return this
     },
 
