@@ -148,7 +148,7 @@
   Spinner.defaults = {}
 
   merge(Spinner.prototype, {
-
+    this.isSpinning = false,
     /**
      * Adds the spinner to the given target element. If this instance is already
      * spinning, it is automatically removed from its previous target b calling
@@ -193,6 +193,7 @@
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
+      this.isSpinning = true;
       return self
     },
 
@@ -206,6 +207,7 @@
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
       }
+      this.isSpinning = false;
       return this
     },
 
