@@ -24,8 +24,8 @@
       left: '50%',          // center horizontally
       position: 'absolute'  // element position
     }
-    var target = document.getElementById('foo');
-    var spinner = new Spinner(opts).spin(target);
+    var target = document.getElementById('foo')
+    var spinner = new Spinner(opts).spin(target)
  */
 (function(root, factory) {
 
@@ -39,7 +39,7 @@
   else root.Spinner = factory()
 }
 (this, function() {
-  "use strict";
+  "use strict"
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
     , animations = {} /* Animation rules keyed by their name */
@@ -209,7 +209,7 @@
           , astep = f/o.lines
 
         ;(function anim() {
-          i++;
+          i++
           for (var j = 0; j < o.lines; j++) {
             alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
 
@@ -218,7 +218,7 @@
           self.timeout = self.el && setTimeout(anim, ~~(1000/fps))
         })()
       }
-      this.isSpinning = true;
+      this.isSpinning = true
       return self
     },
 
@@ -232,7 +232,7 @@
         if (el.parentNode) el.parentNode.removeChild(el)
         this.el = undefined
       }
-      this.isSpinning = false;
+      this.isSpinning = false
       return this
     },
 
