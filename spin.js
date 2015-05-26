@@ -173,7 +173,7 @@
   Spinner.defaults = {}
 
   merge(Spinner.prototype, {
-    this.isSpinning = false,
+    isSpinning: false,
     /**
      * Adds the spinner to the given target element. If this instance is already
      * spinning, it is automatically removed from its previous target b calling
