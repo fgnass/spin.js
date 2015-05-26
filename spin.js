@@ -268,7 +268,7 @@
         })
 
         if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2+'px'}))
-        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
+        ins(el, ins(seg, fill(getColor(o.color, i), o.width<5 ? '' : '0 0 1px rgba(0,0,0,.1)')))
       }
       return el
     },
