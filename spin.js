@@ -186,10 +186,13 @@
 
       var self = this
         , o = self.opts
-        , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})
+        , el = self.el = createEl(0, {className: o.className})
 
       css(el, {
-        left: o.left
+        position: o.position
+      , width: 0
+      , zIndex: o.zIndex
+      , left: o.left
       , top: o.top
       })
 
