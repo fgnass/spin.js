@@ -269,7 +269,7 @@
         , animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1 / o.speed + 's linear infinite'
         })
 
-        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px ' + '#000'), {top: 2 + 'px'}))
+        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px #000'), {top: '2px'}))
         ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
       }
       return el
