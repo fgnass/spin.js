@@ -186,7 +186,7 @@
 
       var self = this
         , o = self.opts
-        , el = self.el = createEl(0, {className: o.className})
+        , el = self.el = createEl(null, {className: o.className})
 
       css(el, {
         position: o.position
