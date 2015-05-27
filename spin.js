@@ -105,11 +105,11 @@
       , i
 
     prop = prop.charAt(0).toUpperCase() + prop.slice(1)
+    if (s[prop] !== undefined) return prop
     for (i = 0; i < prefixes.length; i++) {
       pp = prefixes[i]+prop
       if (s[pp] !== undefined) return pp
     }
-    if (s[prop] !== undefined) return prop
   }
 
   /**
