@@ -4,6 +4,7 @@
  * grunt
  * grunt gh-pages
  * grunt bump-commit
+ * git push --tags
  * npm publish
  */
 module.exports = function(grunt) {
