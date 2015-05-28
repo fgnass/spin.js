@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        banner: '//fgnass.github.com/spin.js#v<%= pkg.version %>\n'
+        banner: 'http://spin.js.org/#v<%= pkg.version %>\n'
       },
       js: {
         src: 'site/spin.js',

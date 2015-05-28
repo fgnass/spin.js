@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
- * http://fgnass.github.com/spin.js
+ * http://spin.js.org/
  */
 
 /*
