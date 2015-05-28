@@ -84,17 +84,20 @@ var opts = {
 , radius: <span id="opt-radius" class="lit">10</span> // The radius of the inner circle
 , scale: <span id="opt-scale" class="lit">1.0</span> // Scales overall size of the spinner
 , corners: <span id="opt-corners" class="lit">1</span> // Corner roundness (0..1)
+, color: '#000' // #rgb or #rrggbb or array of colors
+, opacity: 1/4 // Opacity of the lines
 , rotate: <span id="opt-rotate" class="lit">0</span> // The rotation offset
 , direction: <span id="opt-rotate" class="lit">1</span> // 1: clockwise, -1: counterclockwise
-, color: '#000' // #rgb or #rrggbb or array of colors
 , speed: <span id="opt-speed" class="lit">1</span> // Rounds per second
 , trail: <span id="opt-trail" class="lit">100</span> // Afterglow percentage
-, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
-, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
-, className: 'spinner' // The CSS class to assign to the spinner
+, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
 , zIndex: 2e9 // The z-index (defaults to 2000000000)
+, className: 'spinner' // The CSS class to assign to the spinner
 , top: '50%' // Top position relative to parent
 , left: '50%' // Left position relative to parent
+, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
+, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
+, position: 'absolute' // Element positioning
 }
 var target = document.getElementById('foo')
 var spinner = new Spinner(opts).spin(target);

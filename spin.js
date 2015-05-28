@@ -10,19 +10,21 @@
     , width: 5,             // The line thickness
     , radius: 10            // The radius of the inner circle
     , scale: 1.0            // Scales overall size of the spinner
-    , rotate: 0             // Rotation offset
     , corners: 1            // Roundness (0..1)
     , color: '#000'         // #rgb or #rrggbb
+    , opacity: 1/4          // Opacity of the lines
+    , rotate: 0             // Rotation offset
     , direction: 1          // 1: clockwise, -1: counterclockwise
     , speed: 1              // Rounds per second
     , trail: 100            // Afterglow percentage
-    , opacity: 1/4          // Opacity of the lines
     , fps: 20               // Frames per second when using setTimeout()
     , zIndex: 2e9           // Use a high z-index by default
     , className: 'spinner'  // CSS class to assign to the element
     , top: '50%'            // center vertically
     , left: '50%'           // center horizontally
-    , position: 'absolute'  // element position
+    , shadow: false         // Whether to render a shadow
+    , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
+    , position: 'absolute'  // Element positioning
     }
     var target = document.getElementById('foo')
     var spinner = new Spinner(opts).spin(target)
@@ -151,19 +153,21 @@
   , width: 5              // The line thickness
   , radius: 10            // The radius of the inner circle
   , scale: 1.0            // Scales overall size of the spinner
-  , rotate: 0             // Rotation offset
   , corners: 1            // Roundness (0..1)
   , color: '#000'         // #rgb or #rrggbb
+  , opacity: 1/4          // Opacity of the lines
+  , rotate: 0             // Rotation offset
   , direction: 1          // 1: clockwise, -1: counterclockwise
   , speed: 1              // Rounds per second
   , trail: 100            // Afterglow percentage
-  , opacity: 1/4          // Opacity of the lines
   , fps: 20               // Frames per second when using setTimeout()
   , zIndex: 2e9           // Use a high z-index by default
   , className: 'spinner'  // CSS class to assign to the element
   , top: '50%'            // center vertically
   , left: '50%'           // center horizontally
-  , position: 'absolute'  // element position
+  , shadow: false         // Whether to render a shadow
+  , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
+  , position: 'absolute'  // Element positioning
   }
 
   /** The constructor */
