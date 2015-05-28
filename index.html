@@ -4,7 +4,7 @@
   <title>spin.js</title>
   <meta name="description" content="An animated CSS activity indicator with VML fallback.">
   <meta name="viewport" content="width=1024, maximum-scale=1">
-  <meta property="og:image" content="http://fgnass.github.com/spin.js/assets/preview.jpg?v=1" />
+  <meta property="og:image" content="http://spin.js.org/assets/preview.jpg?v=1" />
   <link rel="shortcut icon" href="favicon.ico">
   <link href="assets/main.css?v=6" type="text/css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
@@ -33,20 +33,23 @@
   <div id="preview"></div>
   <form id="opts">
     <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
-    <label>Length:</label><input type="text" name="length" min="0" max="40" value="20"><br>
-    <label>Width:</label><input type="text" name="width" min="2" max="30" value="10"><br>
-    <label>Radius:</label><input type="text" name="radius" min="0" max="60" value="30"><br>
-    <label>Scale:</label><input type="text" name="scale" min="0.0" max="5.0" step="0.5" value="1.0"><br>
+    <label>Length:</label><input type="text" name="length" min="0" max="56" value="28"><br>
+    <label>Width:</label><input type="text" name="width" min="2" max="52" value="14"><br>
+    <label>Radius:</label><input type="text" name="radius" min="0" max="84" value="42"><br>
+    <label>Scale:</label><input type="text" name="scale" min="0.0" max="5.0" step="0.25" value="1.0"><br>
     <label>Corners:</label><input type="text" name="corners" min="0" max="1" step="0.1" value="1"><br>
+    <label>Opacity:</label><input type="text" name="opacity" min="0" max="1" step="0.05" value="0.25"><br>
     <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
-    <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
-    <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
     <label>Direction:</label>
     <select name="direction">
       <option value="1">Clockwise</option>
       <option value="-1">Counterclockwise</option>
     </select>
     <br>
+    <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+    <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
+    <label>↕:</label><input class="percent" type="text" name="top" min="0" max="100" value="50"><br>
+    <label>↔:</label><input class="percent" type="text" name="left" min="0" max="100" value="50"><br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
     <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
   </form>
@@ -78,25 +81,28 @@
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
-  length: <span id="opt-length" class="lit">7</span>, // The length of each line
-  width: <span id="opt-width" class="lit">5</span>, // The line thickness
-  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
-  scale: <span id="opt-scale" class="lit">1.0</span>, // Scales overall size of the spinner
-  corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1)
-  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
-  direction: <span id="opt-rotate" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
-  color: '#000', // #rgb or #rrggbb or array of colors
-  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
-  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
-  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
-  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration
-  className: 'spinner', // The CSS class to assign to the spinner
-  zIndex: 2e9, // The z-index (defaults to 2000000000)
-  top: '50%', // Top position relative to parent
-  left: '50%' // Left position relative to parent
-};
-var target = document.getElementById('foo');
+  lines: <span id="opt-lines" class="lit">12</span> // The number of lines to draw
+, length: <span id="opt-length" class="lit">7</span> // The length of each line
+, width: <span id="opt-width" class="lit">5</span> // The line thickness
+, radius: <span id="opt-radius" class="lit">10</span> // The radius of the inner circle
+, scale: <span id="opt-scale" class="lit">1.0</span> // Scales overall size of the spinner
+, corners: <span id="opt-corners" class="lit">1</span> // Corner roundness (0..1)
+, color: '#000' // #rgb or #rrggbb or array of colors
+, opacity: <span id="opt-opacity" class="lit">0.25</span> // Opacity of the lines
+, rotate: <span id="opt-rotate" class="lit">0</span> // The rotation offset
+, direction: <span id="opt-direction" class="lit">1</span> // 1: clockwise, -1: counterclockwise
+, speed: <span id="opt-speed" class="lit">1</span> // Rounds per second
+, trail: <span id="opt-trail" class="lit">100</span> // Afterglow percentage
+, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+, zIndex: 2e9 // The z-index (defaults to 2000000000)
+, className: 'spinner' // The CSS class to assign to the spinner
+, top: '<span id="opt-top" class="str">50%</span>' // Top position relative to parent
+, left: '<span id="opt-left" class="str">50%</span>' // Left position relative to parent
+, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
+, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
+, position: 'absolute' // Element positioning
+}
+var target = document.getElementById('foo')
 var spinner = new Spinner(opts).spin(target);
 </pre>
 <p>
@@ -109,8 +115,8 @@ var spinner = new Spinner(opts).spin(target);
   arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
-var spinner = new Spinner().spin();
-target.appendChild(spinner.el);
+var spinner = new Spinner().spin()
+target.appendChild(spinner.el)
 </pre>
 <h3>Positioning</h3>
 <p>
@@ -121,6 +127,10 @@ target.appendChild(spinner.el);
   <b>Note:</b> The spinner element is a 0&times;0 pixel DIV that represents the center of the spinner.
   Hence, if you passed <code>{top:0, left:0}</code> only the lower right quater of the spinner would be inside
   the target's bounding box.
+</p>
+<p>
+  The spinner element must be surrounded by an element using relative positioning, or the spinner will be
+  outside of the parent element.
 </p>
 <h3>Hiding the spinner</h3>
 <p>
@@ -139,7 +149,7 @@ target.appendChild(spinner.el);
     <li>Chrome</li>
     <li>Safari 3.2+</li>
     <li>Firefox 3.5+</li>
-    <li>IE 6,7,8,9</li>
+    <li>IE 6,7,8,9,10,11</li>
     <li>Opera 10.6+</li>
     <li>Mobile Safari (iOS 3.1+)</li>
     <li>Android 2.3+</li>
@@ -148,6 +158,17 @@ target.appendChild(spinner.el);
 
 <h2>Changes</h2>
 
+<h3 id="v2.1.1">Version 2.1.1 (28.05.2015)</h3>
+<ul>
+  <li>Spin.js now has a new maintainer: <a href="https://github.com/TimothyGu">@TimothyGu</a> (that's me ;)!</li>
+  <li>The documentation is updated to note that the container element must use relative positioning. See <a href="https://github.com/fgnass/spin.js/issues/292">issue #292</a>.</li>
+  <li>The examples are all fixed.</li>
+  <li>The demo page had a bug where the direction setting does not reflect in the option object.</li>
+  <li>The website now uses the latest version of jQuery from its 1.x branch.</li>
+  <li>Standard CSS attributes are now preferred over vendor ones if they are supported.</li>
+  <li><a href="http://spmjs.io/">spm</a> support is now added. See <a href="https://github.com/fgnass/spin.js/pull/232">PR #232</a>. (Thanks <a href="https://github.com/afc163">@afc163</a>)</li>
+  <li>Internally the coding style is now unified across all files.</li>
+</ul>
 <h3 id="v2.1.0">Version 2.1.0 (16.04.2015)</h3>
 <ul>
   <li>Added the scale option. See <a href="https://github.com/fgnass/spin.js/pull/287">PR #287</a>. (Thanks <a href="https://github.com/samlbest">samlbest</a>)</li>
@@ -251,64 +272,68 @@ target.appendChild(spinner.el);
 <div id="footer">
   <a class="github" href="http://github.com">Hosted on GitHub</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
 <script src="spin.min.js"></script>
 <script>
-  $.fn.spin = function(opts) {
-    this.each(function() {
-      var $this = $(this),
-          data = $this.data();
+  $.fn.spin = function (opts) {
+    this.each(function () {
+      var $this = $(this)
+        , data = $this.data()
 
       if (data.spinner) {
-        data.spinner.stop();
-        delete data.spinner;
+        data.spinner.stop()
+        delete data.spinner
       }
       if (opts !== false) {
-        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+        window.s = data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this)
       }
-    });
-    return this;
-  };
-  //$('#dot').spin();
-  prettyPrint();
-  function update() {
-    var opts = {};
-    $('#opts input[min], #opts select').each(function() {
-      $('#opt-' + this.name).text(opts[this.name] = parseFloat(this.value));
-    });
-    $('#opts input:checkbox').each(function() {
-      opts[this.name] = this.checked;
-      $('#opt-' + this.name).text(this.checked);
-    });
-    $('#preview').spin(opts);
+    })
+    return this
+  }
+  //$('#dot').spin()
+  prettyPrint()
+  function update () {
+    var opts = {}
+    $('#opts input[min], #opts select').each(function () {
+      var percent = $(this).hasClass('percent')
+        , val = percent ? this.value + '%' : parseFloat(this.value)
+      $('#opt-' + this.name).text(opts[this.name] = val)
+    })
+    $('#opts input:checkbox').each(function () {
+      opts[this.name] = this.checked
+      $('#opt-' + this.name).text(this.checked)
+    })
+    $('#preview').spin(opts)
     if ($('#share').is(':checked')) {
-      window.location.replace('#?' + $('form').serialize());
+      window.location.replace('#?' + $('form').serialize())
     }
   }
-  $(function() {
-    var params = {};
-    var hash = /^#\?(.*)/.exec(location.hash);
+  $(function () {
+    var params = {}
+    var hash = /^#\?(.*)/.exec(location.hash)
     if (hash) {
-      $('#share').prop('checked', true);
-      $.each(hash[1].split(/&/), function(i, pair) {
-        var kv = pair.split(/=/);
-        params[kv[0]] = kv[kv.length-1];
-      });
+      $('#share').prop('checked', true)
+      $.each(hash[1].split(/&/), function (i, pair) {
+        var kv = pair.split(/=/)
+        params[kv[0]] = kv[kv.length-1]
+      })
     }
-    $('#opts input[min], #opts select').each(function() {
-      var val = params[this.name];
-      if (val !== undefined) this.value = val;
-      this.onchange = update;
-    });
-    $('#opts input:checkbox').each(function() {
-      this.checked = !!params[this.name];
-      this.onclick = update;
-    });
-    $('#share').click(function() {
-      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!');
-    });
-    update();
+    $('#opts input[min], #opts select').each(function () {
+      var val = params[this.name]
+        , percent = $(this).hasClass('percent')
+        , extraOpt = percent ? '%' : ''
+      if (val !== undefined) this.value = val + extraOpt
+      this.onchange = update
+    })
+    $('#opts input:checkbox').each(function () {
+      this.checked = !!params[this.name]
+      this.onclick = update
+    })
+    $('#share').click(function () {
+      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!')
+    })
+    update()
   });
 </script>
 <script type="text/javascript">

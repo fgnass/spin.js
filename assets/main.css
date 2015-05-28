@@ -105,17 +105,17 @@ h3 {
   right: 0;
   width: 149px;
   height: 149px;
-  background:url(ribbon.png);
+  background: url(ribbon.png) no-repeat;
   _background: none;
-  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=ribbon.png);
+  _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=ribbon.png);
 }
 #preview {
   position: relative;
   background: #333;
   color: #fff;
   float: left;
-  width: 268px;
-  height: 268px;
+  width: 375px;
+  height: 375px;
   margin: 0 20px 20px 0;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
