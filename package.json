@@ -2,6 +2,11 @@
   "name": "spin.js",
   "version": "2.1.0",
   "main": "spin.js",
+  "author": "Felix Gnass <fgnass@gmail.com>",
+  "contributors": [
+    "Timothy Gu <timothygu99@gmail.com>"
+  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/fgnass/spin.js.git"
