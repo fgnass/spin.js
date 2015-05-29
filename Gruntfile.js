@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        banner: 'http://spin.js.org/#v<%= pkg.version %>\n'
+        banner: '// http://spin.js.org/#v<%= pkg.version %>\n'
       },
       js: {
         files: {
