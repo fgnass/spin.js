@@ -25,8 +25,10 @@ module.exports = function(grunt) {
         banner: 'http://spin.js.org/#v<%= pkg.version %>\n'
       },
       js: {
-        src: 'site/spin.js',
-        dest: 'site/spin.min.js'
+        files: {
+          'site/spin.min.js': ['site/spin.js'],
+          'spin.min.js': ['site/spin.min.js']
+        }
       }
     },
 
@@ -36,7 +38,7 @@ module.exports = function(grunt) {
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json', 'component.json', 'bower.json'],
+        commitFiles: ['package.json', 'component.json', 'bower.json', 'spin.min.js'],
         createTag: true,
         tagName: '%VERSION%',
         push: false
