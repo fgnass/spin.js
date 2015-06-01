@@ -5,9 +5,9 @@
  *
  * Example:
     var opts = {
-      lines: 12,            // The number of lines to draw
-    , length: 7,            // The length of each line
-    , width: 5,             // The line thickness
+      lines: 12             // The number of lines to draw
+    , length: 7             // The length of each line
+    , width: 5              // The line thickness
     , radius: 10            // The radius of the inner circle
     , scale: 1.0            // Scales overall size of the spinner
     , corners: 1            // Roundness (0..1)
