@@ -34,11 +34,11 @@ module.exports = function(grunt) {
 
     bump: {
       options: {
-        files: ['package.json', 'component.json', 'bower.json'],
+        files: ['package.json', 'component.json'],
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json', 'component.json', 'bower.json', 'spin.min.js'],
+        commitFiles: ['package.json', 'component.json', 'spin.min.js'],
         createTag: true,
         tagName: '%VERSION%',
         push: false
