@@ -22,6 +22,7 @@
     , className: 'spinner'  // CSS class to assign to the element
     , top: '50%'            // center vertically
     , left: '50%'           // center horizontally
+    , right: null           // center horizontally
     , shadow: false         // Whether to render a shadow
     , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
     , position: 'absolute'  // Element positioning
@@ -165,6 +166,7 @@
   , className: 'spinner'  // CSS class to assign to the element
   , top: '50%'            // center vertically
   , left: '50%'           // center horizontally
+  , right: null           // center horizontally
   , shadow: false         // Whether to render a shadow
   , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
   , position: 'absolute'  // Element positioning
@@ -196,6 +198,7 @@
       , width: 0
       , zIndex: o.zIndex
       , left: o.left
+      , right: o.right
       , top: o.top
       })
 
