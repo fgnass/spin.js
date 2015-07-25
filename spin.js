@@ -20,8 +20,9 @@
     , fps: 20               // Frames per second when using setTimeout()
     , zIndex: 2e9           // Use a high z-index by default
     , className: 'spinner'  // CSS class to assign to the element
-    , top: '50%'            // center vertically
-    , left: '50%'           // center horizontally
+    , top: '50%'            // Center vertically
+    , left: '50%'           // Center horizontally
+    , right: null           // Ignore the distance to the right side
     , shadow: false         // Whether to render a shadow
     , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
     , position: 'absolute'  // Element positioning
@@ -119,7 +120,9 @@
    */
   function css (el, prop) {
     for (var n in prop) {
-      el.style[vendor(el, n) || n] = prop[n]
+      if (prop[n] != null) {
+        el.style[vendor(el, n) || n] = prop[n]
+      }
     }
 
     return el
@@ -163,8 +166,9 @@
   , fps: 20               // Frames per second when using setTimeout()
   , zIndex: 2e9           // Use a high z-index by default
   , className: 'spinner'  // CSS class to assign to the element
-  , top: '50%'            // center vertically
-  , left: '50%'           // center horizontally
+  , top: '50%'            // Center vertically
+  , left: '50%'           // Center horizontally
+  , right: null           // Ignore the distance to the right side
   , shadow: false         // Whether to render a shadow
   , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
   , position: 'absolute'  // Element positioning
@@ -196,6 +200,7 @@
       , width: 0
       , zIndex: o.zIndex
       , left: o.left
+      , right: o.right
       , top: o.top
       })
 
