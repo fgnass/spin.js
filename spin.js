@@ -35,7 +35,7 @@
   if (typeof module == 'object' && module.exports) module.exports = factory()
 
   /* AMD module */
-  else if (typeof define == 'function' && define.amd) define(factory)
+  else if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) define(factory)
 
   /* Browser global */
   else root.Spinner = factory()
