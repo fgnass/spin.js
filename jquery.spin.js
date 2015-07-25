@@ -65,9 +65,22 @@ $('#el').spin('flower', 'red')
           { color: color || $this.css('color') }
         , $.fn.spin.presets[opts] || opts
         )
+        
+        opts = useDataAttributes(opts, data)
+        
         data.spinner = new Spinner(opts).spin(this)
       }
     })
+  }
+  
+  function useDataAttributes(opts, data) {
+    var attrs = ['lines', 'length', 'width', 'radius', 'corners', 'rotate', 'direction', 'color', 'speed', 'trail', 'shadow', 'hwaccel', 'className', 'zIndex', 'top', 'left'];
+    for (attr in attrs) {
+      if (data[attrs[attr]] !== undefined) {
+        opts[attrs[attr]] = data[attrs[attr]];
+      }
+    }
+    return opts;
   }
 
   $.fn.spin.presets = {
