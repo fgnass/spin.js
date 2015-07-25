@@ -20,9 +20,9 @@
     , fps: 20               // Frames per second when using setTimeout()
     , zIndex: 2e9           // Use a high z-index by default
     , className: 'spinner'  // CSS class to assign to the element
-    , top: '50%'            // center vertically
-    , left: '50%'           // center horizontally
-    , right: null           // center horizontally
+    , top: '50%'            // Center vertically
+    , left: '50%'           // Center horizontally
+    , right: null           // Ignore the distance to the right side
     , shadow: false         // Whether to render a shadow
     , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
     , position: 'absolute'  // Element positioning
@@ -166,9 +166,9 @@
   , fps: 20               // Frames per second when using setTimeout()
   , zIndex: 2e9           // Use a high z-index by default
   , className: 'spinner'  // CSS class to assign to the element
-  , top: '50%'            // center vertically
-  , left: '50%'           // center horizontally
-  , right: null           // center horizontally
+  , top: '50%'            // Center vertically
+  , left: '50%'           // Center horizontally
+  , right: null           // Ignore the distance to the right side
   , shadow: false         // Whether to render a shadow
   , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
   , position: 'absolute'  // Element positioning
