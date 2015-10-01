@@ -22,11 +22,12 @@
     }
   },
   "devDependencies": {
+    "eslint": "^1.5.1",
     "grunt": "~0.4.2",
-    "grunt-gh-pages": "~0.9.0",
-    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-bump": "0.0.13",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-bump": "0.0.13"
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-gh-pages": "~0.9.0"
   },
   "spm": {
     "main": "spin.js"

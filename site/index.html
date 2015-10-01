@@ -81,28 +81,28 @@
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span> // The number of lines to draw
-, length: <span id="opt-length" class="lit">7</span> // The length of each line
-, width: <span id="opt-width" class="lit">5</span> // The line thickness
-, radius: <span id="opt-radius" class="lit">10</span> // The radius of the inner circle
-, scale: <span id="opt-scale" class="lit">1.0</span> // Scales overall size of the spinner
-, corners: <span id="opt-corners" class="lit">1</span> // Corner roundness (0..1)
-, color: '#000' // #rgb or #rrggbb or array of colors
-, opacity: <span id="opt-opacity" class="lit">0.25</span> // Opacity of the lines
-, rotate: <span id="opt-rotate" class="lit">0</span> // The rotation offset
-, direction: <span id="opt-direction" class="lit">1</span> // 1: clockwise, -1: counterclockwise
-, speed: <span id="opt-speed" class="lit">1</span> // Rounds per second
-, trail: <span id="opt-trail" class="lit">100</span> // Afterglow percentage
-, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-, zIndex: 2e9 // The z-index (defaults to 2000000000)
-, className: 'spinner' // The CSS class to assign to the spinner
-, top: '<span id="opt-top" class="str">50%</span>' // Top position relative to parent
-, left: '<span id="opt-left" class="str">50%</span>' // Left position relative to parent
-, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
-, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
-, position: 'absolute' // Element positioning
-}
-var target = document.getElementById('foo')
+  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
+  length: <span id="opt-length" class="lit">7</span>, // The length of each line
+  width: <span id="opt-width" class="lit">5</span>, // The line thickness
+  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
+  scale: <span id="opt-scale" class="lit">1.0</span>, // Scales overall size of the spinner
+  corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1)
+  color: '#000', // #rgb or #rrggbb or array of colors
+  opacity: <span id="opt-opacity" class="lit">0.25</span>, // Opacity of the lines
+  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
+  direction: <span id="opt-direction" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
+  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
+  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
+  fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  className: 'spinner', // The CSS class to assign to the spinner
+  top: '<span id="opt-top" class="str">50%</span>', // Top position relative to parent
+  left: '<span id="opt-left" class="str">50%</span>', // Left position relative to parent
+  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
+  hwaccel: <span id="opt-hwaccel" class="kwd">false</span>, // Whether to use hardware acceleration
+  position: 'absolute' // Element positioning
+};
+var target = document.getElementById('foo');
 var spinner = new Spinner(opts).spin(target);
 </pre>
 <p>
@@ -115,8 +115,8 @@ var spinner = new Spinner(opts).spin(target);
   arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
-var spinner = new Spinner().spin()
-target.appendChild(spinner.el)
+var spinner = new Spinner().spin();
+target.appendChild(spinner.el);
 </pre>
 <h3>Positioning</h3>
 <p>
@@ -290,65 +290,51 @@ target.appendChild(spinner.el)
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
 <script src="spin.min.js"></script>
+<script src="jquery.spin.js"></script>
 <script>
-  $.fn.spin = function (opts) {
-    this.each(function () {
-      var $this = $(this)
-        , data = $this.data()
-
-      if (data.spinner) {
-        data.spinner.stop()
-        delete data.spinner
-      }
-      if (opts !== false) {
-        window.s = data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this)
-      }
-    })
-    return this
-  }
-  //$('#dot').spin()
-  prettyPrint()
-  function update () {
-    var opts = {}
-    $('#opts input[min], #opts select').each(function () {
-      var percent = $(this).hasClass('percent')
-        , val = percent ? this.value + '%' : parseFloat(this.value)
-      $('#opt-' + this.name).text(opts[this.name] = val)
-    })
-    $('#opts input:checkbox').each(function () {
-      opts[this.name] = this.checked
-      $('#opt-' + this.name).text(this.checked)
-    })
-    $('#preview').spin(opts)
+  //$('#dot').spin();
+  prettyPrint();
+  function update() {
+    var opts = {};
+    $('#opts input[min], #opts select').each(function() {
+      var percent = $(this).hasClass('percent');
+      var val = percent ? this.value + '%' : parseFloat(this.value);
+      $('#opt-' + this.name).text(opts[this.name] = val);
+    });
+    $('#opts input:checkbox').each(function() {
+      opts[this.name] = this.checked;
+      $('#opt-' + this.name).text(this.checked);
+    });
+    $('#preview').spin(opts);
     if ($('#share').is(':checked')) {
-      window.location.replace('#?' + $('form').serialize())
+      window.location.replace('#?' + $('form').serialize());
     }
   }
   $(function () {
-    var params = {}
-    var hash = /^#\?(.*)/.exec(location.hash)
+    var params = {};
+    var hash = /^#\?(.*)/.exec(location.hash);
     if (hash) {
-      $('#share').prop('checked', true)
-      $.each(hash[1].split(/&/), function (i, pair) {
-        var kv = pair.split(/=/)
-        params[kv[0]] = kv[kv.length-1]
-      })
+      $('#share').prop('checked', true);
+      $.each(hash[1].split(/&/), function(i, pair) {
+        var kv = pair.split(/=/);
+        params[kv[0]] = kv[kv.length-1];
+      });
     }
-    $('#opts input[min], #opts select').each(function () {
-      var val = params[this.name]
-        , percent = $(this).hasClass('percent')
-        , extraOpt = percent ? '%' : ''
-      if (val !== undefined) this.value = val + extraOpt
-      this.onchange = update
-    })
-    $('#opts input:checkbox').each(function () {
-      this.checked = !!params[this.name]
-      this.onclick = update
-    })
-    $('#share').click(function () {
-      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!')
-    })
-    update()
+    $('#opts input[min], #opts select').each(function() {
+      var val = params[this.name];
+      var percent = $(this).hasClass('percent');
+      var extraOpt = percent ? '%' : '';
+      if (val !== undefined) this.value = val + extraOpt;
+      this.onchange = update;
+    });
+    $('#opts input:checkbox').each(function() {
+      this.checked = !!params[this.name];
+      this.onclick = update;
+    });
+    $('#share').click(function() {
+      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!');
+    });
+    update();
   });
 </script>
 <script type="text/javascript">

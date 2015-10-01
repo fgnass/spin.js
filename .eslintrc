@@ -1,0 +1,15 @@
+{
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "comma-style": [2, "last"],
+    "one-var": [2, "never"],
+    "quotes": [2, "single", "avoid-escape"],
+    "brace-style": [2, "stroustrup"],
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": [2, "always"],
+    "space-before-function-paren": [2, "never"]
+  }
+}

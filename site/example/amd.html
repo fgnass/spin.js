@@ -35,16 +35,16 @@ require.config({
   paths: {
     jquery: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min'
   }
-})
+});
 
-require(['jquery', 'jquery.spin'], function ($) {
-  $('#preview1').spin('tiny', 'teal')
-  $('#preview2').spin({color: '#fff'})
+require(['jquery', 'jquery.spin'], function($) {
+  $('#preview1').spin('tiny', 'teal');
+  $('#preview2').spin({color: '#fff'});
 
   //Remove spinner upon click
-  $('.preview').click(function () {
-    $(this).spin(false)
-  })
+  $('.preview').click(function() {
+    $(this).spin(false);
+  });
 });
 </script>
 </body>
