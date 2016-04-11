@@ -230,7 +230,7 @@
     stop: function() {
       var el = this.el;
       if (el) {
-        clearTimeout(this.timeout);
+        if (this.timeout) clearTimeout(this.timeout);
         if (el.parentNode) el.parentNode.removeChild(el);
         this.el = undefined;
       }
