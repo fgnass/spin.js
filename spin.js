@@ -38,7 +38,6 @@
   'use strict';
 
   var prefixes = ['webkit', 'Moz', 'ms', 'O']; // Vendor prefixes
-  var animations = {}; // Animation rules keyed by their name
   var useCssAnimations; // Whether to use CSS animations or setTimeout
   var sheet; // A stylesheet to hold the @keyframe or VML rules
 
@@ -77,18 +76,22 @@
     var prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase();
     var pre = prefix && '-' + prefix + '-' || '';
 
-    if (!animations[name]) {
-      sheet.insertRule(
-        '@' + pre + 'keyframes ' + name + '{' +
-        '0%{opacity:' + z + '}' +
-        start + '%{opacity:' + alpha + '}' +
-        (start+0.01) + '%{opacity:1}' +
-        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
-        '100%{opacity:' + z + '}' +
-        '}', sheet.cssRules.length);
-
-      animations[name] = 1;
+    var index;
+    for (index = 0; index < sheet.cssRules.length; index++) { 
+      if (sheet.cssRules[index].name == name) {
+        sheet.deleteRule(index);
+        break;
+      }
     }
+    
+    sheet.insertRule(
+      '@' + pre + 'keyframes ' + name + '{' +
+      '0%{opacity:' + z + '}' +
+      start + '%{opacity:' + alpha + '}' +
+      (start+0.01) + '%{opacity:1}' +
+      (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+      '100%{opacity:' + z + '}' +
+      '}', sheet.cssRules.length);
 
     return name;
   }
