@@ -160,6 +160,7 @@
     className: 'spinner', // CSS class to assign to the element
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
+    right: 'auto',         // default value for right position
     shadow: false,        // Whether to render a shadow
     hwaccel: false,       // Whether to use hardware acceleration
     position: 'absolute'  // Element positioning
@@ -191,7 +192,8 @@
         width: 0,
         zIndex: o.zIndex,
         left: o.left,
-        top: o.top
+        top: o.top,
+        right: o.right
       });
 
       if (target) {
