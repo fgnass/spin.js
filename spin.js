@@ -83,7 +83,7 @@
         '0%{opacity:' + z + '}' +
         start + '%{opacity:' + alpha + '}' +
         (start+0.01) + '%{opacity:1}' +
-        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+        ((start+trail) % 100).toFixed(2) + '%{opacity:' + alpha + '}' +
         '100%{opacity:' + z + '}' +
         '}', sheet.cssRules.length);
 
