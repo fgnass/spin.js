@@ -3,6 +3,10 @@
  * Licensed under the MIT license
  * http://spin.js.org/
  *
+ * Code added from:
+ * - https://github.com/fgnass/spin.js/pull/158
+ * - https://github.com/fgnass/spin.js/pull/333
+ *
  * Example:
     var opts = {
       lines: 12,            // The number of lines to draw
@@ -83,7 +87,7 @@
         '0%{opacity:' + z + '}' +
         start + '%{opacity:' + alpha + '}' +
         (start+0.01) + '%{opacity:1}' +
-        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+        ((start+trail) % 100).toFixed(2) + '%{opacity:' + alpha + '}' +
         '100%{opacity:' + z + '}' +
         '}', sheet.cssRules.length);
 
@@ -140,7 +144,27 @@
     return typeof color == 'string' ? color : color[idx % color.length];
   }
 
-  // Built-in defaults
+    /**
+     * Returns progress tracker display.
+     */
+    function createProgressTracker(radius, length, offsetTop, offsetLeft, color) {
+        var dim = 2 * (radius + length);
+        if (dim < 50) dim = 50;
+
+        return css(createEl('div', {innerHTML: ''}), {
+            textAlign : 'center',
+            width : dim + 'px',
+            height: dim + 'px',
+            lineHeight: dim + 'px',
+            position : 'absolute',
+            top : (offsetTop - dim / 2) + 'px',
+            left : (offsetLeft - dim / 2) + 'px',
+            color : color
+        })
+    }
+
+
+    // Built-in defaults
 
   var defaults = {
     lines: 12,            // The number of lines to draw
@@ -201,7 +225,10 @@
       el.setAttribute('role', 'progressbar');
       self.lines(el, self.opts);
 
-      if (!useCssAnimations) {
+      self.progressTracker = createProgressTracker(o.radius, o.length, 0, 0, o.color);
+      ins(el, self.progressTracker);
+
+        if (!useCssAnimations) {
         // No CSS animation support, use setTimeout() instead
         var i = 0;
         var start = (o.lines - 1) * (1 - o.direction) / 2;
@@ -274,7 +301,16 @@
       return el;
     },
 
-    /**
+
+      /**
+       * Update progress status.
+       */
+      setProgress: function(completed, total) {
+          total = total || 100;
+          this.progressTracker.innerHTML = Math.round((completed / total) * 100) + '%';
+      },
+
+      /**
      * Internal method that adjusts the opacity of a single line.
      * Will be overwritten in VML fallback mode below.
      */
