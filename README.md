@@ -15,6 +15,7 @@ An animated CSS3 loading spinner with VML fallback for IE.
 ## Usage
 
 ```javascript
+var target = document.getElementById('foo');
 new Spinner({color:'#fff', lines: 12}).spin(target);
 ```
 
