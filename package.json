@@ -1,9 +1,11 @@
 {
   "name": "spin.js",
-  "version": "2.3.2",
+  "version": "3.0.0",
   "main": "spin.js",
+  "types": "spin.d.ts",
   "author": "Felix Gnass <fgnass@gmail.com>",
   "contributors": [
+    "Theodore Brown (https://github.com/theodorejb)",
     "Timothy Gu <timothygu99@gmail.com>"
   ],
   "license": "MIT",
@@ -13,23 +15,20 @@
   },
   "keywords": [
     "spin",
-    "spinner",
-    "component"
+    "spinner"
   ],
-  "component": {
-    "scripts": {
-      "spin": "spin.js"
-    }
+  "scripts": {
+    "prepare": "tsc && grunt && rollup -c",
+    "gh-pages": "grunt gh-pages",
+    "start": "static-server site"
   },
   "devDependencies": {
-    "eslint": "^1.5.1",
-    "grunt": "~0.4.2",
-    "grunt-bump": "0.0.13",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-gh-pages": "~0.9.0"
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-gh-pages": "^2.0.0",
+    "rollup": "^0.51.1",
+    "static-server": "^2.0.6",
+    "typescript": "^2.6.1"
   },
-  "spm": {
-    "main": "spin.js"
-  }
+  "dependencies": {}
 }
