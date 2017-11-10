@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
   <title>spin.js</title>
-  <meta name="description" content="An animated CSS activity indicator with VML fallback.">
+  <meta name="description" content="An animated activity indicator.">
   <meta name="viewport" content="width=1024, maximum-scale=1">
   <meta property="og:image" content="http://spin.js.org/assets/preview.jpg?v=1" />
   <link rel="shortcut icon" href="favicon.ico">
   <link href="assets/main.css?v=6" type="text/css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
   <link href="assets/prettify.css" type="text/css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider.css?v=2">
-  <link rel="stylesheet" type="text/css" href="assets/fd-slider/fd-slider-tooltip.css">
   <script type="text/javascript" src="assets/prettify.js"></script>
 </head>
 <body>
@@ -19,39 +18,38 @@
   <h1>spin.js</h1>
 </div>
 
-<a id="ribbon" href="http://github.com/fgnass/spin.js"></a>
+<a id="ribbon" href="https://github.com/fgnass/spin.js"></a>
 
 <div id="content">
 
 <div id="download">
   <a href="spin.js" class="button">spin.js</a>
-  <a href="spin.min.js" class="button">spin.min.js</a>
 </div>
 
 <div id="example">
   <h2>Example</h2>
   <div id="preview"></div>
   <form id="opts">
-    <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
-    <label>Length:</label><input type="text" name="length" min="0" max="56" value="28"><br>
-    <label>Width:</label><input type="text" name="width" min="2" max="52" value="14"><br>
-    <label>Radius:</label><input type="text" name="radius" min="0" max="84" value="42"><br>
-    <label>Scale:</label><input type="text" name="scale" min="0.0" max="5.0" step="0.25" value="1.0"><br>
-    <label>Corners:</label><input type="text" name="corners" min="0" max="1" step="0.1" value="1"><br>
-    <label>Opacity:</label><input type="text" name="opacity" min="0" max="1" step="0.05" value="0.25"><br>
-    <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
+    <label>Lines:</label><input type="range" name="lines" min="5" max="16" step="2" value="12"><br>
+    <label>Length:</label><input type="range" name="length" min="0" max="56" value="28"><br>
+    <label>Width:</label><input type="range" name="width" min="2" max="52" value="14"><br>
+    <label>Radius:</label><input type="range" name="radius" min="0" max="84" value="42"><br>
+    <label>Scale:</label><input type="range" name="scale" min="0.0" max="5.0" step="0.25" value="1.0"><br>
+    <label>Corners:</label><input type="range" name="corners" min="0" max="1" step="0.1" value="1"><br>
+    <label>Opacity:</label><input type="range" name="opacity" min="0" max="1" step="0.05" value="0.25"><br>
+    <label>Rotate:</label><input type="range" name="rotate" min="0" max="90" value="0"><br>
     <label>Direction:</label>
     <select name="direction">
       <option value="1">Clockwise</option>
       <option value="-1">Counterclockwise</option>
     </select>
     <br>
-    <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
-    <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
-    <label>↕:</label><input class="percent" type="text" name="top" min="0" max="100" value="50"><br>
-    <label>↔:</label><input class="percent" type="text" name="left" min="0" max="100" value="50"><br>
+    <label>Speed:</label><input type="range" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+    <label>Trail:</label><input type="range" name="trail" min="10" max="100" value="60"><br>
+    <label>Color:</label><input class="string" type="text" name="color" value="#fff"><br>
+    <label>↕:</label><input class="percent" type="range" name="top" min="0" max="100" value="50"><br>
+    <label>↔:</label><input class="percent" type="range" name="left" min="0" max="100" value="50"><br>
     <label>Shadow:</label><input type="checkbox" name="shadow"><br>
-    <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
   </form>
 
   <div class="share">
@@ -66,58 +64,67 @@
 <h2>Features</h2>
 <ul>
   <li>No images, no external CSS</li>
-  <li>No dependencies (jQuery is <a href="#jquery">supported</a>, but not required)</li>
+  <li>No dependencies</li>
   <li>Highly configurable</li>
   <li>Resolution independent</li>
-  <li>Uses VML as fallback in old IEs</li>
-  <li>Uses @keyframe animations, falling back to setTimeout()</li>
-  <li>Works in all major browsers, including IE6</li>
+  <li>Uses requestAnimationFrame(), falling back to setTimeout() in IE 9</li>
+  <li>Works in all major browsers</li>
+  <li>Written in TypeScript</li>
+  <li>Distributed as a native ES6 module</li>
   <li>MIT License</li>
 </ul>
 <p>
   Spin.js dynamically creates spinning activity indicators that can be used as
-  resolution-independent replacement for AJAX loading GIFs.
+  a resolution-independent replacement for AJAX loading GIFs.
 </p>
+
+<h2>Installation</h2>
+<p>Run <code>npm install spin.js</code></p>
+
 <h2 id="usage">Usage</h2>
 <pre class="prettyprint">
+import {Spinner} from 'spin.js';
+
 var opts = {
-  lines: <span id="opt-lines" class="lit">12</span> // The number of lines to draw
-, length: <span id="opt-length" class="lit">7</span> // The length of each line
-, width: <span id="opt-width" class="lit">5</span> // The line thickness
-, radius: <span id="opt-radius" class="lit">10</span> // The radius of the inner circle
-, scale: <span id="opt-scale" class="lit">1.0</span> // Scales overall size of the spinner
-, corners: <span id="opt-corners" class="lit">1</span> // Corner roundness (0..1)
-, color: '#000' // #rgb or #rrggbb or array of colors
-, opacity: <span id="opt-opacity" class="lit">0.25</span> // Opacity of the lines
-, rotate: <span id="opt-rotate" class="lit">0</span> // The rotation offset
-, direction: <span id="opt-direction" class="lit">1</span> // 1: clockwise, -1: counterclockwise
-, speed: <span id="opt-speed" class="lit">1</span> // Rounds per second
-, trail: <span id="opt-trail" class="lit">100</span> // Afterglow percentage
-, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-, zIndex: 2e9 // The z-index (defaults to 2000000000)
-, className: 'spinner' // The CSS class to assign to the spinner
-, top: '<span id="opt-top" class="str">50%</span>' // Top position relative to parent
-, left: '<span id="opt-left" class="str">50%</span>' // Left position relative to parent
-, shadow: <span id="opt-shadow" class="kwd">true</span> // Whether to render a shadow
-, hwaccel: <span id="opt-hwaccel" class="kwd">false</span> // Whether to use hardware acceleration
-, position: 'absolute' // Element positioning
-}
-var target = document.getElementById('foo')
+  lines: <span id="opt-lines" class="lit">12</span>, // The number of lines to draw
+  length: <span id="opt-length" class="lit">7</span>, // The length of each line
+  width: <span id="opt-width" class="lit">5</span>, // The line thickness
+  radius: <span id="opt-radius" class="lit">10</span>, // The radius of the inner circle
+  scale: <span id="opt-scale" class="lit">1.0</span>, // Scales overall size of the spinner
+  corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1)
+  color: '<span id="opt-color" class="str">#000</span>', // #rgb or #rrggbb or array of colors
+  opacity: <span id="opt-opacity" class="lit">0.25</span>, // Opacity of the lines
+  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
+  direction: <span id="opt-direction" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
+  speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
+  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
+  fps: 20, // Frames per second when using setTimeout() as a fallback in IE 9
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  className: 'spinner', // The CSS class to assign to the spinner
+  top: '<span id="opt-top" class="str">50%</span>', // Top position relative to parent
+  left: '<span id="opt-left" class="str">50%</span>', // Left position relative to parent
+  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
+  position: 'absolute' // Element positioning
+};
+
+var target = document.getElementById('foo');
 var spinner = new Spinner(opts).spin(target);
 </pre>
 <p>
   The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target
   element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
 </p>
+
 <h3>Manual insertion</h3>
 <p>
   In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any
   arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
-var spinner = new Spinner().spin()
-target.appendChild(spinner.el)
+var spinner = new Spinner().spin();
+target.appendChild(spinner.el);
 </pre>
+
 <h3>Positioning</h3>
 <p>
   Since version 2.0.0 the spinner is absolutely positioned at 50% of its offset parent.
@@ -132,230 +139,61 @@ target.appendChild(spinner.el)
   The spinner element must be surrounded by an element using relative positioning, or the spinner will be
   outside of the parent element.
 </p>
+
 <h3>Hiding the spinner</h3>
 <p>
   To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops
   the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
 </p>
-<h3 id="jquery">jQuery plugin</h3>
+
+<h3>Bundling</h3>
 <p>
-  Spin.js does not require jQuery. Anyway, if you want to use jQuery you may use <a href="jquery.spin.js">this plugin</a>.
+  Not all browsers support native ES6 module imports yet, so it is recommended to
+  use a module bundler such as <a href="https://webpack.js.org/">Webpack</a> or
+  <a href="https://rollupjs.org/">Rollup</a> to create a production-ready code bundle.
 </p>
+
 <h2>Supported browsers</h2>
 <img src="assets/browsers.png">
 <p>
   Spin.js has been successfully tested in the following browsers:
-  <ul>
-    <li>Chrome</li>
-    <li>Safari 3.2+</li>
-    <li>Firefox 3.5+</li>
-    <li>IE 6,7,8,9,10,11</li>
-    <li>Opera 10.6+</li>
-    <li>Mobile Safari (iOS 3.1+)</li>
-    <li>Android 2.3+</li>
-  </ul>
 </p>
+<ul>
+  <li>Chrome</li>
+  <li>Firefox</li>
+  <li>Opera</li>
+  <li>Safari</li>
+  <li>Internet Explorer 9+</li>
+  <li>Microsoft Edge</li>
+</ul>
 
 <h2>Changes</h2>
 
-<h3 id="v2.3.2">Version 2.3.2 (24.07.2015)</h3>
-<ul>
-  <li>The UMD header is updated to protect against HTMLElement global pollution. See <a href="https://github.com/fgnass/spin.js/pull/300">PR #300</a>. (Thanks <a href="https://github.com/mikesherov">@mikesherov</a>)</li>
-</ul>
-<h3 id="v2.3.1">Version 2.3.1 (16.06.2015)</h3>
-<ul>
-  <li>There have been multiple tagging issues that produced 2.1.3, 2.2.0, and 2.3.0. In the spirit of SemVer, this release is now 2.3.1.</li>
-  <li>The minified spin.min.js is now distributed in the repo, making Bower usage easier. See <a href="https://github.com/fgnass/spin.js/issues/250">issue #250</a>.</li>
-  <li>Fix an incorrect comment in the file header. See <a href="https://github.com/fgnass/spin.js/pull/294">PR #294</a>. (Thanks <a href="ht    tps://github.com/msheakoski">@msheakoski</a>)</li>
-  <li>Remove moot <code>version</code> property from Bower manifest. See <a href="https://github.com/fgnass/spin.js/pull/295">PR #295</a>. (Thanks <a href="https://github.com/kkirsche">@kkirsche</a>)</li>
-</ul>
-<h3 id="v2.1.2">Version 2.1.2 (28.05.2015)</h3>
-<ul>
-  <li>There has been a packaging error in the last release. This release rectifies that.</li>
-</ul>
-<h3 id="v2.1.1">Version 2.1.1 (28.05.2015)</h3>
-<ul>
-  <li>Spin.js now has a new maintainer: <a href="https://github.com/TimothyGu">@TimothyGu</a> (that's me ;)!</li>
-  <li>The documentation is updated to note that the container element must use relative positioning. See <a href="https://github.com/fgnass/spin.js/issues/292">issue #292</a>.</li>
-  <li>The examples are all fixed.</li>
-  <li>The demo page had a bug where the direction setting does not reflect in the option object.</li>
-  <li>The website now uses the latest version of jQuery from its 1.x branch.</li>
-  <li>Standard CSS attributes are now preferred over vendor ones if they are supported.</li>
-  <li><a href="http://spmjs.io/">spm</a> support is now added. See <a href="https://github.com/fgnass/spin.js/pull/232">PR #232</a>. (Thanks <a href="https://github.com/afc163">@afc163</a>)</li>
-  <li>Internally the coding style is now unified across all files.</li>
-</ul>
-<h3 id="v2.1.0">Version 2.1.0 (16.04.2015)</h3>
-<ul>
-  <li>Added the scale option. See <a href="https://github.com/fgnass/spin.js/pull/287">PR #287</a>. (Thanks <a href="https://github.com/samlbest">samlbest</a>)</li>
-  <li>Spin.js can now be required on the server. See <a href="https://github.com/fgnass/spin.js/pull/283">PR #218</a>. (Thanks <a href="https://github.com/davidmccabe">David McCabe</a>)</li>
-</ul>
-<h3 id="v2.0.1">Version 2.0.1 (24.04.2014)</h3>
-<ul>
-  <li>Position is now set even if now target is given. See <a href="https://github.com/fgnass/spin.js/issues/218">issue #218</a>. (Thanks <a href="https://github.com/tablatronix">tablatronix</a>)</li>
-</ul>
-<h3 id="v2.0.0">Version 2.0.0 (13.03.2014)</h3>
-<ul>
-  <li>The Spinner is now absolutely positioned at top: 50% left: 50% by default. (Thanks <a href="https://github.com/steelywing">steelywing</a>)</li>
-</ul>
-<h3 id="v1.3.3">Version 1.3.3 (24.12.2013)</h3>
-<ul>
-  <li>Grunt-based build and a master branch. See <a href="https://github.com/fgnass/spin.js/issues/189">issue #189</a>.</li>
-</ul>
-<h3 id="v1.3.2">Version 1.3.2 (26.8.2013)</h3>
-<ul>
-  <li>Workaround for q regression in Chrome Canary. See <a href="https://github.com/fgnass/spin.js/issues/168">issue #168</a>.</li>
-</ul>
-<h3 id="v1.3.1">Version 1.3.1 (19.8.2013)</h3>
-<ul>
-  <li>Support for multi-colored spinners. (Thanks <a href="https://github.com/ranyefet">ranyefet</a>)</li>
-</ul>
-<h3 id="v1.3.0">Version 1.3.0 (2.4.2013)</h3>
-<ul>
-  <li>UMD pattern to support AMD and CommonJS module loaders</li>
-  <li>Use strict mode</li>
-  <li>Bundled the jQuery plugin</li>
-  <li>Added an option to control the spinning direction. See <a href="https://github.com/fgnass/spin.js/pull/126">PR #126</a>.</li>
-</ul>
-<h3 id="v1.2.8">Version 1.2.8 (28.1.2013)</h3>
-<ul>
-  <li>Removed an unnecessary var. See <a href="https://github.com/fgnass/spin.js/issues/78">issue #78</a>.</li>
-</ul>
-<h3 id="v1.2.7">Version 1.2.7 (2.10.2012)</h3>
-<ul>
-  <li>Added an option to set the position property. See <a href="https://github.com/fgnass/spin.js/issues/93">issue #98</a>.</li>
-  <li>Added a trailing semicolon to support concatenation tools that don't know about ASI.</li>
-</ul>
-<h3 id="v1.2.6">Version 1.2.6 (30.08.2012)</h3>
-<ul>
-  <li>Added an option to set the border-radius. See <a href="https://github.com/fgnass/spin.js/issues/93">issue #93</a>.</li>
-  <li>Fix for Opera 12. See <a href="https://github.com/fgnass/spin.js/issues/87">issue #87</a>.</li>
-  <li>Fix for IE. See <a href="https://github.com/fgnass/spin.js/pull/77">issue #77</a>.</li>
-  <li>Fixed an issue with very wide target elements. See <a href="https://github.com/fgnass/spin.js/issues/74">issue #78</a>.</li>
-</ul>
-<h3 id="v1.2.5">Version 1.2.5 (22.03.2012)</h3>
-<ul>
-  <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/58">a bug</a> that prevented the VML from being displayed when Modernizr or html5shiv was used.</li>
-  <li>Added a rotate option. See <a href="https://github.com/fgnass/spin.js/issues/60">issue #60</a>.</li>
-  <li>The constructor property is now preserved. See <a href="https://github.com/fgnass/spin.js/pull/61">issue #61</a>.</li>
-</ul>
-<h3 id="v1.2.4">Version 1.2.4 (28.02.2012)</h3>
-<ul>
-  <li>
-    Added new config options: top, left, zIndex and className.
-  </li>
-</ul>
-<h3 id="v1.2.3">Version 1.2.3 (30.01.2012)</h3>
-<ul>
-  <li>Hardware acceleration is now disabled by default. See <a href="https://github.com/fgnass/spin.js/issues/47">issue #47</a> and
-  <a href="https://github.com/fgnass/spin.js/issues/41">issue #41</a>.</li>
-</ul>
-<h3 id="v1.2.2">Version 1.2.2 (8.11.2011)</h3>
-<ul>
-  <li>Fixed a cross-domain issue with the dynamically created stylesheet. See <a href="https://github.com/fgnass/spin.js/issues/36">issue #36</a>.</li>
-</ul>
-<h3 id="v1.2.1">Version 1.2.1 (5.10.2011)</h3>
-<ul>
-  <li>Added a sanity check. See <a href="https://github.com/fgnass/spin.js/issues/31">issue #31</a>.</li>
-</ul>
-<h3 id="v1.2">Version 1.2 (16.9.2011)</h3>
-<ul>
-  <li>Calling <code>spin()</code> now invokes <code>stop()</code> first. See <a href="https://github.com/fgnass/spin.js/issues/28">issue #28</a>.</li>
-  <li>Added a workaround for the IE negative margin bug. See <a href="https://github.com/fgnass/spin.js/issues/27">issue #27</a>.</li>
-  <li>The <code>new</code> operator is now optional. See <a href="https://github.com/fgnass/spin.js/issues/14">issue #14</a>.</li>
-  <li>Improved accessibility by adding <code>role="progressbar"</code>.</a>
-</ul>
-
-<h3 id="v1.1">Version 1.1 (6.9.2011)</h3>
-<ul>
-  <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/12">a bug</a> where the animation occasionally got out of sync in Mobile Safari and Android's built-in WebKit.</li>
-  <li>Fixed <a href="https://github.com/fgnass/spin.js/issues/23">a bug</a> where the spinner was misplaced when the target element had a non-zero padding.</li>
-  <li>Optimized the code for gzip compression. While the minified version got slightly larger, the zipped version now only weighs  1.7K.</li>
-</ul>
-<h3 id="v1.0">Version 1.0 (16.8.2011)</h3>
-<ul>
-  <li>Initial release</li>
-</ul>
+<p>
+   See <a href="https://github.com/fgnass/spin.js/releases">https://github.com/fgnass/spin.js/releases</a>
+</p>
 
 <h2>Contact</h2>
 <p id="contact">
-  <img width="57" height="57" src="http://www.gravatar.com/avatar/f1f2e1842f6ff681a6d1b0a2405d0117.png">
+  <img width="57" height="57" src="https://www.gravatar.com/avatar/f1f2e1842f6ff681a6d1b0a2405d0117.png">
   If you encounter any problems, please use the <a href="https://github.com/fgnass/spin.js/issues">GitHub issue tracker</a>.<br>
-  For updates <a href="http://twitter.com/fgnass">follow me on Twitter</a>.<br>
+  For updates <a href="https://twitter.com/fgnass">follow me on Twitter</a>.<br>
   If you like spin.js and use it in the wild, let me know.
 </p>
 </div>
 <div id="footer">
-  <a class="github" href="http://github.com">Hosted on GitHub</a>
+  <a class="github" href="https://github.com">Hosted on GitHub</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="assets/fd-slider/fd-slider.js"></script>
-<script src="spin.min.js"></script>
 <script>
-  $.fn.spin = function (opts) {
-    this.each(function () {
-      var $this = $(this)
-        , data = $this.data()
+  prettyPrint();
 
-      if (data.spinner) {
-        data.spinner.stop()
-        delete data.spinner
-      }
-      if (opts !== false) {
-        window.s = data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this)
-      }
-    })
-    return this
-  }
-  //$('#dot').spin()
-  prettyPrint()
-  function update () {
-    var opts = {}
-    $('#opts input[min], #opts select').each(function () {
-      var percent = $(this).hasClass('percent')
-        , val = percent ? this.value + '%' : parseFloat(this.value)
-      $('#opt-' + this.name).text(opts[this.name] = val)
-    })
-    $('#opts input:checkbox').each(function () {
-      opts[this.name] = this.checked
-      $('#opt-' + this.name).text(this.checked)
-    })
-    $('#preview').spin(opts)
-    if ($('#share').is(':checked')) {
-      window.location.replace('#?' + $('form').serialize())
-    }
-  }
-  $(function () {
-    var params = {}
-    var hash = /^#\?(.*)/.exec(location.hash)
-    if (hash) {
-      $('#share').prop('checked', true)
-      $.each(hash[1].split(/&/), function (i, pair) {
-        var kv = pair.split(/=/)
-        params[kv[0]] = kv[kv.length-1]
-      })
-    }
-    $('#opts input[min], #opts select').each(function () {
-      var val = params[this.name]
-        , percent = $(this).hasClass('percent')
-        , extraOpt = percent ? '%' : ''
-      if (val !== undefined) this.value = val + extraOpt
-      this.onchange = update
-    })
-    $('#opts input:checkbox').each(function () {
-      this.checked = !!params[this.name]
-      this.onclick = update
-    })
-    $('#share').click(function () {
-      window.location.replace(this.checked ? '#?' + $('form').serialize() : '#!')
-    })
-    update()
-  });
-</script>
-<script type="text/javascript">
   var _gaq=[['_setAccount','UA-19036385-2'],['_trackPageview']];
   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,"script"));
 </script>
+
+<script src="bundle.js"></script>
+
 </body>
 </html>

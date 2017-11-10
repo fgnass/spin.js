@@ -59,22 +59,20 @@ pre {
   margin: 0 0 30px 0;
 }
 label {
-  display: inline-block;
-  width: 440px;
   font-size: 14px;
   vertical-align: top;
 }
 #opts {
   display: inline-block;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 #opts label {
+  display: inline-block;
   line-height: 25px;
   width: 80px;
-}
-span.fd-slider {
-  vertical-align: top;
-  display: inline-block;
-  width: 150px;
 }
 #logo {
   position: relative;
@@ -106,8 +104,6 @@ h3 {
   width: 149px;
   height: 149px;
   background: url(ribbon.png) no-repeat;
-  _background: none;
-  _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=ribbon.png);
 }
 #preview {
   position: relative;
@@ -115,10 +111,8 @@ h3 {
   color: #fff;
   float: left;
   width: 375px;
-  height: 375px;
+  height: 420px;
   margin: 0 20px 20px 0;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
   border-radius: 10px;
 }
 #demo {
@@ -144,7 +138,7 @@ a.button {
   text-shadow: 1px 1px 1px #59a24f;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   margin: 10px 20px 0 0;
-  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 a.button:hover {
   background: #2f8325;
