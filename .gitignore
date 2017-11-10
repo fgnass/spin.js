@@ -1,6 +1,7 @@
-.DS_Store
-.grunt
-node_modules
-site/spin.js
-site/spin.min.js
-site/jquery.spin.js
+/.grunt
+/node_modules
+/package-lock.json
+/site/bundle.js
+/site/spin.js
+/spin.js
+/spin.d.ts

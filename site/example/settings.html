@@ -1,38 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
   <title>spin.js</title>
-  <style type="text/css">
-  body {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-  }
-  label {
-    display: inline-block;
-    width: 70px;
-    line-height: 25px;
-  }
-  #preview {
-    background: #333;
-    color: #fff;
-    width: 220px;
-    height: 220px;
-    margin: 0 20px;
-    float: left;
-    border-radius: 10px;
-    position: relative;
-  }
-  form {
-    float: left;
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="settings.css"/>
 </head>
 <body>
 
 <div id="preview"></div>
 <form>
   <label>Lines:</label><input type="range" name="lines" min="5" max="16" step="2" value="12"><br>
-  <label>Length:</label><input type="range" name="length" min="0" max="30" value="7"><br>
+  <label>Length:</label><input type="range" name="length" min="0" max="60" value="7"><br>
   <label>Width:</label><input type="range" name="width" min="2" max="20" value="4"><br>
   <label>Radius:</label><input type="range" name="radius" min="0" max="40" value="10"><br>
   <label>Corners:</label><input type="range" name="corners" min="0" max="1" step="0.1" value="1"><br>
@@ -46,26 +24,8 @@
   </select>
   <br>
   <label>Shadow:</label><input type="checkbox" name="shadow"><br>
-  <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
 </form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="../spin.js"></script>
-<script src="../jquery.spin.js"></script>
-<script>
-  function update () {
-    var opts = {};
-    $('input[min], select').each(function() {
-      opts[this.name] = parseFloat(this.value);
-    });
-    $('input:checkbox').each(function() {
-      opts[this.name] = this.checked;
-    });
-    $('#preview').spin(opts);
-  }
-  $('input[min], select').change(update);
-  $('input:checkbox').click(update);
-  update();
-</script>
+<script type="module" src="settings.js"></script>
 </body>
 </html>

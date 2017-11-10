@@ -1,20 +1,22 @@
 # spin.js [![JS.ORG](https://img.shields.io/badge/js.org-spin-ffb400.svg?style=flat-square)](http://js.org)
 
-An animated CSS3 loading spinner with VML fallback for IE.
+An animated loading spinner
 
  * No images, no external CSS
  * No dependencies
  * Highly configurable
  * Resolution independent
- * Uses VML as fallback in old IEs
- * Uses @keyframe animations, falling back to setTimeout()
- * Works in all major browsers, including IE6
- * Small footprint (~1.9K gzipped)
+ * Uses `requestAnimationFrame()`, falling back to `setTimeout()` in IE 9
+ * Works in all major browsers
+ * Includes TypeScript definitions
  * MIT License
 
 ## Usage
 
 ```javascript
+import {Spinner} from 'spin.js';
+
+var target = document.getElementById('foo');
 new Spinner({color:'#fff', lines: 12}).spin(target);
 ```
 
