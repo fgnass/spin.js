@@ -1,0 +1,24 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+label {
+    display: inline-block;
+    width: 70px;
+    line-height: 25px;
+}
+
+#preview {
+    background: #333;
+    width: 220px;
+    height: 220px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+    position: relative;
+}
+
+form {
+    float: left;
+}
