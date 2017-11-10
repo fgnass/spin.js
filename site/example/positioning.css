@@ -1,0 +1,40 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+div {
+    position: relative;
+    border-radius: 10px;
+}
+
+#target1 {
+    background: #aaa url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+}
+
+#target2 {
+    background: #bbb url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+}
+
+#target3 {
+    background: #ccc url(../assets/crosshair.gif) center center no-repeat;
+    width: 99px;
+    height: 99px;
+    padding: 15px;
+}
+
+#target4 {
+    background: #ddd url(../assets/crosshair.gif) center center no-repeat;
+    padding: 15px;
+    width: 350px;
+    height: 99px;
+    padding: 50px;
+}
