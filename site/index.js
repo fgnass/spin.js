@@ -25,7 +25,12 @@ for (var i = 0; i < inputs.length; i++) {
         input.value = val;
     }
 
-    var event = (input.tagName === 'SELECT') ? 'change' : 'input';
+    if (input.tagName === 'SELECT' || navigator.userAgent.indexOf('Trident') !== -1) {
+        // "input" event doesn't work on range inputs in Internet Explorer
+        var event = 'change';
+    } else {
+        event = 'input';
+    }
 
     input.addEventListener(event, update);
 }
