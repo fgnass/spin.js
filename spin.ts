@@ -215,7 +215,7 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): HTMLElement {
             seg.appendChild(css(fill('#000', '0 0 4px #000', opts, i), { top: '2px' }));
         }
 
-        seg.appendChild(fill(getColor(opts.color, i), '0 0 1px rgba(0,0,0,.1)', opts, i));
+        seg.appendChild(fill(getColor(opts.color, i), 'none', opts, i));
         el.appendChild(seg);
     }
 
