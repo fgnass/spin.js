@@ -63,11 +63,8 @@ label {
   vertical-align: top;
 }
 #opts {
-  display: inline-block;
   background: #fff;
   padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
 }
 #opts label {
   display: inline-block;
@@ -76,7 +73,7 @@ label {
 }
 #logo {
   position: relative;
-  height: 300px;
+  height: 275px;
   margin-left: 100px;
 }
 h1, h2, h3, #download a {
@@ -105,25 +102,18 @@ h3 {
   height: 149px;
   background: url(ribbon.png) no-repeat;
 }
+#opts, .mid_col, #preview {
+  display: table-cell;
+  border-radius: 10px;
+}
+.mid_col {
+  width: 20px;
+}
 #preview {
   position: relative;
   background: #333;
-  color: #fff;
-  float: left;
   width: 375px;
-  height: 420px;
-  margin: 0 20px 20px 0;
-  border-radius: 10px;
-}
-#demo {
-  clear: both;
-}
-#demo form {
-  width: 250px;
-  float: left;
-}
-.share {
-  clear: left;
+  height: 100%;
 }
 a.button {
   display: inline-block;
