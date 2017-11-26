@@ -203,91 +203,108 @@ function getColor(color: string | string[], idx): string {
 /**
  * Internal method that draws the individual lines.
  */
-function drawLines(el: HTMLElement, opts: SpinnerOptions): HTMLElement {
-    let borderRadius = (opts.corners * opts.scale * opts.width >> 1) + 'px';
+function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
+    css(el, {
+        transform: `scale(${opts.scale})`
+    });
+
+    let borderRadius = (Math.round(opts.corners * opts.width * 500) / 1000) + 'px';
+    let shadow = 'none';
+
+    if (opts.shadow === true) {
+        shadow = '0 2px 4px #000'; // default shadow
+    } else if (typeof opts.shadow === 'string') {
+        shadow = opts.shadow;
+    }
+
+    let shadows = parseBoxShadow(shadow);
 
     for (let i = 0; i < opts.lines; i++) {
-        let seg = css(createEl('div'), {
+        let degrees = ~~(360 / opts.lines * i + opts.rotate);
+
+        let backgroundLine = css(createEl('div'), {
             position: 'absolute',
-            top: 1 + ~(opts.scale * opts.width / 2) + 'px',
+            top: `${-opts.width / 2}px`,
+            width: (opts.length + opts.width) + 'px',
+            height: opts.width + 'px',
             borderRadius: borderRadius,
+            transformOrigin: 'left',
+            transform: `rotate(${degrees}deg) translateX(${opts.radius}px)`,
         });
 
-        let shadow = 'none';
+        let line = css(createEl('div'), {
+            width: '100%',
+            height: '100%',
+            background: getColor(opts.color, i),
+            borderRadius: borderRadius,
+            boxShadow: normalizeShadow(shadows, degrees),
+            opacity: opts.opacity,
+        });
 
-        if (opts.shadow === true) {
-            shadow = '0 2px 4px #000';
-        } else if (typeof opts.shadow === 'string') {
-            shadow = opts.shadow;
-        }
-
-        seg.appendChild(fill(borderRadius, shadow, opts, i));
-        el.appendChild(seg);
+        backgroundLine.appendChild(line);
+        el.appendChild(backgroundLine);
     }
-
-    return el;
 }
 
-function fill(borderRadius: string, shadow: string, opts: SpinnerOptions, i: number): HTMLElement {
-    let degrees = ~~(360 / opts.lines * i + opts.rotate);
-
-    return css(createEl('div'), {
-        position: 'absolute',
-        width: opts.scale * (opts.length + opts.width) + 'px',
-        height: opts.scale * opts.width + 'px',
-        background: getColor(opts.color, i),
-        boxShadow: normalizeShadow(shadow, degrees),
-        transformOrigin: 'left',
-        transform: `rotate(${degrees}deg) translate(${opts.scale * opts.radius}px, 0)`,
-        borderRadius: borderRadius,
-        opacity: opts.opacity,
-    });
+interface ParsedShadow {
+    prefix: string,
+    x: number,
+    y: number,
+    xUnits: string,
+    yUnits: string,
+    end: string,
 }
 
-/**
- * Parse a box-shadow value and modify the x/y offsets to counteract rotation
- */
-function normalizeShadow(shadow: string, degrees: number): string {
-    let stopwords = ['', 'none', 'inherit', 'initial', 'unset'];
+function parseBoxShadow(boxShadow: string): ParsedShadow[] {
+    let regex = /^\s*([a-zA-Z]+\s+)?(-?\d+(\.\d+)?)([a-zA-Z]*)\s+(-?\d+(\.\d+)?)([a-zA-Z]*)(.*)$/;
+    let shadows: ParsedShadow[] = [];
 
-    if (stopwords.indexOf(shadow) !== -1) {
-        return shadow;
-    }
-
-    let shadows = shadow.split(',');
-    let regex = /^\s*([a-zA-Z]+\s+)?(-?\d+(\.\d+)?)(\w*)\s+(-?\d+(\.\d+)?)(\w*)(.*)$/;
-    let normalized = [];
-
-    for (let shadow of shadows) {
+    for (let shadow of boxShadow.split(',')) {
         let matches = shadow.match(regex);
 
         if (matches === null) {
-            throw new Error('Invalid box shadow');
+            continue; // invalid syntax
         }
 
-        // matches[1] could have a value of 'inset' or undefined
-
-        if (matches[1] === undefined) {
-            matches[1] = '';
-        }
-
+        let x = +matches[2];
+        let y = +matches[5];
         let xUnits = matches[4];
         let yUnits = matches[7];
 
-        if (!xUnits) {
+        if (x === 0 && !xUnits) {
             xUnits = yUnits;
         }
 
-        if (!yUnits) {
+        if (y === 0 && !yUnits) {
             yUnits = xUnits;
         }
 
         if (xUnits !== yUnits) {
-            throw new Error('Box shadow x and y offsets must use the same units');
+            continue; // units must match to use as coordinates
         }
 
-        let xy = convertOffset(+matches[2], +matches[5], degrees);
-        normalized.push(matches[1] + xy[0] + xUnits + ' ' + xy[1] + yUnits + matches[8]);
+        shadows.push({
+            prefix: matches[1] || '', // could have value of 'inset' or undefined
+            x: x,
+            y: y,
+            xUnits: xUnits,
+            yUnits: yUnits,
+            end: matches[8],
+        });
+    }
+
+    return shadows;
+}
+
+/**
+ * Modify box-shadow x/y offsets to counteract rotation
+ */
+function normalizeShadow(shadows: ParsedShadow[], degrees: number): string {
+    let normalized: string[] = [];
+
+    for (let shadow of shadows) {
+        let xy = convertOffset(shadow.x, shadow.y, degrees);
+        normalized.push(shadow.prefix + xy[0] + shadow.xUnits + ' ' + xy[1] + shadow.yUnits + shadow.end);
     }
 
     return normalized.join(', ');
