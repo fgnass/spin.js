@@ -19,7 +19,7 @@ const defaults: SpinnerOptions = {
     className: 'spinner',
     top: '50%',
     left: '50%',
-    shadow: false,
+    shadow: 'none',
     position: 'absolute',
 };
 
@@ -88,10 +88,10 @@ export class Spinner {
                 state -= Math.floor(state);
             }
 
-            for (let line = 0; line < this.opts.lines; line++) {
-                if (line < this.el.childNodes.length) {
+            if (this.el.childNodes.length === this.opts.lines) {
+                for (let line = 0; line < this.opts.lines; line++) {
                     let opacity = getLineOpacity(line, state, this.opts);
-                    (this.el.childNodes[line] as HTMLElement).style.opacity = opacity.toString();
+                    (this.el.childNodes[line].childNodes[0] as HTMLElement).style.opacity = opacity.toString();
                 }
             }
 
@@ -204,33 +204,102 @@ function getColor(color: string | string[], idx): string {
  * Internal method that draws the individual lines.
  */
 function drawLines(el: HTMLElement, opts: SpinnerOptions): HTMLElement {
-    for (var i = 0; i < opts.lines; i++) {
+    let borderRadius = (opts.corners * opts.scale * opts.width >> 1) + 'px';
+
+    for (let i = 0; i < opts.lines; i++) {
         let seg = css(createEl('div'), {
             position: 'absolute',
             top: 1 + ~(opts.scale * opts.width / 2) + 'px',
-            opacity: opts.opacity,
+            borderRadius: borderRadius,
         });
 
-        if (opts.shadow) {
-            seg.appendChild(css(fill('#000', '0 0 4px #000', opts, i), { top: '2px' }));
+        let shadow = 'none';
+
+        if (opts.shadow === true) {
+            shadow = '0 2px 4px #000';
+        } else if (typeof opts.shadow === 'string') {
+            shadow = opts.shadow;
         }
 
-        seg.appendChild(fill(getColor(opts.color, i), 'none', opts, i));
+        seg.appendChild(fill(borderRadius, shadow, opts, i));
         el.appendChild(seg);
     }
 
     return el;
 }
 
-function fill(color: string, shadow: string, opts: SpinnerOptions, i: number): HTMLElement {
+function fill(borderRadius: string, shadow: string, opts: SpinnerOptions, i: number): HTMLElement {
+    let degrees = ~~(360 / opts.lines * i + opts.rotate);
+
     return css(createEl('div'), {
         position: 'absolute',
         width: opts.scale * (opts.length + opts.width) + 'px',
         height: opts.scale * opts.width + 'px',
-        background: color,
-        boxShadow: shadow,
+        background: getColor(opts.color, i),
+        boxShadow: normalizeShadow(shadow, degrees),
         transformOrigin: 'left',
-        transform: 'rotate(' + ~~(360 / opts.lines * i + opts.rotate) + 'deg) translate(' + opts.scale * opts.radius + 'px' + ',0)',
-        borderRadius: (opts.corners * opts.scale * opts.width >> 1) + 'px'
+        transform: `rotate(${degrees}deg) translate(${opts.scale * opts.radius}px, 0)`,
+        borderRadius: borderRadius,
+        opacity: opts.opacity,
     });
+}
+
+/**
+ * Parse a box-shadow value and modify the x/y offsets to counteract rotation
+ */
+function normalizeShadow(shadow: string, degrees: number): string {
+    let stopwords = ['', 'none', 'inherit', 'initial', 'unset'];
+
+    if (stopwords.indexOf(shadow) !== -1) {
+        return shadow;
+    }
+
+    let shadows = shadow.split(',');
+    let regex = /^\s*([a-zA-Z]+\s+)?(-?\d+(\.\d+)?)(\w*)\s+(-?\d+(\.\d+)?)(\w*)(.*)$/;
+    let normalized = [];
+
+    for (let shadow of shadows) {
+        let matches = shadow.match(regex);
+
+        if (matches === null) {
+            throw new Error('Invalid box shadow');
+        }
+
+        // matches[1] could have a value of 'inset' or undefined
+
+        if (matches[1] === undefined) {
+            matches[1] = '';
+        }
+
+        let xUnits = matches[4];
+        let yUnits = matches[7];
+
+        if (!xUnits) {
+            xUnits = yUnits;
+        }
+
+        if (!yUnits) {
+            yUnits = xUnits;
+        }
+
+        if (xUnits !== yUnits) {
+            throw new Error('Box shadow x and y offsets must use the same units');
+        }
+
+        let xy = convertOffset(+matches[2], +matches[5], degrees);
+        normalized.push(matches[1] + xy[0] + xUnits + ' ' + xy[1] + yUnits + matches[8]);
+    }
+
+    return normalized.join(', ');
+}
+
+function convertOffset(x: number, y: number, degrees: number) {
+    let radians = degrees * Math.PI / 180;
+    let sin = Math.sin(radians);
+    let cos = Math.cos(radians);
+
+    return [
+        Math.round((x * cos + y * sin) * 1000) / 1000,
+        Math.round((-x * sin + y * cos) * 1000) / 1000,
+    ];
 }

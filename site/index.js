@@ -13,7 +13,7 @@ if (hash) {
 
     hash[1].split(/&/).forEach(function (pair) {
         var kv = pair.split(/=/);
-        params[kv[0]] = kv[kv.length - 1];
+        params[kv[0]] = decodeURIComponent(kv[kv.length - 1]);
     });
 }
 
@@ -107,7 +107,7 @@ function getParamStringFromOpts(opts) {
                 val = val.slice(0, -1);
             }
 
-            params.push(prop + '=' + val);
+            params.push(prop + '=' + encodeURIComponent(val));
         }
     }
 

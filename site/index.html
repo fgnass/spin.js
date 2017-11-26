@@ -50,7 +50,7 @@
     <label>Color:</label><input class="string" type="text" name="color" value="#fff"><br>
     <label>↕:</label><input class="percent" type="range" name="top" min="0" max="100" value="50"><br>
     <label>↔:</label><input class="percent" type="range" name="left" min="0" max="100" value="50"><br>
-    <label>Shadow:</label><input type="checkbox" name="shadow"><br>
+    <label>Shadow:</label><input class="string" type="text" name="shadow" value="none"><br>
   </form>
 
   <div class="share">
@@ -110,7 +110,7 @@ var opts = {
   className: 'spinner', // The CSS class to assign to the spinner
   top: '<span id="opt-top" class="str">50%</span>', // Top position relative to parent
   left: '<span id="opt-left" class="str">50%</span>', // Left position relative to parent
-  shadow: <span id="opt-shadow" class="kwd">true</span>, // Whether to render a shadow
+  shadow: <span id="opt-shadow" class="str">none</span>, // Box-shadow for the lines
   position: 'absolute' // Element positioning
 };
 

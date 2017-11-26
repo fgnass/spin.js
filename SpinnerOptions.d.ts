@@ -35,7 +35,7 @@ export interface SpinnerOptions {
     color?: string | string[];
 
     /**
-     * Opacity of the lines (0..1)
+     * The minimum opacity the line color will fade to (0..1)
      */
     opacity?: number;
 
@@ -85,9 +85,10 @@ export interface SpinnerOptions {
     left?: string;
 
     /**
-     * Whether to render a shadow
+     * Whether to render the default shadow (boolean).
+     * A string can be used to set a custom box-shadow value.
      */
-    shadow?: boolean;
+    shadow?: boolean | string;
 
     /**
      * Element positioning
