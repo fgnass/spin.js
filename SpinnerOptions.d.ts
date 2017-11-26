@@ -30,9 +30,15 @@ export interface SpinnerOptions {
     corners?: number;
 
     /**
-     * #rgb or #rrggbb or array of colors
+     * A CSS color string, or array of strings to set the line color
      */
     color?: string | string[];
+
+    /**
+     * A CSS color string, or array of strings to set the color that lines will fade to.
+     * Defaults to transparent.
+     */
+    fadeColor?: string | string[];
 
     /**
      * The minimum opacity the line color will fade to (0..1)
