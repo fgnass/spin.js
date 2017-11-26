@@ -1,6 +1,6 @@
 {
   "name": "spin.js",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "spin.js",
   "types": "spin.d.ts",
   "author": "Felix Gnass <fgnass@gmail.com>",
