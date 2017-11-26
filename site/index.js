@@ -1,6 +1,6 @@
 import { Spinner } from "../spin.js";
 
-var inputs = document.querySelectorAll('#opts input[type="range"], #opts input[type="text"], #opts select');
+var inputs = document.querySelectorAll('#opts input[type="range"], #opts input[type="color"], #opts input[type="text"], #opts select');
 var cbInputs = document.querySelectorAll('#opts input[type="checkbox"]');
 var spinnerEl = document.getElementById('preview');
 var shareEl = document.getElementById('share');
@@ -13,7 +13,7 @@ if (hash) {
 
     hash[1].split(/&/).forEach(function (pair) {
         var kv = pair.split(/=/);
-        params[kv[0]] = kv[kv.length - 1];
+        params[kv[0]] = decodeURIComponent(kv[kv.length - 1]);
     });
 }
 
@@ -107,7 +107,7 @@ function getParamStringFromOpts(opts) {
                 val = val.slice(0, -1);
             }
 
-            params.push(prop + '=' + val);
+            params.push(prop + '=' + encodeURIComponent(val));
         }
     }
 
