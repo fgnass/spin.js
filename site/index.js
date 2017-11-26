@@ -1,6 +1,6 @@
 import { Spinner } from "../spin.js";
 
-var inputs = document.querySelectorAll('#opts input[type="range"], #opts input[type="text"], #opts select');
+var inputs = document.querySelectorAll('#opts input[type="range"], #opts input[type="color"], #opts input[type="text"], #opts select');
 var cbInputs = document.querySelectorAll('#opts input[type="checkbox"]');
 var spinnerEl = document.getElementById('preview');
 var shareEl = document.getElementById('share');

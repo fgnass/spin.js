@@ -26,8 +26,8 @@
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-gh-pages": "^2.0.0",
-    "rollup": "^0.51.8",
-    "static-server": "^2.0.6",
+    "rollup": "^0.52.0",
+    "static-server": "^3.0.0",
     "typescript": "^2.6.1"
   },
   "dependencies": {}

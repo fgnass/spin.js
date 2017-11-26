@@ -44,7 +44,8 @@ export class Spinner {
     spin(target?: HTMLElement): this {
         this.stop();
 
-        this.el = createEl('div', { className: this.opts.className });
+        this.el = document.createElement('div');
+        this.el.className = this.opts.className;
         this.el.setAttribute('role', 'progressbar');
 
         css(this.el, {
@@ -52,7 +53,8 @@ export class Spinner {
             width: 0,
             zIndex: this.opts.zIndex,
             left: this.opts.left,
-            top: this.opts.top
+            top: this.opts.top,
+            transform: `scale(${this.opts.scale})`,
         });
 
         if (target) {
@@ -152,19 +154,6 @@ function getLineOpacity(line: number, state: number, opts: SpinnerOptions): numb
 }
 
 /**
- * Utility function to create elements. Optionally properties can be passed.
- */
-function createEl(tag: string, prop = {}): HTMLElement {
-    var el = document.createElement(tag);
-
-    for (var n in prop) {
-        el[n] = prop[n];
-    }
-
-    return el;
-}
-
-/**
  * Tries various vendor prefixes and returns the first supported property.
  */
 function vendor(el: HTMLElement, prop: string): string {
@@ -204,10 +193,6 @@ function getColor(color: string | string[], idx): string {
  * Internal method that draws the individual lines.
  */
 function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
-    css(el, {
-        transform: `scale(${opts.scale})`
-    });
-
     let borderRadius = (Math.round(opts.corners * opts.width * 500) / 1000) + 'px';
     let shadow = 'none';
 
@@ -222,7 +207,7 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
     for (let i = 0; i < opts.lines; i++) {
         let degrees = ~~(360 / opts.lines * i + opts.rotate);
 
-        let backgroundLine = css(createEl('div'), {
+        let backgroundLine = css(document.createElement('div'), {
             position: 'absolute',
             top: `${-opts.width / 2}px`,
             width: (opts.length + opts.width) + 'px',
@@ -232,7 +217,7 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
             transform: `rotate(${degrees}deg) translateX(${opts.radius}px)`,
         });
 
-        let line = css(createEl('div'), {
+        let line = css(document.createElement('div'), {
             width: '100%',
             height: '100%',
             background: getColor(opts.color, i),
