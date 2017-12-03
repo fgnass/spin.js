@@ -10,12 +10,10 @@ const defaults: SpinnerOptions = {
     corners: 1,
     color: '#000',
     fadeColor: 'transparent',
-    opacity: 0.25,
+    animation: 'spinner-line-fade-default',
     rotate: 0,
     direction: 1,
     speed: 1,
-    trail: 100,
-    fps: 20,
     zIndex: 2e9,
     className: 'spinner',
     top: '50%',
@@ -62,47 +60,7 @@ export class Spinner {
             target.insertBefore(this.el, target.firstChild || null);
         }
 
-        let animator: (callback: () => void) => number;
-        let getNow: () => number;
-
-        if (typeof requestAnimationFrame !== 'undefined') {
-            animator = requestAnimationFrame;
-            getNow = () => performance.now();
-        } else {
-            // fallback for IE 9
-            animator = callback => setTimeout(callback, 1000 / this.opts.fps);
-            getNow = () => Date.now();
-        }
-
-        let lastFrameTime: number;
-        let state = 0; // state is rotation percentage (between 0 and 1)
-
-        let animate = () => {
-            let time = getNow();
-
-            if (lastFrameTime === undefined) {
-                lastFrameTime = time - 1;
-            }
-
-            state += getAdvancePercentage(time - lastFrameTime, this.opts.speed);
-            lastFrameTime = time;
-
-            if (state > 1) {
-                state -= Math.floor(state);
-            }
-
-            if (this.el.childNodes.length === this.opts.lines) {
-                for (let line = 0; line < this.opts.lines; line++) {
-                    let opacity = getLineOpacity(line, state, this.opts);
-                    (this.el.childNodes[line].childNodes[0] as HTMLElement).style.opacity = opacity.toString();
-                }
-            }
-
-            this.animateId = this.el ? animator(animate) : undefined;
-        };
-
         drawLines(this.el, this.opts);
-        animate();
 
         return this;
     }
@@ -130,54 +88,12 @@ export class Spinner {
     }
 }
 
-function getAdvancePercentage(msSinceLastFrame: number, roundsPerSecond: number): number {
-    return msSinceLastFrame / 1000 * roundsPerSecond;
-}
-
-function getLineOpacity(line: number, state: number, opts: SpinnerOptions): number {
-    let linePercent = (line + 1) / opts.lines;
-    let diff = state - (linePercent * opts.direction);
-
-    if (diff < 0 || diff > 1) {
-        diff += opts.direction;
-    }
-
-    // opacity should start at 1, and approach opacity option as diff reaches trail percentage
-    let trailPercent = opts.trail / 100;
-    let opacityPercent = 1 - diff / trailPercent;
-
-    if (opacityPercent < 0) {
-        return opts.opacity;
-    }
-
-    let opacityDiff = 1 - opts.opacity;
-    return opacityPercent * opacityDiff + opts.opacity;
-}
-
-/**
- * Tries various vendor prefixes and returns the first supported property.
- */
-function vendor(el: HTMLElement, prop: string): string {
-    if (el.style[prop] !== undefined) {
-        return prop;
-    }
-
-    // needed for transform properties in IE 9
-    let prefixed = 'ms' + prop.charAt(0).toUpperCase() + prop.slice(1);
-
-    if (el.style[prefixed] !== undefined) {
-        return prefixed;
-    }
-
-    return '';
-}
-
 /**
  * Sets multiple style properties at once.
  */
 function css(el: HTMLElement, props): HTMLElement {
     for (var prop in props) {
-        el.style[vendor(el, prop) || prop] = props[prop];
+        el.style[prop] = props[prop];
     }
 
     return el;
@@ -219,13 +135,16 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
             transform: `rotate(${degrees}deg) translateX(${opts.radius}px)`,
         });
 
+        let delay = i * opts.direction / opts.lines / opts.speed;
+        delay -= 1 / opts.speed; // so initial animation state will include trail
+
         let line = css(document.createElement('div'), {
             width: '100%',
             height: '100%',
             background: getColor(opts.color, i),
             borderRadius: borderRadius,
             boxShadow: normalizeShadow(shadows, degrees),
-            opacity: opts.opacity,
+            animation: `${1 / opts.speed}s linear ${delay}s infinite ${opts.animation}`,
         });
 
         backgroundLine.appendChild(line);

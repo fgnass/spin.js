@@ -27,8 +27,8 @@
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-gh-pages": "^2.0.0",
-    "rollup": "^0.57.1",
-    "typescript": "^2.8.1"
+    "rollup": "^0.58.2",
+    "typescript": "^2.8.3"
   },
   "dependencies": {}
 }
