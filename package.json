@@ -20,14 +20,14 @@
   "scripts": {
     "prepare": "tsc && grunt && rollup -c",
     "gh-pages": "grunt gh-pages",
-    "start": "static-server site"
+    "start": "grunt serve"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-gh-pages": "^2.0.0",
     "rollup": "^0.52.0",
-    "static-server": "^3.0.0",
     "typescript": "^2.6.1"
   },
   "dependencies": {}
