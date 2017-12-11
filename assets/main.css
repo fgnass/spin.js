@@ -1,24 +1,28 @@
 html, body {
   margin: 0;
 }
+
 html {
   background: url(bg.png);
 }
+
 body {
   color: #333;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
+
 ul {
   padding: 0 0 0 20px;
 }
+
 #content {
-  width: 75%;
   max-width: 800px;
   line-height: 1.4em;
-  margin: 0 50px 50px 100px;
+  margin: 0 50px 50px;
   text-shadow: 0px 1px 0px #fff;
 }
+
 #footer {
   background: #202020;
   overflow: hidden;
@@ -27,6 +31,7 @@ ul {
   padding: 20px 0 100px 50px;
   position: relative;
 }
+
 #footer:before {
   content: '';
   display: block;
@@ -37,6 +42,7 @@ ul {
   top: -10px;
   width: 100%;
 }
+
 #footer a.github {
    background: url(github.gif) no-repeat;
    width: 68px;
@@ -46,50 +52,54 @@ ul {
    bottom: 30px;
    right: 30px;
 }
+
 a {
   color: #333;
 }
+
 a:hover {
   color: #000;
 }
+
 pre {
   text-shadow: none;
   font-size: 14px;
   line-height: 18px;
   margin: 0 0 30px 0;
 }
+
 label {
   font-size: 14px;
   vertical-align: top;
 }
+
 #opts {
   background: #fff;
   padding: 10px;
+  margin-top: 20px;
+  box-sizing: border-box;
 }
+
 #opts label {
   display: inline-block;
   line-height: 25px;
   width: 80px;
 }
-#logo {
-  position: relative;
-  height: 275px;
-  margin-left: 100px;
+
+h1 {
+  margin-top: 0.5em;
+  font-size: 100px;
 }
+
 h1, h2, h3, #download a {
   font-family: 'Amaranth', sans-serif;
 }
-h1 {
-  font-size: 200px;
-  position: absolute;
-  text-shadow: 0px 1px 0px #fff;
-  margin: 0;
-  padding: 0;
-}
+
 h2 {
   font-size: 28px;
   margin: 45px 0 28px 0;
 }
+
 h3 {
   margin: 35px 0 10px 0;
 }
@@ -102,19 +112,79 @@ h3 {
   height: 149px;
   background: url(ribbon.png) no-repeat;
 }
-#opts, .mid_col, #preview {
-  display: table-cell;
-  border-radius: 10px;
-}
+
 .mid_col {
   width: 20px;
 }
+
+#opts, #preview {
+  width: 325px;
+  border-radius: 10px;
+}
+
 #preview {
   position: relative;
   background: #333;
-  width: 375px;
-  height: 100%;
+  height: 325px;
 }
+
+@media screen and (min-width: 545px) {
+  h1 {
+    font-size: 150px;
+  }
+}
+
+@media screen and (min-width: 745px) {
+  h1 {
+    font-size: 175px;
+  }
+
+  #opts, .mid_col, #preview {
+    display: table-cell;
+  }
+
+  #opts {
+    width: auto;
+  }
+
+  #preview {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  #preview {
+    width: 375px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  h1 {
+    font-size: 200px;
+  }
+
+  #content {
+    margin-left: 100px;
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* styling fixes for IE 10 and IE 11 only */
+
+  #opts input[type="range"] {
+    padding: 7px;
+    width: 150px;
+  }
+
+  #opts, .mid_col, #preview {
+    display: inline-block;
+  }
+
+  #preview {
+    height: 400px;
+  }
+}
+
 a.button {
   display: inline-block;
   background: #56ba4a;
@@ -130,10 +200,12 @@ a.button {
   margin: 10px 20px 0 0;
   transition: all 0.25s ease;
 }
+
 a.button:hover {
   background: #2f8325;
   box-shadow: none;
 }
+
 #contact img {
   float: left;
   border: 3px solid #eee;
