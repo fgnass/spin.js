@@ -23,12 +23,12 @@
     "start": "grunt serve"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.2",
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-gh-pages": "^2.0.0",
-    "rollup": "^0.52.0",
-    "typescript": "^2.6.1"
+    "rollup": "^0.57.1",
+    "typescript": "^2.8.1"
   },
   "dependencies": {}
 }

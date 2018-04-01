@@ -3,6 +3,13 @@
         "moduleResolution": "node",
         "target": "es5",
         "module": "es2015",
-        "declaration": true
-    }
+        "declaration": true,
+        "lib": [
+            "es2015",
+            "dom"
+        ]
+    },
+    "files": [
+        "spin.ts"
+    ]
 }
