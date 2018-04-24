@@ -162,14 +162,13 @@ function vendor(el: HTMLElement, prop: string): string {
         return prop;
     }
 
-    // needed for transform properties in IE 9
-    let prefixed = 'ms' + prop.charAt(0).toUpperCase() + prop.slice(1);
+    // needed for transform properties in IE 9 and Chrome < 36
+    let prefixList = ['ms', 'webkit'];
 
-    if (el.style[prefixed] !== undefined) {
-        return prefixed;
-    }
+    prefixList = prefixList.map(prefix => `${prefix}${prop.charAt(0).toUpperCase()}${prop.slice(1)}`);
+    prefixList = prefixList.filter(prefix => el.style[prefix] !== undefined);
 
-    return '';
+    return prefixList ? prefixList[0] : '';
 }
 
 /**
