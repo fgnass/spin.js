@@ -32,9 +32,18 @@ div {
 }
 
 #target4 {
-    background: #ddd url(../assets/crosshair.gif) center center no-repeat;
+    background: #ddd;
     padding: 15px;
-    width: 350px;
-    height: 99px;
-    padding: 50px;
+    width: 375px;
+    height: 66px;
+    padding: 66px 38px;
+}
+
+@keyframes spinner-line-fade-custom {
+  0%, 59%, 100% {
+    opacity: 0.25; /* minimum opacity */
+  }
+  60% {
+    opacity: 1;
+  }
 }

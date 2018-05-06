@@ -18,7 +18,7 @@ const defaults: SpinnerOptions = {
     className: 'spinner',
     top: '50%',
     left: '50%',
-    shadow: 'none',
+    shadow: '0 0 1px transparent', // prevent aliased lines
     position: 'absolute',
 };
 
