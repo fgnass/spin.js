@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=1024, maximum-scale=1">
   <meta property="og:image" content="http://spin.js.org/assets/preview.jpg?v=1" />
   <link rel="shortcut icon" href="favicon.ico">
+  <link href="spin.css" rel="stylesheet">
   <link href="assets/main.css?v=6" type="text/css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Amaranth:400,700' rel='stylesheet' type='text/css'>
   <link href="assets/prettify.css" type="text/css" rel="stylesheet">
@@ -23,6 +24,7 @@
 
 <div id="download">
   <a href="spin.js" class="button">spin.js</a>
+  <a href="spin.css" class="button">spin.css</a>
 </div>
 
 <h2>Example</h2>
@@ -36,16 +38,21 @@
     <label>Radius:</label><input type="range" name="radius" min="0" max="84" value="45"><br>
     <label>Scale:</label><input type="range" name="scale" min="0.05" max="4.0" step="0.05" value="1.0"><br>
     <label>Corners:</label><input type="range" name="corners" min="0" max="1" step="0.1" value="1"><br>
-    <label>Opacity:</label><input type="range" name="opacity" min="0" max="1" step="0.05" value="0.25"><br>
+    <label>Speed:</label><input type="range" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
     <label>Rotate:</label><input type="range" name="rotate" min="0" max="90" value="0"><br>
+    <label>Animation:</label>
+    <select class="string" name="animation">
+      <option value="spinner-line-fade-default">spinner-line-fade-default</option>
+      <option value="spinner-line-fade-quick" selected>spinner-line-fade-quick</option>
+      <option value="spinner-line-fade-more">spinner-line-fade-more</option>
+    </select>
+    <br>
     <label>Direction:</label>
     <select name="direction">
       <option value="1">Clockwise</option>
       <option value="-1">Counterclockwise</option>
     </select>
     <br>
-    <label>Speed:</label><input type="range" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
-    <label>Trail:</label><input type="range" name="trail" min="10" max="100" value="60"><br>
     <label>Color:</label><input class="string" type="color" name="color" value="#ffffff"><br>
     <label>Fade color:</label><input class="string" type="text" name="fadeColor" value="transparent"><br>
     <label>↕:</label><input class="percent" type="range" name="top" min="0" max="100" value="50"><br>
@@ -63,11 +70,11 @@
 
 <h2>Features</h2>
 <ul>
-  <li>No images, no external CSS</li>
+  <li>No images</li>
   <li>No dependencies</li>
   <li>Highly configurable</li>
   <li>Resolution independent</li>
-  <li>Uses requestAnimationFrame(), falling back to setTimeout() in IE 9</li>
+  <li>Uses CSS keyframe animations</li>
   <li>Works in all major browsers</li>
   <li>Includes TypeScript definitions</li>
   <li>Distributed as a native ES6 module</li>
@@ -83,7 +90,10 @@
   Run <code>npm install spin.js</code> (recommended), or save the spin.js file in your repo.
 </p>
 <p>
-  Note: do not use a <code>&lt;script&gt;</code> tag directly referencing the spin.js file on this website.
+  Unless you plan to replace the preset opacity animations, load the spin.css file.
+</p>
+<p>
+  Note: do not use <code>&lt;script&gt;</code> or <code>&lt;link&gt;</code> tags directly referencing the files on this website.
   Doing this is likely to break your app whenever a major new version is released.
 </p>
 
@@ -100,12 +110,10 @@ var opts = {
   corners: <span id="opt-corners" class="lit">1</span>, // Corner roundness (0..1)
   color: '<span id="opt-color" class="str">#000</span>', // CSS color or array of colors
   fadeColor: '<span id="opt-fadeColor" class="str">transparent</span>', // CSS color or array of colors
-  opacity: <span id="opt-opacity" class="lit">0.25</span>, // Opacity of the lines
-  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
-  direction: <span id="opt-direction" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
   speed: <span id="opt-speed" class="lit">1</span>, // Rounds per second
-  trail: <span id="opt-trail" class="lit">100</span>, // Afterglow percentage
-  fps: 20, // Frames per second when using setTimeout() as a fallback in IE 9
+  rotate: <span id="opt-rotate" class="lit">0</span>, // The rotation offset
+  animation: '<span id="opt-animation" class="str">spinner-line-fade-default</span>', // The CSS animation name for the lines
+  direction: <span id="opt-direction" class="lit">1</span>, // 1: clockwise, -1: counterclockwise
   zIndex: 2e9, // The z-index (defaults to 2000000000)
   className: 'spinner', // The CSS class to assign to the spinner
   top: '<span id="opt-top" class="str">50%</span>', // Top position relative to parent
@@ -122,42 +130,43 @@ var spinner = new Spinner(opts).spin(target);
   element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
 </p>
 
+<h3>Bundling</h3>
+<p>
+  Not all browsers support native ES6 module imports yet, so it is recommended to use a module bundler such as
+  <a href="https://webpack.js.org/">Webpack</a> or
+  <a href="https://rollupjs.org/">Rollup</a> to create a production-ready code bundle.
+</p>
+
 <h3>Manual insertion</h3>
 <p>
-  In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method without any
-  arguments and use the <code>el</code> property to access the HTML element:
+  In order to manually insert the spinner into the DOM you can invoke the <code>spin()</code> method
+  without any arguments and use the <code>el</code> property to access the HTML element:
 </p>
 <pre class="prettyprint">
 var spinner = new Spinner().spin();
 target.appendChild(spinner.el);
 </pre>
 
+<h3>Hiding the spinner</h3>
+<p>
+  To hide the spinner, invoke the
+  <code>stop()</code> method, which removes the UI elements from the DOM and stops the animation.
+  Stopped spinners may be reused by calling <code>spin()</code> again.
+</p>
+
 <h3>Positioning</h3>
 <p>
-  Since version 2.0.0 the spinner is absolutely positioned at 50% of its offset parent.
+  The spinner is absolutely positioned at 50% of its offset parent.
   You may specify a <code>top</code> and <code>left</code> option to position the spinner manually.
 </p>
 <p>
   <b>Note:</b> The spinner element is a 0&times;0 pixel DIV that represents the center of the spinner.
-  Hence, if you passed <code>{top:0, left:0}</code> only the lower right quater of the spinner would be inside
-  the target's bounding box.
+  Hence, if you passed <code>{top:0, left:0}</code> only the lower right quarter of the spinner would
+  be inside the target's bounding box.
 </p>
 <p>
   The spinner element must be surrounded by an element using relative positioning, or the spinner will be
   outside of the parent element.
-</p>
-
-<h3>Hiding the spinner</h3>
-<p>
-  To hide the spinner, invoke the <code>stop()</code> method, which removes the UI elements from the DOM and stops
-  the animation. Stopped spinners may be reused by calling <code>spin()</code> again.
-</p>
-
-<h3>Bundling</h3>
-<p>
-  Not all browsers support native ES6 module imports yet, so it is recommended to
-  use a module bundler such as <a href="https://webpack.js.org/">Webpack</a> or
-  <a href="https://rollupjs.org/">Rollup</a> to create a production-ready code bundle.
 </p>
 
 <h2>Supported browsers</h2>
@@ -166,12 +175,11 @@ target.appendChild(spinner.el);
   Spin.js has been successfully tested in the following browsers:
 </p>
 <ul>
-  <li>Chrome</li>
   <li>Firefox</li>
-  <li>Opera</li>
+  <li>Chrome</li>
   <li>Safari</li>
-  <li>Internet Explorer 9+</li>
   <li>Microsoft Edge</li>
+  <li>Internet Explorer 10+</li>
 </ul>
 
 <h2>Changes</h2>

@@ -41,9 +41,9 @@ export interface SpinnerOptions {
     fadeColor?: string | string[];
 
     /**
-     * The minimum opacity the line color will fade to (0..1)
+     * The animation name used for the spinner lines. Defaults to 'spinner-line-fade-default'.
      */
-    opacity?: number;
+    animation?: string;
 
     /**
      * The rotation offset
@@ -59,16 +59,6 @@ export interface SpinnerOptions {
      * Rounds per second
      */
     speed?: number;
-
-    /**
-     * Afterglow percentage (0..100)
-     */
-    trail?: number;
-
-    /**
-     * Frames per second when using setTimeout() as a fallback in IE 9
-     */
-    fps?: number;
 
     /**
      * The z-index (defaults to 2000000000)

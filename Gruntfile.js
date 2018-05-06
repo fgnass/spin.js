@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     copy: {
       js: {
         files: [
-          { src: ['spin.js'], dest: 'site/' }
+          { src: ['spin.js', 'spin.css'], dest: 'site/' }
         ]
       }
     },
