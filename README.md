@@ -9,6 +9,7 @@ An animated loading spinner
  * Uses CSS keyframe animations
  * Works in all major browsers
  * Includes TypeScript definitions
+ * Distributed as a native ES6 module
  * MIT License
 
 ## Usage
