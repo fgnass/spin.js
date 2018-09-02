@@ -12,7 +12,19 @@ An animated loading spinner
  * Distributed as a native ES6 module
  * MIT License
 
+## Installation
+
+`npm install spin.js`
+
 ## Usage
+
+### CSS
+
+```html
+<link rel="stylesheet" href="node_modules/spin.js/spin.css">
+```
+
+### TypeScript or JavaScript
 
 ```javascript
 import {Spinner} from 'spin.js';
