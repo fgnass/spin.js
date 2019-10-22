@@ -35,7 +35,7 @@
     var Spinner = /** @class */ (function () {
         function Spinner(opts) {
             if (opts === void 0) { opts = {}; }
-            this.opts = __assign({}, defaults, opts);
+            this.opts = __assign(__assign({}, defaults), opts);
         }
         /**
          * Adds the spinner to the given target element. If this instance is already
