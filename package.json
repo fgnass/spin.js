@@ -1,6 +1,6 @@
 {
   "name": "spin.js",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "A spinning activity indicator",
   "files": [
     "spin.css",

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.0] - 2019-10-22
+### Added
+- `spinner-line-shrink` animation preset.
+
 ## [4.0.0] - 2018-05-06
 ### Changed
 - Switched from `requestAnimationFrame` back to CSS keyframe animations
@@ -226,7 +230,8 @@ built-in WebKit (issue [#12]).
 ## [1.0.0] - 2011-08-16
 - Initial release
 
-[Unreleased]: https://github.com/fgnass/spin.js/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/fgnass/spin.js/compare/4.1.0...HEAD
+[4.1.0]: https://github.com/fgnass/spin.js/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/fgnass/spin.js/compare/3.1.0...4.0.0
 [3.1.0]: https://github.com/fgnass/spin.js/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/fgnass/spin.js/compare/2.3.2...3.0.0
