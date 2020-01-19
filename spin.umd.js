@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (global = global || self, factory(global.Spin = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
     var __assign = (undefined && undefined.__assign) || function () {
         __assign = Object.assign || function(t) {
@@ -198,4 +198,4 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
