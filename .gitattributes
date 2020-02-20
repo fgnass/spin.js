@@ -1,0 +1,2 @@
+# so documentation files won't cause project language to be shown as HTML
+site/* linguist-documentation
