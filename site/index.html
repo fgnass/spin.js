@@ -88,8 +88,33 @@
 
 <h2>Installation</h2>
 <p>
-  Run <code>npm install spin.js</code> (recommended), or save the spin.js file in your repo.
+  Run <code>npm install spin.js</code>, or save the spin.js and spin.css files in your repository.
 </p>
+
+<h3>JS bundling</h3>
+<p>
+  For best performance and compatibility, it is recommended to use a module bundler such as
+  <a href="https://parceljs.org/">Parcel</a>, <a href="https://rollupjs.org/">Rollup</a>,
+  or <a href="https://webpack.js.org/">Webpack</a> to create a production-ready code bundle.
+  However, in modern browsers it is also possible to directly load the module via a script tag:
+</p>
+<pre class="prettyprint">
+  &lt;script type="module" src="node_modules/spin.js/spin.js"&gt;&lt;/script&gt;
+</pre>
+<p>
+  If for some reason you can't use ES6 modules or a module bundler, download
+  <a href="spin.umd.js">spin.umd.js</a> and save it in your repository.
+  The UMD script can be used as follows:
+</p>
+<pre class="prettyprint">
+  var spinner = new Spin.Spinner(opts).spin(target);
+</pre>
+<p>
+  Note that the UMD version is only available as a temporary workaround.
+  Longer term it is recommended to migrate to the standard ES6 module.
+</p>
+
+<h3>CSS</h3>
 <p>
   Load the spin.css file to include the default animation presets.
   You could alternatively create a custom CSS keyframe animation (in your own CSS file)
@@ -134,17 +159,6 @@ var spinner = new Spinner(opts).spin(target);
 <p>
   The <code>spin()</code> method creates the necessary HTML elements and starts the animation. If a target
   element is passed as argument, the spinner is added as first child and horizontally and vertically centered.
-</p>
-
-<h3>Bundling</h3>
-<p>
-  Not all browsers support native ES6 module imports yet, so it is recommended to use a module bundler such as
-  <a href="https://webpack.js.org/">Webpack</a> or
-  <a href="https://rollupjs.org/">Rollup</a> to create a production-ready code bundle.
-</p>
-<p>
-  If for some reason you can't use ES6 modules or a module bundler, download
-  <a href="spin.umd.js">spin.umd.js</a> and save it in your repo.
 </p>
 
 <h3>Manual insertion</h3>
