@@ -145,6 +145,7 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
             borderRadius: borderRadius,
             boxShadow: normalizeShadow(shadows, degrees),
             animation: `${1 / opts.speed}s linear ${delay}s infinite ${opts.animation}`,
+            border: 1px solid transparent,
         });
 
         backgroundLine.appendChild(line);
