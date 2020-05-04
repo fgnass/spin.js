@@ -39,7 +39,7 @@
 
 @media screen and (-ms-high-contrast: active) {
   /* All high contrast styling rules */
-  div {
+  .spinner > div > div {
     border: 1px solid transparent;
   }
 }
