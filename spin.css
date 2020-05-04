@@ -36,3 +36,10 @@
     opacity: 1;
   }
 }
+
+@media screen and (-ms-high-contrast: active) {
+  /* All high contrast styling rules */
+  div {
+    border: 1px solid transparent;
+  }
+}
