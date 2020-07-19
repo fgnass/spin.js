@@ -32,12 +32,12 @@
     "start": "grunt serve"
   },
   "devDependencies": {
-    "grunt": "^1.0.3",
-    "grunt-contrib-connect": "^2.0.0",
+    "grunt": "^1.2.1",
+    "grunt-contrib-connect": "^3.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-gh-pages": "^3.1.0",
-    "rollup": "^1.29.0",
-    "typescript": "^3.7.5"
+    "grunt-gh-pages": "^4.0.0",
+    "rollup": "^2.22.1",
+    "typescript": "^3.9.7"
   },
   "dependencies": {}
 }
