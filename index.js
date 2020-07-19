@@ -75,9 +75,9 @@ function getOptionsFromInputs() {
         var input = inputs[i];
         var val = input.value;
 
-        if (hasClass(input, 'percent')) {
+        if (input.classList.contains('percent')) {
             val += '%';
-        } else if (!hasClass(input, 'string')) {
+        } else if (!input.classList.contains('string')) {
             val = parseFloat(val);
         }
 
@@ -112,12 +112,4 @@ function getParamStringFromOpts(opts) {
     }
 
     return params.join('&');
-}
-
-function hasClass(el, className) {
-    if (el.classList) {
-        return el.classList.contains(className);
-    } else {
-        return new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
-    }
 }
