@@ -44,9 +44,10 @@ ul {
 }
 
 #footer a.github {
-   background: url(github.gif) no-repeat;
-   width: 68px;
-   height: 30px;
+   background: url(github.svg) no-repeat;
+   background-size: 100%;
+   width: 144px;
+   height: 72px;
    text-indent: -999em;
    position: absolute;
    bottom: 30px;
@@ -206,9 +207,27 @@ a.button:hover {
   box-shadow: none;
 }
 
-#contact img {
-  float: left;
-  border: 3px solid #eee;
-  box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
-  margin: 0 16px 50px 0;
+.authors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  grid-gap: 50px;
+}
+
+.contact {
+  background-color: #e1e1e1;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 2px 2px 10px #bbb;
+}
+
+.contact h3 {
+  margin: 20px 0;
+}
+
+.contact p {
+  margin-bottom: 0;
+}
+
+.contact img {
+  border-radius: 50%;
 }
