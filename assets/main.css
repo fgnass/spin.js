@@ -19,8 +19,12 @@ ul {
 #content {
   max-width: 800px;
   line-height: 1.4em;
-  margin: 0 50px 50px;
+  margin: 0 40px 40px;
   text-shadow: 0px 1px 0px #fff;
+}
+
+#content img {
+  max-width: 100%;
 }
 
 #footer {
