@@ -108,15 +108,6 @@ h3 {
   margin: 30px 0 10px 0;
 }
 
-#ribbon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 149px;
-  height: 149px;
-  background: url(ribbon.png) no-repeat;
-}
-
 .mid_col {
   width: 20px;
 }
