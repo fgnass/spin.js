@@ -19,8 +19,12 @@ ul {
 #content {
   max-width: 800px;
   line-height: 1.4em;
-  margin: 0 50px 50px;
+  padding: 0 40px 40px;
   text-shadow: 0px 1px 0px #fff;
+}
+
+#content img {
+  max-width: 100%;
 }
 
 #footer {
@@ -88,7 +92,6 @@ label {
 }
 
 h1 {
-  margin-top: 0.5em;
   font-size: 100px;
 }
 
@@ -98,11 +101,11 @@ h1, h2, h3, #download a {
 
 h2 {
   font-size: 28px;
-  margin: 45px 0 28px 0;
+  margin: 30px 0 20px;
 }
 
 h3 {
-  margin: 35px 0 10px 0;
+  margin: 30px 0 10px 0;
 }
 
 #ribbon {
