@@ -66,13 +66,6 @@ a:hover {
   color: #000;
 }
 
-pre {
-  text-shadow: none;
-  font-size: 14px;
-  line-height: 18px;
-  margin: 0 0 30px 0;
-}
-
 label {
   font-size: 14px;
   vertical-align: top;
