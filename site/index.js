@@ -101,10 +101,10 @@ function getOptionsCode(options) {
         let value = options[opt];
 
         if (typeof value === 'string') {
-            value = `'${value}'`;
+            value = "'" + value + "'";
         }
 
-        code += `  ${opt}: ${value}, // ${optDescriptions[opt]}\n`;
+        code += "  " + opt + ": " + value + ", // " + optDescriptions[opt] + "\n";
     }
 
     code += "};\n\n";
