@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [4.1.1] - 2021-09-01
+### Changed
+- Set package type to `module` to better support native ES module imports.
+- Improved website design.
+
 ## [4.1.0] - 2019-10-22
 ### Added
 - `spinner-line-shrink` animation preset.
@@ -230,7 +236,8 @@ built-in WebKit (issue [#12]).
 ## [1.0.0] - 2011-08-16
 - Initial release
 
-[Unreleased]: https://github.com/fgnass/spin.js/compare/4.1.0...HEAD
+[Unreleased]: https://github.com/fgnass/spin.js/compare/4.1.1...HEAD
+[4.1.1]: https://github.com/fgnass/spin.js/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/fgnass/spin.js/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/fgnass/spin.js/compare/3.1.0...4.0.0
 [3.1.0]: https://github.com/fgnass/spin.js/compare/3.0.0...3.1.0
