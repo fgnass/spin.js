@@ -1,7 +1,7 @@
-import { SpinnerOptions } from './SpinnerOptions';
-export { SpinnerOptions } from './SpinnerOptions';
+import { SpinnerOptions } from './SpinnerOptions.js';
+export { SpinnerOptions } from './SpinnerOptions.js';
 
-const defaults: SpinnerOptions = {
+const defaults: Required<SpinnerOptions> = {
     lines: 12,
     length: 7,
     width: 5,
@@ -23,7 +23,7 @@ const defaults: SpinnerOptions = {
 };
 
 export class Spinner {
-    private opts: SpinnerOptions;
+    private opts: Required<SpinnerOptions>;
 
     /**
      * The Spinner's HTML element - can be used to manually insert the spinner into the DOM
@@ -46,14 +46,12 @@ export class Spinner {
         this.el.className = this.opts.className;
         this.el.setAttribute('role', 'progressbar');
 
-        css(this.el, {
-            position: this.opts.position,
-            width: 0,
-            zIndex: this.opts.zIndex,
-            left: this.opts.left,
-            top: this.opts.top,
-            transform: `scale(${this.opts.scale})`,
-        });
+        this.el.style.position = this.opts.position;
+        this.el.style.width = "0";
+        this.el.style.zIndex = this.opts.zIndex.toString();
+        this.el.style.left = this.opts.left;
+        this.el.style.top = this.opts.top;
+        this.el.style.transform = `scale(${this.opts.scale})`;
 
         if (target) {
             target.insertBefore(this.el, target.firstChild || null);
@@ -82,27 +80,16 @@ export class Spinner {
 }
 
 /**
- * Sets multiple style properties at once.
- */
-function css(el: HTMLElement, props): HTMLElement {
-    for (var prop in props) {
-        el.style[prop] = props[prop];
-    }
-
-    return el;
-}
-
-/**
  * Returns the line color from the given string or array.
  */
-function getColor(color: string | string[], idx): string {
+function getColor(color: string | string[], idx: number): string {
     return typeof color == 'string' ? color : color[idx % color.length];
 }
 
 /**
  * Internal method that draws the individual lines.
  */
-function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
+function drawLines(el: HTMLElement, opts: Required<SpinnerOptions>): void {
     let borderRadius = (Math.round(opts.corners * opts.width * 500) / 1000) + 'px';
     let shadow = 'none';
 
@@ -117,28 +104,26 @@ function drawLines(el: HTMLElement, opts: SpinnerOptions): void {
     for (let i = 0; i < opts.lines; i++) {
         let degrees = ~~(360 / opts.lines * i + opts.rotate);
 
-        let backgroundLine = css(document.createElement('div'), {
-            position: 'absolute',
-            top: `${-opts.width / 2}px`,
-            width: (opts.length + opts.width) + 'px',
-            height: opts.width + 'px',
-            background: getColor(opts.fadeColor, i),
-            borderRadius: borderRadius,
-            transformOrigin: 'left',
-            transform: `rotate(${degrees}deg) translateX(${opts.radius}px)`,
-        });
+        let backgroundLine = document.createElement('div');
+        backgroundLine.style.position = 'absolute';
+        backgroundLine.style.top = `${-opts.width / 2}px`;
+        backgroundLine.style.width = (opts.length + opts.width) + 'px';
+        backgroundLine.style.height = opts.width + 'px';
+        backgroundLine.style.background = getColor(opts.fadeColor, i);
+        backgroundLine.style.borderRadius = borderRadius;
+        backgroundLine.style.transformOrigin = 'left';
+        backgroundLine.style.transform = `rotate(${degrees}deg) translateX(${opts.radius}px)`;
 
         let delay = i * opts.direction / opts.lines / opts.speed;
         delay -= 1 / opts.speed; // so initial animation state will include trail
 
-        let line = css(document.createElement('div'), {
-            width: '100%',
-            height: '100%',
-            background: getColor(opts.color, i),
-            borderRadius: borderRadius,
-            boxShadow: normalizeShadow(shadows, degrees),
-            animation: `${1 / opts.speed}s linear ${delay}s infinite ${opts.animation}`,
-        });
+        let line = document.createElement('div');
+        line.style.width = '100%';
+        line.style.height = '100%';
+        line.style.background = getColor(opts.color, i);
+        line.style.borderRadius = borderRadius;
+        line.style.boxShadow = normalizeShadow(shadows, degrees);
+        line.style.animation = `${1 / opts.speed}s linear ${delay}s infinite ${opts.animation}`;
 
         backgroundLine.appendChild(line);
         el.appendChild(backgroundLine);

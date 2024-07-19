@@ -1,8 +1,11 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
-        "target": "es5",
-        "module": "es2015",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES5",
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": true,
+        "strict": true,
         "declaration": true
     },
     "files": [

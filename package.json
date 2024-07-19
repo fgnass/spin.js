@@ -30,15 +30,14 @@
   "scripts": {
     "prepare": "tsc && grunt --gruntfile Gruntfile.cjs && rollup -c",
     "gh-pages": "grunt gh-pages --gruntfile Gruntfile.cjs",
-    "start": "grunt serve --gruntfile Gruntfile.cjs"
+    "start": "serve site/"
   },
   "devDependencies": {
-    "grunt": "^1.4.1",
-    "grunt-contrib-connect": "^3.0.0",
+    "grunt": "^1.6.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-gh-pages": "^4.0.0",
-    "rollup": "^2.56.3",
-    "typescript": "^4.4.2"
-  },
-  "dependencies": {}
+    "rollup": "^4.18.1",
+    "serve": "^14.2.3",
+    "typescript": "^5.5.3"
+  }
 }
