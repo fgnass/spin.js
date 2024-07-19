@@ -29,7 +29,6 @@ export class Spinner {
      * The Spinner's HTML element - can be used to manually insert the spinner into the DOM
      */
     public el: HTMLElement | undefined;
-    private animateId: number | undefined;
 
     constructor(opts: SpinnerOptions = {}) {
         this.opts = { ...defaults, ...opts };
@@ -71,12 +70,6 @@ export class Spinner {
      */
     stop(): this {
         if (this.el) {
-            if (typeof requestAnimationFrame !== 'undefined') {
-                cancelAnimationFrame(this.animateId);
-            } else {
-                clearTimeout(this.animateId);
-            }
-
             if (this.el.parentNode) {
                 this.el.parentNode.removeChild(this.el);
             }
