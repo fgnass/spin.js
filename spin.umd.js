@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Spin = {}));
-}(this, (function (exports) { 'use strict';
+})(this, (function (exports) { 'use strict';
 
     var __assign = (undefined && undefined.__assign) || function () {
         __assign = Object.assign || function(t) {
@@ -32,7 +32,7 @@
         className: 'spinner',
         top: '50%',
         left: '50%',
-        shadow: '0 0 1px transparent',
+        shadow: '0 0 1px transparent', // prevent aliased lines
         position: 'absolute',
     };
     var Spinner = /** @class */ (function () {
@@ -50,14 +50,12 @@
             this.el = document.createElement('div');
             this.el.className = this.opts.className;
             this.el.setAttribute('role', 'progressbar');
-            css(this.el, {
-                position: this.opts.position,
-                width: 0,
-                zIndex: this.opts.zIndex,
-                left: this.opts.left,
-                top: this.opts.top,
-                transform: "scale(" + this.opts.scale + ")",
-            });
+            this.el.style.position = this.opts.position;
+            this.el.style.width = "0";
+            this.el.style.zIndex = this.opts.zIndex.toString();
+            this.el.style.left = this.opts.left;
+            this.el.style.top = this.opts.top;
+            this.el.style.transform = "scale(".concat(this.opts.scale, ")");
             if (target) {
                 target.insertBefore(this.el, target.firstChild || null);
             }
@@ -70,12 +68,6 @@
          */
         Spinner.prototype.stop = function () {
             if (this.el) {
-                if (typeof requestAnimationFrame !== 'undefined') {
-                    cancelAnimationFrame(this.animateId);
-                }
-                else {
-                    clearTimeout(this.animateId);
-                }
                 if (this.el.parentNode) {
                     this.el.parentNode.removeChild(this.el);
                 }
@@ -85,15 +77,6 @@
         };
         return Spinner;
     }());
-    /**
-     * Sets multiple style properties at once.
-     */
-    function css(el, props) {
-        for (var prop in props) {
-            el.style[prop] = props[prop];
-        }
-        return el;
-    }
     /**
      * Returns the line color from the given string or array.
      */
@@ -115,26 +98,24 @@
         var shadows = parseBoxShadow(shadow);
         for (var i = 0; i < opts.lines; i++) {
             var degrees = ~~(360 / opts.lines * i + opts.rotate);
-            var backgroundLine = css(document.createElement('div'), {
-                position: 'absolute',
-                top: -opts.width / 2 + "px",
-                width: (opts.length + opts.width) + 'px',
-                height: opts.width + 'px',
-                background: getColor(opts.fadeColor, i),
-                borderRadius: borderRadius,
-                transformOrigin: 'left',
-                transform: "rotate(" + degrees + "deg) translateX(" + opts.radius + "px)",
-            });
+            var backgroundLine = document.createElement('div');
+            backgroundLine.style.position = 'absolute';
+            backgroundLine.style.top = "".concat(-opts.width / 2, "px");
+            backgroundLine.style.width = (opts.length + opts.width) + 'px';
+            backgroundLine.style.height = opts.width + 'px';
+            backgroundLine.style.background = getColor(opts.fadeColor, i);
+            backgroundLine.style.borderRadius = borderRadius;
+            backgroundLine.style.transformOrigin = 'left';
+            backgroundLine.style.transform = "rotate(".concat(degrees, "deg) translateX(").concat(opts.radius, "px)");
             var delay = i * opts.direction / opts.lines / opts.speed;
             delay -= 1 / opts.speed; // so initial animation state will include trail
-            var line = css(document.createElement('div'), {
-                width: '100%',
-                height: '100%',
-                background: getColor(opts.color, i),
-                borderRadius: borderRadius,
-                boxShadow: normalizeShadow(shadows, degrees),
-                animation: 1 / opts.speed + "s linear " + delay + "s infinite " + opts.animation,
-            });
+            var line = document.createElement('div');
+            line.style.width = '100%';
+            line.style.height = '100%';
+            line.style.background = getColor(opts.color, i);
+            line.style.borderRadius = borderRadius;
+            line.style.boxShadow = normalizeShadow(shadows, degrees);
+            line.style.animation = "".concat(1 / opts.speed, "s linear ").concat(delay, "s infinite ").concat(opts.animation);
             backgroundLine.appendChild(line);
             el.appendChild(backgroundLine);
         }
@@ -162,7 +143,7 @@
                 continue; // units must match to use as coordinates
             }
             shadows.push({
-                prefix: matches[1] || '',
+                prefix: matches[1] || '', // could have value of 'inset' or undefined
                 x: x,
                 y: y,
                 xUnits: xUnits,
@@ -196,6 +177,4 @@
 
     exports.Spinner = Spinner;
 
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+}));

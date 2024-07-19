@@ -1,0 +1,11 @@
+{
+  "headers": [
+    {
+      "source" : "index.html",
+      "headers" : [{
+        "key" : "Content-Security-Policy",
+        "value" : "default-src 'self'; style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' www.gravatar.com;"
+      }]
+    }
+  ]
+}
